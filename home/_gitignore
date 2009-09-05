@@ -1,0 +1,12 @@
+.DS_Store
+*.log
+*.sqlite3
+.svn
+.tmtags
+nbproject
+log
+*.dump
+tmp
+.idea
+public/system
+uploads/*

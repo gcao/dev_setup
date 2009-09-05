@@ -1,0 +1,18 @@
+[github]
+	user = gcao
+	token = 486e72be6382402976b0ef9179a433fd
+[user]
+	name = Guoliang Cao
+	email = gcao@vonage.com
+[color]
+	diff = auto
+	status = auto
+	branch = auto
+[core]
+	excludesfile = /Users/gcao/.gitignore
+
+[alias]
+  co = checkout
+  st = status
+  br = branch
+  ba = branch -a

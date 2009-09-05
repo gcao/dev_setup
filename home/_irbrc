@@ -1,0 +1,101 @@
+require 'rubygems'
+require 'pp'
+  
+begin 
+  require 'wirble'
+  Wirble.init
+  Wirble.colorize
+rescue LoadError
+  puts "Error loading Wirble. Run 'sudo gem install wirble' to enable colorized results."
+end
+
+begin
+  require 'utility_belt'
+rescue LoadError
+  puts "Error loading Utility Belt. Run 'sudo gem install utility_belt' to install."
+end
+
+class Object
+  def local_methods
+    (methods - Object.instance_methods).sort
+  end
+  alias m local_methods
+end
+
+def mate
+  filename = 'debug.rb'
+  
+  `mate -w #{filename}` # waits for Textmate to close file
+  File.open(filename, 'r') { |f| @content = f.read }
+  `rm -rf ./#{filename}`
+  
+  eval @content
+end
+
+require 'irb_rocket'
+
+::IRB::Irb.class_eval do
+  alias :orig_output_value :output_value
+
+  def output_value
+    return if @context.last_value == 'NO_OUTPUT'
+    orig_output_value
+  end
+end
+
+def show_response response
+  puts "RESPONSE CODE: #{response.code}\n\n"
+  puts response.body
+end
+
+def get *args
+  app.get *args
+  show_response app.response
+end
+
+def post *args
+  app.post *args
+  show_response app.response
+end
+
+def put *args
+  app.put *args
+  show_response app.response
+end
+
+def delete *args
+  app.delete *args
+  show_response app.response
+end
+
+
+def save_and_run_applescript input
+  temp_file = File.new("/tmp/script#{rand(1000)}.applescript", 'w')
+  temp_file.print input
+  temp_file.close
+  command = "osascript #{temp_file.path}"
+  puts command
+  system(command)
+end
+
+def ff url
+  url = "http://#{url}" unless url =~ /http/
+  save_and_run_applescript <<-APPLESCRIPT
+  tell application "Firefox" to Get URL "#{url}"
+  tell application "System Events"
+    tell process "Firefox" 
+      set frontmost to true
+    end tell
+  end tell
+  APPLESCRIPT
+  'NO_OUTPUT'
+end
+
+def help_utility_belt
+  ff "http://utilitybelt.rubyforge.org/usage.html"
+end
+
+
+# Below is for creating project or directory specific .irbrc
+local_irb = File.expand_path(Dir.pwd + "/.irbrc")
+load local_irb if local_irb != __FILE__ and File.exists? local_irb

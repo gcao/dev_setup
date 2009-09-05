@@ -1,0 +1,41 @@
+export PATH=$HOME/bin:/opt/local/bin:/opt/local/sbin:$PATH
+
+export EDITOR='mate -w'
+export GREP_OPTIONS='--color=auto'
+export JAVA_HOME="/Library/Java/Home"
+export PS1='${LOGNAME} \w>'
+umask 022
+
+alias ri='ri -Tf ansi'
+alias r='rake'
+alias ss='./script/server'
+alias sc='./script/console'
+alias tail="tail -200f"
+alias sb="sudo bash"
+alias sm="sudo mate"
+alias si="sudo vi"
+alias ll="ls -l"
+alias k9="kill -9"
+
+# MISC ALIASES
+alias home='cd ~'
+alias quit='exit'
+alias c='clear'
+alias cls='clear;ls'
+alias more='less'
+alias vi='vim'
+alias ll='ls -l'
+alias ls='ls -CFh'
+alias pg='ps aux | grep'
+alias h="history"
+alias hgrep="history | grep"
+alias a="alias"
+alias ag="alias | grep"
+alias rt="rake -T"
+
+# FUNCTIONS 
+pkill() {
+  kill -9 `ps ax | grep $1 | grep -v grep | awk '{print $1}'`;
+}
+
+test -r .bash_login.private && . .bash_login.private
