@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>beforeRunningCommand</key>
+	<string>saveActiveFile</string>
+	<key>command</key>
+	<string>#!/usr/bin/env ruby
+
+require ENV['TM_BUNDLE_SUPPORT'] + "/lib/spec/mate"
+Spec::Mate::Runner.new.run_file_drb STDOUT</string>
+	<key>input</key>
+	<string>document</string>
+	<key>keyEquivalent</key>
+	<string>^r</string>
+	<key>name</key>
+	<string>Run Examples - DRB</string>
+	<key>output</key>
+	<string>showAsHTML</string>
+	<key>scope</key>
+	<string>source.ruby.rspec</string>
+	<key>uuid</key>
+	<string>FC1DC451-D5EA-4B16-8CA3-50F01B6E6D43</string>
+</dict>
+</plist>

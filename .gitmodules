@@ -1,0 +1,9 @@
+[submodule "textmate/bundles/Ack.tmbundle"]
+	path = textmate/bundles/Ack.tmbundle
+	url = git://github.com/protocool/ack-tmbundle.git
+[submodule "textmate/bundles/Cucumber.tmbundle"]
+	path = textmate/bundles/Cucumber.tmbundle
+	url = git://github.com/aslakhellesoy/cucumber.git
+[submodule "textmate/bundles/tm-ctags.tmbundle"]
+	path = textmate/bundles/tm-ctags.tmbundle
+	url = git://github.com/sbenhaim/tm-ctags-tmbundle.git

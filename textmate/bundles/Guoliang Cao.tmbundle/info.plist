@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>changed</key>
+	<dict>
+		<key>deleted</key>
+		<array>
+			<string>0F1FD30D-C48F-4B0C-89FC-F65553C8DD77</string>
+		</array>
+		<key>name</key>
+		<string>Guoliang Cao</string>
+		<key>ordering</key>
+		<array>
+			<string>B40557A1-0240-4B77-A535-C6C41B8101BE</string>
+			<string>818DE26D-7931-4FB7-97C3-12206D68F5A7</string>
+			<string>FCA21AD8-338E-4ED1-8A92-58D788B57390</string>
+			<string>CAA39DBB-5355-4C14-BAB5-A1D47D0FC8F7</string>
+			<string>524F0FA6-4FDA-4203-A4AD-BD85147FAC02</string>
+			<string>D6A534E4-7456-4FAE-8309-38B12566A540</string>
+			<string>439C019C-2AB0-4B25-993B-623C84233500</string>
+			<string>96CFF43E-FAFA-42AB-B509-08E6C89260FC</string>
+			<string>429E79CE-64F5-47A2-BB9A-321750CF53C2</string>
+			<string>4F10A382-B4CF-48EA-84B4-3BCB3FB7CBB6</string>
+			<string>9D4B85CB-D49A-4B04-9349-D484DC694F18</string>
+			<string>AEA17E21-E7CA-4CB8-8A24-5997BF464E3B</string>
+			<string>110856D6-B95B-411F-9102-E8CBC8EEA4D4</string>
+			<string>9680550F-40B6-405E-8596-B3D687D713BA</string>
+			<string>465B538E-2383-4C89-91C3-601335D7BFED</string>
+			<string>7B583CB8-A7FA-44C0-813A-A424BB90FCA1</string>
+			<string>A5160F33-57E4-4057-9AE2-BCA81DBCEA15</string>
+			<string>4FE925A2-54C0-4B32-9374-924FBE66A27F</string>
+			<string>8E71F0CA-F451-4A80-835D-8899957FFE66</string>
+			<string>4BF25DBE-459C-4293-BDDC-315FFDEC4690</string>
+			<string>FFE9F6E3-F141-4EF6-BF54-088E0D380F16</string>
+			<string>92B9CFFE-F824-499A-9B59-7C15C862098A</string>
+			<string>248DDBAF-354B-4A93-A205-3FFDC76953B0</string>
+			<string>B2F52BBB-F7E1-415E-BBD9-79184AAF1F48</string>
+			<string>8E7436EB-E51F-401C-ADB5-E00E9E5C3A89</string>
+			<string>61E91C8A-D7B9-4D2C-8605-1517B6DA2DE7</string>
+			<string>F6AEB55E-C452-4068-8812-253DEBF9941E</string>
+			<string>AB468401-431E-475F-A4A3-91292A3588AE</string>
+			<string>45DB5D10-FC58-4776-B9A4-76FEB51DEA8E</string>
+		</array>
+	</dict>
+	<key>deleted</key>
+	<array/>
+	<key>isDelta</key>
+	<true/>
+	<key>uuid</key>
+	<string>89AF4F6D-DFAF-48B0-AFBA-962F91048934</string>
+</dict>
+</plist>
