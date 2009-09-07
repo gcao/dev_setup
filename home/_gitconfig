@@ -12,7 +12,9 @@
 	excludesfile = /Users/gcao/.gitignore
 
 [alias]
+  ci = commit -a
   co = checkout
   st = status
   br = branch
   ba = branch -a
+  putsh = push origin master

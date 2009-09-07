@@ -8,30 +8,39 @@ umask 022
 
 alias ri='ri -Tf ansi'
 alias r='rake'
+alias rt="rake -T"
 alias ss='./script/server'
 alias sc='./script/console'
-alias tail="tail -200f"
-alias sb="sudo bash"
-alias sm="sudo mate"
-alias si="sudo vi"
-alias ll="ls -l"
-alias k9="kill -9"
+alias dr='rake db:migrate:reset'
+alias tr='rake db:test:load'
 
-# MISC ALIASES
-alias home='cd ~'
-alias quit='exit'
-alias c='clear'
-alias cls='clear;ls'
-alias more='less'
-alias vi='vim'
-alias ll='ls -l'
-alias ls='ls -CFh'
-alias pg='ps aux | grep'
-alias h="history"
-alias hgrep="history | grep"
 alias a="alias"
 alias ag="alias | grep"
-alias rt="rake -T"
+alias c='clear'
+alias cls='clear;ls'
+alias h="history"
+alias hgrep="history | grep"
+alias pg='ps aux | grep'
+alias tail="tail -200f"
+alias vi='vim'
+alias sb="sudo bash"
+alias sm="sudo mate"
+alias sv="sudo vi"
+alias ls='ls -CFh'
+alias ll="ls -l"
+alias k9="kill -9"
+alias more='less'
+alias quit='exit'
+
+alias home='cd ~'
+alias dev='cd ~/proj/dev_setup'
+alias gocool='cd ~/proj/gocool'
+alias jsgv='cd ~/proj/jsgameviewer'
+alias sgf='cd ~/proj/jsgameviewer/vendor/gems/sgf-0.1.0'
+alias textmate_bundles='cd ~/Library/Application\ Support/TextMate/Bundles'
+
+alias gitpush="git push origin master"
+alias yui="java -jar /Users/gcao/tools/yuicompressor-2.4.2/build/yuicompressor-2.4.2.jar"
 
 # FUNCTIONS 
 pkill() {
