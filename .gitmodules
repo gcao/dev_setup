@@ -10,3 +10,6 @@
 [submodule "textmate/bundles/handcrafted-haml.tmbundle"]
 	path = textmate/bundles/handcrafted-haml.tmbundle
 	url = git://github.com/handcrafted/handcrafted-haml-textmate-bundle.git
+[submodule "textmate/bundles/Sass.tmbundle"]
+	path = textmate/bundles/Sass.tmbundle
+	url = git://github.com/seaofclouds/sass-textmate-bundle.git
