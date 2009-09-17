@@ -1,4 +1,6 @@
-export PATH=$HOME/bin:/opt/local/bin:/opt/local/sbin:$PATH
+export PATH=$HOME/bin:~/.rvm/bin:/opt/local/bin:/opt/local/sbin:$PATH
+
+set -o emacs
 
 export EDITOR='mate -w'
 export GREP_OPTIONS='--color=auto'
@@ -20,6 +22,7 @@ alias c='clear'
 alias cls='clear;ls'
 alias h="history"
 alias hgrep="history | grep"
+alias hi='hijack'
 alias pg='ps aux | grep'
 alias tail="tail -200f"
 alias vi='vim'
@@ -39,6 +42,9 @@ alias jsgv='cd ~/proj/jsgameviewer'
 alias sgf='cd ~/proj/jsgameviewer/vendor/gems/sgf-0.1.0'
 alias textmate_bundles='cd ~/Library/Application\ Support/TextMate/Bundles'
 
+alias gpull="git pull origin master"
+alias gpush="git push origin master"
+alias gitpull="git pull origin master"
 alias gitpush="git push origin master"
 alias yui="java -jar /Users/gcao/tools/yuicompressor-2.4.2/build/yuicompressor-2.4.2.jar"
 
@@ -47,4 +53,8 @@ pkill() {
   kill -9 `ps ax | grep $1 | grep -v grep | awk '{print $1}'`;
 }
 
-test -r .bash_login.private && . .bash_login.private
+# Ruby Version Manager
+if [ -f ~/.rvm/bin/rvm ] ; then source ~/.rvm/bin/rvm ; fi
+if [ -f ~/.rvm/current ] ; then source ~/.rvm/current ; fi
+
+# test -r .bash_login.private && . .bash_login.private
