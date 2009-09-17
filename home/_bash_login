@@ -39,7 +39,7 @@ alias home='cd ~'
 alias dev='cd ~/proj/dev_setup'
 alias gocool='cd ~/proj/gocool'
 alias jsgv='cd ~/proj/jsgameviewer'
-alias sgf='cd ~/proj/jsgameviewer/vendor/gems/sgf-0.1.0'
+alias sgf='cd ~/proj/gocool/vendor/gems/sgf-0.1.0'
 alias textmate_bundles='cd ~/Library/Application\ Support/TextMate/Bundles'
 
 alias gpull="git pull origin master"
