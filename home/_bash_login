@@ -19,8 +19,8 @@ alias r='rake'
 alias rt="rake -T"
 alias ss='./script/server'
 alias sc='./script/console'
-alias dr='rake db:migrate:reset'
-alias tr='rake db:test:load'
+alias pdr='rake db:migrate:reset db:seed'
+alias ptr='rake db:test:load'
 
 alias a="alias"
 alias ag="alias | grep"

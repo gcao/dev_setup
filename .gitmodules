@@ -13,3 +13,6 @@
 [submodule "textmate/bundles/Sass.tmbundle"]
 	path = textmate/bundles/Sass.tmbundle
 	url = git://github.com/seaofclouds/sass-textmate-bundle.git
+[submodule "textmate/bundles/gotofile.tmbundle"]
+	path = textmate/bundles/gotofile.tmbundle
+	url = git://github.com/amiel/gotofile.tmbundle.git
