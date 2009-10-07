@@ -15,4 +15,4 @@
 	url = git://github.com/seaofclouds/sass-textmate-bundle.git
 [submodule "textmate/bundles/gotofile.tmbundle"]
 	path = textmate/bundles/gotofile.tmbundle
-	url = git://github.com/amiel/gotofile.tmbundle.git
+	url = git@github.com:gcao/gotofile.tmbundle.git
