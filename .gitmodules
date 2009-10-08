@@ -16,3 +16,6 @@
 [submodule "textmate/bundles/gotofile.tmbundle"]
 	path = textmate/bundles/gotofile.tmbundle
 	url = git@github.com:gcao/gotofile.tmbundle.git
+[submodule "textmate/bundles/GetBundles.tmbundle"]
+	path = textmate/bundles/GetBundles.tmbundle
+	url = git://github.com/adamsalter/GetBundles.tmbundle.git
