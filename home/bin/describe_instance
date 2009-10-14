@@ -19,9 +19,9 @@ while not (instance and domain_name)
 end
 
 File.open("#{ENV['HOME']}/bin/ami_instance", "w") do |f|
-  f.print "echo #{instance}\n"
+  f.print "#!/bin/bash\necho #{instance}\n"
 end
 
 File.open("#{ENV['HOME']}/bin/ami_host", "w") do |f|
-  f.print "echo #{domain_name}\n"
+  f.print "#!/bin/bash\necho #{domain_name}\n"
 end
