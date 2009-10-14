@@ -41,6 +41,8 @@ alias k9="kill -9"
 alias more='less'
 alias quit='exit'
 
+alias goami='ssh root@`ami_host`'
+
 alias cdh='cd ~'
 alias home='cd ~'
 alias devsetup='cd ~/proj/dev_setup'
