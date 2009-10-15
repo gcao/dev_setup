@@ -1,0 +1,6 @@
+gem install passenger
+passenger-install-apache2-module
+gem install imagesize
+cd ~/Downloads/ImageMagick-6.5.5-8
+./configure; make; make install
+gem install rmagick
