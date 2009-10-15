@@ -1,4 +1,4 @@
-export PATH=$HOME/bin:~/.rvm/bin:/opt/local/bin:/opt/local/sbin:$PATH
+export PATH=bin:$HOME/bin:~/.rvm/bin:/opt/local/bin:/opt/local/sbin:$PATH
 
 set -o emacs
 
