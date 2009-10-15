@@ -1,1 +1,10 @@
-ec2-run-instances ami-71fd1a18 -k ec2-keypair && describe_instance
+#!/bin/bash
+
+# http://alestic.com/
+# Ubuntu 9.04 Jaunty:       ami-ccf615a5 
+# Ubuntu 8.10 Intrepid:     ami-c0f615a9
+# Ubuntu 8.04 Hardy:        ami-c4f615ad
+# Ubuntu 8.04 Hardy:        ami-71fd1a18  See http://developer.amazonwebservices.com/connect/entry.jspa?externalID=1427 
+
+# ec2-run-instances ami-71fd1a18 -k ec2-keypair && describe_instance
+ec2-run-instances ami-ccf615a5 -k ec2-keypair && describe_instance
