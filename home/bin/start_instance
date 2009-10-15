@@ -1,0 +1,1 @@
+ec2-run-instances ami-71fd1a18 -k ec2-keypair && describe_instance

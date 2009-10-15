@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+
+#RESERVATION     r-9b08ebf3      616986057442    default
+#INSTANCE        i-ffe85d97      ami-71fd1a18    ec2-67-202-26-45.compute-1.amazonaws.com        domU-12-31-39-07-60-43.compute-1.internal       shutting-down     ec2-keypair     0               m1.small        2009-10-13T12:22:52+0000        us-east-1a      aki-a71cf9ce    ari-a51cf9cc     monitoring-disabled      67.202.26.45    10.209.99.177
+
+instance = domain_name = nil
+
+while not (instance and domain_name)
+  result = `ec2-describe-instances`
+  puts result
+  
+  if result =~ /INSTANCE\s+(i-\w+)\s+[^\s]+\s+(ec2[^\s]+\.com)\s+/
+    instance = $1
+    domain_name = $2
+    break
+  end
+  
+  sleep 3
+end
+
+File.open("#{ENV['HOME']}/bin/ami_instance", "w") do |f|
+  f.print "#!/bin/bash\necho #{instance}\n"
+end
+
+File.open("#{ENV['HOME']}/bin/ami_host", "w") do |f|
+  f.print "#!/bin/bash\necho #{domain_name}\n"
+end

@@ -1,0 +1,1 @@
+ec2-terminate-instances `ami_instance`
