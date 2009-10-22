@@ -1,0 +1,19 @@
+#!/usr/bin/env ruby
+
+if ARGV.size == 0
+  puts <<-USAGE
+Usage: 
+  #{__FILE__} <filename_prefix>
+  USAGE
+  exit 1
+end
+
+filename_prefix = ARGV[0]
+
+1.upto 100 do |i|
+  file = "#{filename_prefix}-#{i}.sql"
+  break unless File.exists? file
+  cmd = "mysql --max_allowed_packet=64M -u root --password=#{`msp`.strip} bbs < #{file}"
+  puts cmd
+  `#{cmd}`
+end
