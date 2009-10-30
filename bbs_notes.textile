@@ -1,0 +1,118 @@
+h2. Deploy local bbs to remote
+
+Components: ucenter, bbs
+
+Local: 
+  Export data from mysql
+  Compress and upload sql and files
+Remote: 
+  Import data into mysql
+  Decompress
+  Create apache config
+  Update config.inc.php
+
+h2. Customize it to support SGF attachments and show games
+
+h3. show games
+
+viewthread.php 497
+	// CAO
+	$extrahead = '<link rel="stylesheet" href="/jsgameviewer/build/compressed.css"/><script language="JavaScript" type="text/javascript" src="/jsgameviewer/js/jquery-1.3.2.min.js"></script><script language="JavaScript" type="text/javascript" src="/jsgameviewer/build/compressed.js"></script>';
+
+Modify discuz code [sgf] (界面 » 编辑器设置)
+<script language='JavaScript'>new jsGameViewer.GameController().load('{1}');</script>
+
+h3. support SGF attachments
+
+attachment.php
+
+templates/default/discuzcode.htm
+From
+	<!--{if !isset($attach['unpayed'])}-->
+To
+  <!--{if strstr(strtolower($attach['filename']), '.sgf') !== FALSE}-->
+	<p><a href="/bbs/attachment.php?aid=$aidencode">&#19979;&#36733;&#26827;&#35889;</a></p>
+  	<script language='JavaScript'>new jsGameViewer.GameController().load('/bbs/attachment.php?aid=$aidencode');</script>
+	<!--{elseif !isset($attach['unpayed'])}-->
+
+h3. Rename register.php to avoid spam
+
+h2. Upgrade forum from Discuz 6.0 to 7.1
+
+Download UCenter 1.5.0 SC UTF8 (SC = Simplified Chinese)
+Unzip, copy upload to /public_html, rename to ucenter
+Change owner to _www (or whichever user that apache runs as)
+(If already installed, recreate database and remove ucenter/data/install.lock)
+Install with database=ucenter, write down creator's password
+
+Download Discuz 7.1 SC UTF8
+Unzip, copy upload to /public_html, rename to bbs
+(If already installed, recreate database and remove bbs/forumdata/install.lock)
+Install with database=bbs, table prefix: discuz
+
+Download data from daoqigame.com (export from admin control panel, in UTF)
+In mysql
+  drop database bbs;
+  create database bbs;
+Load data (restore_db prefix_for_sql_files)
+
+Upgrade data
+/bbs/upgrade10.php    (6.0 -> 6.1)
+/bbs/upgrade11.php    (6.1 -> 7.0)
+  Comment out code that check Discuz code version == 7.0
+/bbs/upgrade12.php    (7.0 -> 7.1)
+
+Copy avatars from daoqigame.com
+Copy attachments from daoqigme.com
+
+Problem: attachments does not display
+http://www.discuz.net/thread-1422498-1-1.html - does not work
+
+h3. Consolidated repetitive steps
+
+echo drop database ucenter | mysql1
+echo drop database bbs | mysql1
+cd ~/Sites/ucenter
+rm data/install.lock
+Install ucenter ->  http://localhost/ucenter/install/index.php
+cd ~/Sites/bbs
+rm forumdata/install.lock
+Install Discuz  ->  http://localhost/bbs/install/index.php
+echo drop database bbs | mysql1
+echo create database bbs | mysql1
+cd ~/proj/forum/backup/backup_1022
+restore_db 091022_test
+Upgrade from 6.0 to 6.1  ->  http://localhost/bbs/upgrade10.php
+  (Choose merge users on second screen)
+Upgrade from 6.1 to 7.0  ->  http://localhost/bbs/upgrade11.php
+Upgrade from 7.0 to 7.1  ->  http://localhost/bbs/upgrade12.php
+Verify forums, posts and attachments
+
+h2. TODO
+
+h3. Setup local copy
+
+* Import data
+* Copy attachments and gravatars
+* Styles
+
+h3. Deploy
+
+h3. Domain change (necessary?)
+
+
+h2. MISC
+
+find . | egrep 'htm|php' | xargs ls -l | grep -v 'Oct 15  2007' 
+
+find *.php templates/default include | egrep 'htm|php' | xargs ls -l | grep -v 'Oct 15  2007'  | cut -c 52- | xargs mate
+
+h3. Backup bbs code (TODO: copy all except images, avatars and attachments)
+
+cd && rm -rf code
+mkdir -p code/include code/templates/default
+cd /data/apps/bbs/current
+find *.php templates/default include/*.php | egrep 'htm|php' | xargs ls -l | grep -v 'Oct 15  2007'  | cut -c 52- | xargs -I % cp -R % ~/code/%
+cd && tar czf code.tgz code
+
+h3. Backup bbs images and attachments
