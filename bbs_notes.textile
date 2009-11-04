@@ -116,3 +116,7 @@ find *.php templates/default include/*.php | egrep 'htm|php' | xargs ls -l | gre
 cd && tar czf code.tgz code
 
 h3. Backup bbs images and attachments
+
+Avatars conversion:
+
+http://faq.comsenz.com/viewnews-825
