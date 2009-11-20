@@ -50,6 +50,7 @@ alias gocool='cd ~/proj/gocool'
 alias jsgv='cd ~/proj/jsgameviewer'
 alias sgf='cd ~/proj/sgf_parser'
 alias chef='cd ~/proj/chef'
+alias bbs='cd ~/proj/bbs'
 alias validanguage='cd ~/proj/validanguage'
 alias textmate_bundles='cd ~/Library/Application\ Support/TextMate/Bundles'
 
