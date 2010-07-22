@@ -1,0 +1,12 @@
+# Screen configuration 
+ 
+# Statusbar 
+hardstatus off 
+hardstatus alwayslastline 
+hardstatus string "%{.bW}%-w%{.rW}%n %t%{-}%+w %=%{..G} %H %{..Y} %d/%m %C%a" 
+ 
+# Scrolling in xterms 
+termcapinfo xterm|xterms|xs|rxvt ti@:te@ 
+ 
+# Miscellaneous 
+startup_message off 

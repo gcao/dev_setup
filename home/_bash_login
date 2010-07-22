@@ -1,4 +1,4 @@
-export PATH=bin:$HOME/bin:~/.rvm/bin:/opt/local/bin:/opt/local/sbin:$PATH
+export PATH=bin:$HOME/bin:/opt/local/bin:/opt/local/sbin:$PATH
 
 set -o emacs
 
@@ -30,7 +30,6 @@ alias h="history"
 alias hgrep="history | grep"
 alias hi='hijack'
 alias pg='ps aux | grep'
-alias tail="tail -200f"
 alias vi='vim'
 alias sb="sudo bash"
 alias sm="sudo mate"
@@ -40,6 +39,7 @@ alias ll="ls -l"
 alias k9="kill -9"
 alias more='less'
 alias quit='exit'
+alias rake='rake -rubygems -r rakegrowl'
 
 alias goami='ssh root@`ami_host`'
 
@@ -72,7 +72,6 @@ pkill() {
 }
 
 # Ruby Version Manager
-if [ -f ~/.rvm/bin/rvm ] ; then source ~/.rvm/bin/rvm ; fi
-if [ -f ~/.rvm/current ] ; then source ~/.rvm/current ; fi
+if [[ -s "$HOME/.rvm/scripts/rvm" ]]  ; then source "$HOME/.rvm/scripts/rvm" ; fi
 
 # test -r .bash_login.private && . .bash_login.private

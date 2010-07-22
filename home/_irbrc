@@ -1,6 +1,8 @@
 require 'rubygems'
 require 'pp'
-  
+
+alias :r, :reload!
+
 begin 
   require 'wirble'
   Wirble.init
