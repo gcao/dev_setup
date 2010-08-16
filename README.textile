@@ -1,6 +1,35 @@
+== Prerequisite
+
+* Git
+* This project is checked out into ~/proj/dev_setup
+
+== Shell
+
+ln -s ~/proj/dev_setup/home/bin
+ln -s ~/proj/dev_setup/home/_bash_login .bash_login
+
+== Ruby environment
+
+* Install ruby
+* Install rvm
+* Add rvm settings to ~/.bash_profile
+* Add 'rvm default' to ~/.bash_profile to use default ruby from rvm
+
+== Stuff needed for gocool, jsgameviewer etc.
+
 gem install passenger
 passenger-install-apache2-module
 gem install imagesize
 cd ~/Downloads/ImageMagick-6.5.5-8
 ./configure; make; make install
 gem install rmagick
+
+== Notes on connecting to a remote server
+
+* ssh-copy-id.sh SERVER
+* create and modify ~/.bash_profile to add appropriate paths etc
+* create ~/.screenrc with default session name etc
+
+== TODO
+
+Create a shell script to automate some of above steps
