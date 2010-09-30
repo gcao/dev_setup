@@ -1,0 +1,60 @@
+#!/usr/bin/env ruby
+# Register AMI
+# $ ec2-register primary_server_backup/monday.manifest.xml
+# IMAGE ami-xxxxxxxx
+# 
+# Start instance
+# $ ec2-run-instances -k ec2-keypair ami-xxxxxxxx
+# 
+# $ ec2-deregister ami-xxxxxxxx
+# 
+# $ ec2-describe-instances
+# 
+# Assocaite the elastic IP to this new instance when the new instance is verified thoroughly
+# 
+# $ ec2-associate-address IP -i INSTANCE
+# 
+# Terminate the old instance
+# 
+# $ ec2-terminate-instances OLD_INSTANCE
+
+def run cmd
+  puts "\n$ #{cmd}\n"
+  result = `#{cmd}`
+  puts result
+  result
+end
+
+# yesterday = %w(sunday monday tuesday wednesday thursday friday saturday)[Time.new.wday - 1]
+# 
+# ami = run("ec2-register primary_server_backup/#{yesterday}.manifest.xml").scan(/ami-[a-z0-9]+/).first
+# exit "Register AMI from backup failed!" if ami.nil?
+# 
+# run "ec2-run-instances -k ec2-keypair #{ami}"
+# run "ec2-deregister #{ami}"
+
+ami = "ami-7a5aaf13"
+
+instance = nil
+
+while instance.nil?
+  lines = run("ec2-describe-instances").split("\n")
+  lines.each do |line|
+    fields = line.split
+    if fields[2] == ami and fields[3] != "pending"
+      instance = fields[3]
+    end
+  end
+  sleep 15 if instance.nil?
+end
+
+puts "\nNew Instance: #{instance}"
+
+# Save instance to ~/bin/new_instance
+new_instance_file = "#{ENV['HOME']}/bin/new_instance"
+File.open(new_instance_file, "w") do |f|
+  f.print "#!/bin/bash\n"
+  f.print "echo #{instance}\n"
+end
+
+`chmod +x #{new_instance_file}`

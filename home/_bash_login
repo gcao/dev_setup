@@ -1,5 +1,12 @@
 export PATH=bin:$HOME/bin:/opt/local/bin:/opt/local/sbin:$PATH
 
+# Amazon Tools Setup
+export EC2_HOME=~/tools/ec2-api-tools
+export PATH=$PATH:$EC2_HOME/bin
+export EC2_PRIVATE_KEY=~/.ec2/pk.pem
+export EC2_CERT=~/.ec2/cert.pem
+ssh-add ~/.ssh/ec2-keypair
+
 set -o emacs
 
 export EDITOR='mate -w'
