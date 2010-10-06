@@ -25,6 +25,8 @@ def run cmd
   result
 end
 
+ami = "ami-7a5aaf13"
+
 # yesterday = %w(sunday monday tuesday wednesday thursday friday saturday)[Time.new.wday - 1]
 # 
 # ami = run("ec2-register primary_server_backup/#{yesterday}.manifest.xml").scan(/ami-[a-z0-9]+/).first
@@ -32,8 +34,6 @@ end
 # 
 # run "ec2-run-instances -k ec2-keypair #{ami}"
 # run "ec2-deregister #{ami}"
-
-ami = "ami-7a5aaf13"
 
 instance = nil
 
