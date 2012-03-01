@@ -1,0 +1,20 @@
+set nocompatible               " be iMproved
+filetype off                   " required!
+
+set rtp+=~/.vim/vundle.git/ 
+call vundle#rc()
+
+" My Bundles here:
+"
+" original repos on github
+"Bundle 'user/project'
+
+" vim-scripts repos
+"Bundle 'name'
+"Bundle 'vimsh.tar.gz'
+
+" non github repos
+"Bundle 'git://git.abc.com/project.git'
+
+filetype plugin indent on     " required!
+

@@ -1,4 +1,4 @@
-export PATH=bin:$HOME/bin:/opt/local/bin:/opt/local/sbin:$PATH
+export PATH=bin:$HOME/bin:/opt/local/bin:/opt/local/sbin:$PATH:$HOME/tools/mongodb-2.0/bin
 
 # Amazon Tools Setup
 export EC2_HOME=~/tools/ec2-api-tools
@@ -6,10 +6,13 @@ export PATH=$PATH:$EC2_HOME/bin
 export EC2_PRIVATE_KEY=~/.ec2/pk.pem
 export EC2_CERT=~/.ec2/cert.pem
 ssh-add ~/.ssh/ec2-keypair
+ssh-add ~/.ssh/ec2-tokyo
 
-set -o emacs
+set -o vi
 
+#export MYTTY=`tty`
 export EDITOR='mate -w'
+#export EDITOR="$HOME/bin/myvi"
 export GREP_OPTIONS='--color=auto'
 export JAVA_HOME="/Library/Java/Home"
 export PS1='${LOGNAME} \w>'
@@ -22,7 +25,8 @@ export EC2_PRIVATE_KEY=~/.ec2/pk.pem
 export EC2_CERT=~/.ec2/cert.pem
 
 alias ri='ri -Tf ansi'
-alias r='rake'
+#alias r='rake'
+unalias r
 alias rt="rake -T"
 alias ss='./script/server'
 alias sc='./script/console'
@@ -46,7 +50,7 @@ alias ll="ls -l"
 alias k9="kill -9"
 alias more='less'
 alias quit='exit'
-alias rake='rake -rubygems -r rakegrowl'
+alias rake='rake -rubygems'
 
 alias goami='ssh root@`ami_host`'
 
@@ -82,3 +86,9 @@ pkill() {
 if [[ -s "$HOME/.rvm/scripts/rvm" ]]  ; then source "$HOME/.rvm/scripts/rvm" ; fi
 
 # test -r .bash_login.private && . .bash_login.private
+
+export TOMCAT_HOME=$HOME/tools/apache-tomcat-7.0.21
+export ORACLE_HOME=/usr/local/oracle/instantclient_10_2
+export PATH=$ORACLE_HOME:$PATH
+export LD_LIBRARY_PATH=$ORACLE_HOME:$LD_LIBRARY_PATH
+

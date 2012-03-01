@@ -1,0 +1,5 @@
+" Run below command to set up vim
+" curl https://github.com/spf13/spf13-vim/raw/master/bootstrap.sh -o - | sh
+" ln -s ~/proj/dev_setup/home/_vimrc_local ~/.vimrc.local
+
+color molokai
