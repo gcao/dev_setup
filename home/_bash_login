@@ -1,4 +1,4 @@
-export PATH=bin:$HOME/bin:/opt/local/bin:/opt/local/sbin:$PATH:$HOME/tools/mongodb-2.0/bin
+export PATH=bin:$HOME/bin:/usr/local/Cellar/python/2.7.1/bin:/opt/local/bin:/opt/local/sbin:$PATH:$HOME/tools/mongodb-2.0/bin
 
 # Amazon Tools Setup
 export EC2_HOME=~/tools/ec2-api-tools
@@ -6,11 +6,12 @@ export PATH=$PATH:$EC2_HOME/bin
 export EC2_PRIVATE_KEY=~/.ec2/pk.pem
 export EC2_CERT=~/.ec2/cert.pem
 ssh-add ~/.ssh/ec2-keypair
-ssh-add ~/.ssh/ec2-tokyo
+#ssh-add ~/.ssh/ec2-tokyo
 
 set -o vi
 
-#export MYTTY=`tty`
+export HISTCONTROL=ignoreboth
+
 export EDITOR='mate -w'
 #export EDITOR="$HOME/bin/myvi"
 export GREP_OPTIONS='--color=auto'
@@ -92,3 +93,5 @@ export ORACLE_HOME=/usr/local/oracle/instantclient_10_2
 export PATH=$ORACLE_HOME:$PATH
 export LD_LIBRARY_PATH=$ORACLE_HOME:$LD_LIBRARY_PATH
 
+# Required by byobu
+export BYOBU_PREFIX=`brew --prefix`

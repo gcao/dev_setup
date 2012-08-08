@@ -1,5 +1,154 @@
 " Run below command to set up vim
-" curl https://github.com/spf13/spf13-vim/raw/master/bootstrap.sh -o - | sh
+" curl http://j.mp/spf13-vim3 -L -o - | sh
 " ln -s ~/proj/dev_setup/home/_vimrc_local ~/.vimrc.local
 
-color molokai
+"color molokai
+color tolerable
+
+set nospell
+set nopaste
+" http://stackoverflow.com/questions/2861627/vim-paste-in-insert-mode
+" http://vim.wikia.com/wiki/Toggle_auto-indenting_for_code_paste
+set pastetoggle=<F2>
+set wrap
+set hidden  " Don't prompt to save buffer when changing to another buffer
+set expandtab  "Use :retab to replace tabs with spaces
+set shiftwidth=2
+set tabstop=2
+set autoindent
+set nosmartindent " See http://vim.wikia.com/wiki/Indenting_source_code
+set smarttab
+set clipboard=unnamed " Default to copy to system clipboard
+set nolist " Hide invisible charasters
+set listchars=tab:,.,trail:.,extends:#,nbsp:. " Highlight problematic whitespace
+
+let mapleader=","
+
+" Functions: http://www.ibm.com/developerworks/linux/library/l-vim-script-2/index.html
+
+" The Smash Escape
+" http://vimbits.com/bits/180
+inoremap jk <Esc>
+inoremap kj <Esc>
+
+nnoremap /    /\v
+nnoremap //   /\vxzz<CR>
+
+nnoremap <Leader>k :Ack<Space>
+
+" Ctrl+A to select all
+nnoremap <C-A> ggVGy
+" Ctrl+I to delete all
+nnoremap <C-I> gg1000d<CR>i
+
+" Disable arrow keys - based on recommendations on http://blog.sanctum.geek.nz/vim-anti-patterns/
+nnoremap <Up> <nop>
+nnoremap <Down> <nop>
+nnoremap <Left> <nop>
+nnoremap <Right> <nop>
+
+" http://vimbits.com/bits/25
+" Improve up/down movement on wrapped lines
+"nnoremap j gj
+"nnoremap k gk
+
+" Use mm and `` to set mark quickly
+nnoremap `` `m
+
+" http://vimbits.com/bits/11
+" Make Y behave like other capitals
+nnoremap Y y$
+
+" http://stackoverflow.com/questions/7163947/vim-paste-multiple-times
+" 'p' to paste, 'gv' to re-select what was originally selected. 'y' to copy it again.
+xnoremap p pgvy
+
+nnoremap cc xi
+
+"nmap ;  :    " This is already defined
+nnoremap <Leader><Space> :map<Space>
+
+nnoremap <Leader>f :CommandTFlush<CR>
+
+nnoremap <Leader>el :e ~/.vimrc.local<CR>
+nnoremap <Leader>sl :so ~/.vimrc.local<CR>
+
+" http://vimbits.com/bits/128
+" automatically reload vimrc when it's saved
+au BufWritePost .vimrc so ~/.vimrc
+au BufWritePost .vimrc.local so ~/.vimrc.local
+
+nnoremap <Leader>ee :NERDTreeToggle<CR><C-w>j
+nnoremap <Leader>mb <Plug>MiniBufExplorer<CR><C-w>j
+
+nnoremap <Leader>tt :TagbarToggle<CR><C-w>l
+
+" Use qq to record a quick macro and @@ to replay it
+nnoremap @@ @q
+
+" http://vim.wikia.com/wiki/Set_working_directory_to_the_current_file
+"autocmd BufEnter * silent! lcd %:p:h
+
+" Remove trailing spaces
+nnoremap <Leader>spa :%s/\v\s+$<CR>
+
+" Wrap word with "
+nnoremap <Leader>" i"<ESC>wwi"<ESC>
+" Wrap word with '
+nnoremap <Leader>' i'<ESC>wwi'<ESC>
+
+" Map ,XXX to go to buffer XXX
+nnoremap <Leader>0 :10b<CR>
+
+for i in range(1,400)
+  execute "nnoremap <Leader>".i." :".i."b<CR>"
+endfor
+
+nnoremap <Leader><Leader>0 :10b<CR>
+for i in range(1,9)
+  execute "nnoremap <Leader><Leader>".i." :".i."b<CR>"
+endfor
+
+"ruby <<EOF
+"1.upto 400 do |i|
+"  VIM.command "nnoremap <Leader>#{i} :#{i}b<CR>"
+"end
+"EOF
+
+"nnoremap <Leader>, :bp<CR>
+nnoremap H :bp<CR>
+"nnoremap <Leader>. :bn<CR>
+nnoremap L :bn<CR>
+nnoremap <Leader>x :bd<CR>
+
+nnoremap <c-p> :CtrlPBuffer<CR>
+
+" Conque http://code.google.com/p/conque/wiki/Usage
+let g:ConqueTerm_FastMode = 1
+let g:ConqueTerm_InsertOnEnter = 1
+let g:ConqueTerm_CWInsert = 1
+
+" CtrlP: do not manage working directory
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_cmd = 'CtrlPBuffer' " Search in Files, Buffers and MRU files at the same time.
+
+" Remove auto close for " because it causes problem when editting vim files
+iunmap <tab>
+
+nnoremap <Leader>r :!ruby %<CR>
+
+" vim-slime
+let g:slime_target = "tmux"
+
+" ctags
+nnoremap <leader>ct :!ctags -R app vendor lib public/javascripts/ public/stylesheets/ public/triton<CR>
+autocmd BufWritePost * if filereadable('tags') | call system('ctags -a '.expand('%')) | endif
+
+" Open tmux command buffer
+nnoremap <Leader>em :e ~/.vim-tmux<CR>
+" Map <CR> in insert mode
+"autocmd BufEnter .vim-tmux inoremap <CR> <ESC><C-c><C-c>j<S-a>
+"autocmd BufLeave .vim-tmux iunmap <CR>
+
+" Buffers
+"<C-6> to switch between current and last accessed buffer
