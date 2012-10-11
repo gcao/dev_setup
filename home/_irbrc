@@ -81,5 +81,5 @@ def ff url
 end
 
 # Below is for creating project or directory specific .irbrc
-#local_irb = File.expand_path(Dir.pwd + "/.irbrc")
-#load local_irb if local_irb != __FILE__ and File.exists? local_irb
+local_irb = File.expand_path(Dir.pwd + "/.irbrc")
+load local_irb if local_irb != __FILE__ and File.exists? local_irb

@@ -1,9 +1,12 @@
 " Run below command to set up vim
 " curl http://j.mp/spf13-vim3 -L -o - | sh
 " ln -s ~/proj/dev_setup/home/_vimrc_local ~/.vimrc.local
+" Use below command to reload vim with updated configuration
+" vim +BundleInstall! +BundleClean +q
 
 "color molokai
 color tolerable
+"color Monokai
 
 set nospell
 set nopaste
@@ -21,6 +24,8 @@ set smarttab
 set clipboard=unnamed " Default to copy to system clipboard
 set nolist " Hide invisible charasters
 set listchars=tab:,.,trail:.,extends:#,nbsp:. " Highlight problematic whitespace
+set foldmethod=syntax " :help fold
+set foldlevelstart=1
 
 let mapleader=","
 
@@ -34,7 +39,20 @@ inoremap kj <Esc>
 nnoremap /    /\v
 nnoremap //   /\vxzz<CR>
 
-nnoremap <Leader>k :Ack<Space>
+" fold open/close at cursor location
+nnoremap zz   za
+
+" /,/l1l0 to remove space before ',' but add one after ','
+nmap <Leader>a :Tabularize /
+vmap <Leader>a :Tabularize /
+nmap <Leader>a, :Tabularize /,/l0l1<CR>
+vmap <Leader>a, :Tabularize /,/l0l1<CR>
+nmap <Leader>a= :Tabularize /=<CR>
+vmap <Leader>a= :Tabularize /=<CR>
+nmap <Leader>a> :Tabularize /=><CR>
+vmap <Leader>a> :Tabularize /=><CR>
+
+nmap <Leader>k :Ack<Space>
 
 " Ctrl+A to select all
 nnoremap <C-A> ggVGy
@@ -46,6 +64,11 @@ nnoremap <Up> <nop>
 nnoremap <Down> <nop>
 nnoremap <Left> <nop>
 nnoremap <Right> <nop>
+
+nnoremap <C-J> <C-W>j
+nnoremap <C-K> <C-W>k
+nnoremap <C-H> <C-W>h
+nnoremap <C-L> <C-W>l
 
 " http://vimbits.com/bits/25
 " Improve up/down movement on wrapped lines
@@ -65,7 +88,7 @@ xnoremap p pgvy
 
 nnoremap cc xi
 
-"nmap ;  :    " This is already defined
+nmap ;  :
 nnoremap <Leader><Space> :map<Space>
 
 nnoremap <Leader>f :CommandTFlush<CR>
@@ -78,7 +101,11 @@ nnoremap <Leader>sl :so ~/.vimrc.local<CR>
 au BufWritePost .vimrc so ~/.vimrc
 au BufWritePost .vimrc.local so ~/.vimrc.local
 
+" https://github.com/scrooloose/nerdtree
+"autocmd vimenter * NERDTree
+"autocmd vimenter * if !argc() | NERDTree | endif
 nnoremap <Leader>ee :NERDTreeToggle<CR><C-w>j
+
 nnoremap <Leader>mb <Plug>MiniBufExplorer<CR><C-w>j
 
 nnoremap <Leader>tt :TagbarToggle<CR><C-w>l
@@ -100,7 +127,7 @@ nnoremap <Leader>' i'<ESC>wwi'<ESC>
 " Map ,XXX to go to buffer XXX
 nnoremap <Leader>0 :10b<CR>
 
-for i in range(1,400)
+for i in range(1,200)
   execute "nnoremap <Leader>".i." :".i."b<CR>"
 endfor
 
@@ -121,8 +148,6 @@ nnoremap H :bp<CR>
 nnoremap L :bn<CR>
 nnoremap <Leader>x :bd<CR>
 
-nnoremap <c-p> :CtrlPBuffer<CR>
-
 " Conque http://code.google.com/p/conque/wiki/Usage
 let g:ConqueTerm_FastMode = 1
 let g:ConqueTerm_InsertOnEnter = 1
@@ -131,14 +156,21 @@ let g:ConqueTerm_CWInsert = 1
 " CtrlP: do not manage working directory
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_cmd = 'CtrlPBuffer' " Search in Files, Buffers and MRU files at the same time.
+let g:ctrlp_max_history = 50
+let g:ctrlp_mruf_max = 50
+nnoremap <c-p> :CtrlPBuffer<CR>
 
 " Remove auto close for " because it causes problem when editting vim files
+"iunmap "
+
+" <tab> was mapped to delete file content which is annoying
 iunmap <tab>
 
 nnoremap <Leader>r :!ruby %<CR>
 
 " vim-slime
 let g:slime_target = "tmux"
+let g:slime_no_mappings="yes"
 
 " ctags
 nnoremap <leader>ct :!ctags -R app vendor lib public/javascripts/ public/stylesheets/ public/triton<CR>
@@ -152,3 +184,32 @@ nnoremap <Leader>em :e ~/.vim-tmux<CR>
 
 " Buffers
 "<C-6> to switch between current and last accessed buffer
+
+" xmllint is part of libxml2
+" http://vim.wikia.com/wiki/Format_your_xml_document_using_xmllint
+nnoremap <Leader>tidy !xmllint --format -<CR>
+vnoremap <Leader>tidy !xmllint --format -<CR>
+
+" http://code.google.com/p/conque/wiki/Usage
+nnoremap <Leader>shh :ConqueTermSplit bash -login<CR>
+nnoremap <Leader>shv :ConqueTermVSplit bash -login<CR>
+
+" http://vim.wikia.com/wiki/Maximize_window_and_return_to_previous_split_structure
+nnoremap <C-W>o :call MaximizeToggle ()<CR>
+inoremap <C-W>o :call MaximizeToggle ()<CR>
+
+function! MaximizeToggle()
+  if exists("s:maximize_session")
+    exec "source " . s:maximize_session
+    call delete(s:maximize_session)
+    unlet s:maximize_session
+    let &hidden=s:maximize_hidden_save
+    unlet s:maximize_hidden_save
+  else
+    let s:maximize_hidden_save = &hidden
+    let s:maximize_session = tempname()
+    set hidden
+    exec "mksession! " . s:maximize_session
+    only
+  endif
+endfunction

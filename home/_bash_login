@@ -1,4 +1,4 @@
-export PATH=bin:$HOME/bin:/usr/local/Cellar/python/2.7.1/bin:/opt/local/bin:/opt/local/sbin:$PATH:$HOME/tools/mongodb-2.0/bin
+export PATH=bin:$HOME/bin:/Users/gcao/tools/apache-tomcat-7.0.30/bin:/usr/local/Cellar/python/2.7.1/bin:/opt/local/bin:/opt/local/sbin:$PATH:$HOME/tools/mongodb-2.0/bin
 
 # Amazon Tools Setup
 export EC2_HOME=~/tools/ec2-api-tools
@@ -12,7 +12,8 @@ set -o vi
 
 export HISTCONTROL=ignoreboth
 
-export EDITOR='mate -w'
+#export EDITOR='mate -w'
+export EDITOR='vi -u ~/.vimrc.blank' # start vim quickly
 #export EDITOR="$HOME/bin/myvi"
 export GREP_OPTIONS='--color=auto'
 export JAVA_HOME="/Library/Java/Home"

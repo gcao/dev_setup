@@ -1,0 +1,12 @@
+"let g:spf13_bundle_groups=['general', 'programming', 'php', 'ruby', 'python', 'javascript', 'html', 'misc']
+let g:spf13_bundle_groups=['general', 'programming', 'ruby', 'javascript', 'html', 'misc']
+
+let g:spf13_no_autochdir = 1
+
+let g:rooter_patterns = ['PROTEUS_VERSION', 'Rakefile', '.git/']
+
+Bundle 'fholgado/minibufexpl.vim'
+Bundle 'wincent/Command-T'
+Bundle 'rickharris/vim-monokai'
+Bundle 'airblade/vim-rooter'
+
