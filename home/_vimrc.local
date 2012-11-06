@@ -160,6 +160,9 @@ let g:ctrlp_max_history = 50
 let g:ctrlp_mruf_max = 50
 nnoremap <c-p> :CtrlPBuffer<CR>
 
+" http://stackoverflow.com/questions/53664/how-to-effectively-work-with-multiple-files-in-vim/53702#53702
+" Ctrl+Shift+6 to switch between 2 files 
+
 " Remove auto close for " because it causes problem when editting vim files
 "iunmap "
 
@@ -173,7 +176,7 @@ let g:slime_target = "tmux"
 let g:slime_no_mappings="yes"
 
 " ctags
-nnoremap <leader>ct :!ctags -R app vendor lib public/javascripts/ public/stylesheets/ public/triton<CR>
+nnoremap <leader>ct :!/usr/local/bin/ctags -R app vendor lib public/javascripts/ public/stylesheets/ public/triton<CR>
 autocmd BufWritePost * if filereadable('tags') | call system('ctags -a '.expand('%')) | endif
 
 " Open tmux command buffer
@@ -213,3 +216,8 @@ function! MaximizeToggle()
     only
   endif
 endfunction
+
+" https://github.com/spf13/spf13-vim/issues/68
+autocmd BufNewFile,BufRead *.coffee set filetype=coffee
+unmap <tab>
+

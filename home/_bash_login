@@ -43,7 +43,6 @@ alias h="history"
 alias hgrep="history | grep"
 alias hi='hijack'
 alias pg='ps aux | grep'
-alias vi='vim'
 alias sb="sudo bash"
 alias sm="sudo mate"
 alias sv="sudo vi"
@@ -56,8 +55,6 @@ alias rake='rake -rubygems'
 
 alias goami='ssh root@`ami_host`'
 
-alias cdh='cd ~'
-alias home='cd ~'
 alias devsetup='cd ~/proj/dev_setup'
 alias gocool='cd ~/proj/gocool'
 alias jsgv='cd ~/proj/jsgameviewer'
@@ -96,3 +93,7 @@ export LD_LIBRARY_PATH=$ORACLE_HOME:$LD_LIBRARY_PATH
 
 # Required by byobu
 export BYOBU_PREFIX=`brew --prefix`
+
+IPHONEOS_BASESDK_VERSION=4.3
+IPHONE_SIMULATOR_BASESDK_VERSION=4.3
+

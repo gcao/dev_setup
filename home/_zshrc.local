@@ -1,0 +1,4 @@
+export IPHONEOS_BASESDK_VERSION=4.3
+export IPHONE_SIMULATOR_BASESDK_VERSION=4.3
+
+export PATH=bin:$PATH:$HOME/tools/android-sdk-macosx/tools
