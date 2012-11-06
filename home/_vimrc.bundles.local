@@ -10,5 +10,6 @@ Bundle 'wincent/Command-T'
 Bundle 'rickharris/vim-monokai'
 Bundle 'airblade/vim-rooter'
 Bundle 'kchmck/vim-coffee-script'
+Bundle 'vim-scripts/L9'
 Bundle 'vim-scripts/FuzzyFinder'
 
