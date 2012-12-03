@@ -69,10 +69,10 @@ nnoremap <Down> <nop>
 nnoremap <Left> <nop>
 nnoremap <Right> <nop>
 
-nnoremap <C-J> <C-W>j
-nnoremap <C-K> <C-W>k
-nnoremap <C-H> <C-W>h
-nnoremap <C-L> <C-W>l
+"nnoremap <C-J> <C-W>j
+"nnoremap <C-K> <C-W>k
+"nnoremap <C-H> <C-W>h
+"nnoremap <C-L> <C-W>l
 
 " http://vimbits.com/bits/25
 " Improve up/down movement on wrapped lines

@@ -1,5 +1,5 @@
-"let g:spf13_bundle_groups=['general', 'programming', 'php', 'ruby', 'python', 'javascript', 'html', 'misc']
-let g:spf13_bundle_groups=['general', 'programming', 'ruby', 'javascript', 'html', 'misc']
+"let g:spf13_bundle_groups=['general', 'neocomplcache', 'programming', 'php', 'ruby', 'python', 'javascript', 'html', 'misc', 'scala']
+let g:spf13_bundle_groups=['general', 'neocomplcache', 'programming', 'ruby', 'javascript', 'html', 'misc']
 
 let g:spf13_no_autochdir = 1
 
