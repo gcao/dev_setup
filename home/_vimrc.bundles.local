@@ -12,4 +12,5 @@ Bundle 'airblade/vim-rooter'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'vim-scripts/L9'
 Bundle 'vim-scripts/FuzzyFinder'
+Bundle 'altercation/vim-colors-solarized'
 

@@ -1,11 +1,15 @@
-" Run below command to set up vim
+" Run below commands to set up vim
 " curl http://j.mp/spf13-vim3 -L -o - | sh
-" ln -s ~/proj/dev_setup/home/_vimrc_local ~/.vimrc.local
+" ln -s ~/proj/dev_setup/home/_vimrc.local ~/.vimrc.local
+" ln -s ~/proj/dev_setup/home/_vimrc.bundles.local ~/.vimrc.bundles.local
 " Use below command to reload vim with updated configuration
 " vim +BundleInstall! +BundleClean +q
-
+"
+syntax enable
+set background=dark
 "color molokai
-color tolerable
+"color tolerable
+color solarized
 "color Monokai
 
 set nospell
@@ -77,6 +81,7 @@ nnoremap <C-L> <C-W>l
 
 " Use mm and `` to set mark quickly
 nnoremap `` `m
+nnoremap <Leader>` :marks<CR>
 
 " http://vimbits.com/bits/11
 " Make Y behave like other capitals
@@ -220,4 +225,7 @@ endfunction
 " https://github.com/spf13/spf13-vim/issues/68
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 unmap <tab>
+
+nnoremap <space> i <esc>l
+nnoremap <backspace> X
 

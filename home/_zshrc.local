@@ -1,3 +1,51 @@
+# Add below line to end of .zshrc
+#test -r .zshrc.local && source .zshrc.local
+
+# Overwrite prompt_context() which is used in themes
+prompt_context() {
+}
+
+# Customize to your needs...
+export PATH=$HOME/bin:$HOME/.rvm/bin:/usr/local/oracle/instantclient_10_2:bin:$HOME/tools/apache-tomcat-7.0.30/bin:/usr/local/Cellar/python/2.7.1/bin:/opt/local/bin:/opt/local/sbin:/opt/local/lib/postgresql83/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/usr/local/bin/postgres:/sw/bin:/Applications/kdiff3.app/Contents/MacOS:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:$HOME/tools/mongodb-2.0/bin
+
+# Amazon Tools Setup
+export EC2_HOME=~/tools/ec2-api-tools
+export PATH=$PATH:$EC2_HOME/bin
+export EC2_PRIVATE_KEY=~/.ec2/pk.pem
+export EC2_CERT=~/.ec2/cert.pem
+ssh-add ~/.ssh/ec2-keypair
+
+alias a="alias"
+alias diff='colordiff'
+alias h='history'
+alias hgrep="history | grep"
+alias k9="kill -9"
+alias ll='ls -l'
+alias pg='ps aux | grep'
+alias svnst='svn --ignore-externals st | egrep -v "^X"'
+alias tmux="TERM=screen-256color-bce tmux"
+alias vii='vi -c startinsert'
+
+alias ss='./script/server'
+alias sc='./script/console'
+alias dr='rake db:dev:reset'
+alias trr='rake db:test:reset'
+alias rt="rake -T"
+
+alias ui='cd ~/work/ui/src'
+alias ui16='cd ~/work/ui_r16/src/'
+alias ui20='cd ~/work/ui_r20/src/'
+
+export EDITOR='vi -c startinsert -u ~/.vimrc.blank' # start vim quickly and in insert mode
+set -o vi
+
+# http://danielmiessler.com/blog/enhancements-to-shell-and-vim-productivity
+bindkey -M viins 'jk' vi-cmd-mode
+bindkey -M viins 'kj' vi-cmd-mode
+
+export rvm_project_rvmrc=1
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
+
 export IPHONEOS_BASESDK_VERSION=4.3
 export IPHONE_SIMULATOR_BASESDK_VERSION=4.3
 
