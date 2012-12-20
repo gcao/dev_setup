@@ -1,4 +1,6 @@
 # Add the .rake extension to the existing ruby type.
 --type-add
 ruby=.rake
+--type-add
+html=.haml
 

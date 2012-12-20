@@ -3,14 +3,17 @@ let g:spf13_bundle_groups=['general', 'neocomplcache', 'programming', 'ruby', 'j
 
 let g:spf13_no_autochdir = 1
 
-let g:rooter_patterns = ['PROTEUS_VERSION', 'Rakefile', '.git/']
+let g:rooter_patterns = ['vendor/', 'PROTEUS_VERSION', 'Rakefile', '.git/']
 
-Bundle 'fholgado/minibufexpl.vim'
+"Bundle 'rosenfeld/conque-term'
+"Bundle 'fholgado/minibufexpl.vim'
 Bundle 'wincent/Command-T'
 Bundle 'rickharris/vim-monokai'
-Bundle 'airblade/vim-rooter'
+"Bundle 'airblade/vim-rooter'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'vim-scripts/L9'
 Bundle 'vim-scripts/FuzzyFinder'
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'mileszs/ack.vim'
+Bundle 'jgdavey/tslime.vim'
 

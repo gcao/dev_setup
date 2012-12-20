@@ -1,5 +1,7 @@
 # Add below line to end of .zshrc
 #test -r .zshrc.local && source .zshrc.local
+#
+setopt AUTO_CD
 
 # Overwrite prompt_context() which is used in themes
 prompt_context() {
@@ -15,6 +17,9 @@ export EC2_PRIVATE_KEY=~/.ec2/pk.pem
 export EC2_CERT=~/.ec2/cert.pem
 ssh-add ~/.ssh/ec2-keypair
 
+# http://www.commandlinefu.com/commands/view/2081/mac-os-x-change-color-of-the-ls-command
+export LSCOLORS=gxfxcxdxbxegedabagacad
+
 alias a="alias"
 alias diff='colordiff'
 alias h='history'
@@ -24,7 +29,10 @@ alias ll='ls -l'
 alias pg='ps aux | grep'
 alias svnst='svn --ignore-externals st | egrep -v "^X"'
 alias tmux="TERM=screen-256color-bce tmux"
+alias vi='GEM_HOME="" GEM_PATH="" vi'
+alias vim='GEM_HOME="" GEM_PATH="" vi'
 alias vii='vi -c startinsert'
+alias vib='vi -u $HOME/.vimrc.blank'
 
 alias ss='./script/server'
 alias sc='./script/console'
@@ -36,17 +44,24 @@ alias ui='cd ~/work/ui/src'
 alias ui16='cd ~/work/ui_r16/src/'
 alias ui20='cd ~/work/ui_r20/src/'
 
-export EDITOR='vi -c startinsert -u ~/.vimrc.blank' # start vim quickly and in insert mode
+export EDITOR='vi -c startinsert -u /Users/gcao/.vimrc.blank' # start vim quickly and in insert mode
 set -o vi
 
 # http://danielmiessler.com/blog/enhancements-to-shell-and-vim-productivity
 bindkey -M viins 'jk' vi-cmd-mode
 bindkey -M viins 'kj' vi-cmd-mode
+bindkey -v
+bindkey '^R' history-incremental-search-backward
 
 export rvm_project_rvmrc=1
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
 
-export IPHONEOS_BASESDK_VERSION=4.3
-export IPHONE_SIMULATOR_BASESDK_VERSION=4.3
-
 export PATH=bin:$PATH:$HOME/tools/android-sdk-macosx/tools
+
+export TOMCAT_HOME=$HOME/tools/apache-tomcat-7.0.30
+
+#export LD_LIBRARY_PATH="/usr/local/oracle/instantclient_10_2"
+#export DYLD_LIBRARY_PATH="/usr/local/oracle/instantclient_10_2"
+#export SQLPATH="/usr/local/oracle/instantclient_10_2"
+#export TNS_ADMIN="/usr/local/oracle/network/admin"
+

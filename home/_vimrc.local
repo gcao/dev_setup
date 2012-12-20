@@ -29,7 +29,11 @@ set clipboard=unnamed " Default to copy to system clipboard
 set nolist " Hide invisible charasters
 set listchars=tab:,.,trail:.,extends:#,nbsp:. " Highlight problematic whitespace
 set foldmethod=syntax " :help fold
-set foldlevelstart=1
+set foldlevelstart=5
+
+" http://lokaltog.github.com/powerline/overview.html#installation
+"python from powerline.ext.vim import source_plugin; source_plugin()
+"source /usr/local/lib/python2.7/site-packages/powerline/ext/vim/powerline.vim
 
 let mapleader=","
 
@@ -94,8 +98,12 @@ xnoremap p pgvy
 nnoremap cc xi
 
 nmap ;  :
+nmap !  :!
 nnoremap <Leader><Space> :map<Space>
 
+nnoremap s :CommandT<CR>
+"Force to use t to find files
+"unmap <Leader>t
 nnoremap <Leader>f :CommandTFlush<CR>
 
 nnoremap <Leader>el :e ~/.vimrc.local<CR>
@@ -106,14 +114,10 @@ nnoremap <Leader>sl :so ~/.vimrc.local<CR>
 au BufWritePost .vimrc so ~/.vimrc
 au BufWritePost .vimrc.local so ~/.vimrc.local
 
-" https://github.com/scrooloose/nerdtree
-"autocmd vimenter * NERDTree
-"autocmd vimenter * if !argc() | NERDTree | endif
-nnoremap <Leader>ee :NERDTreeToggle<CR><C-w>j
-
 nnoremap <Leader>mb <Plug>MiniBufExplorer<CR><C-w>j
 
 nnoremap <Leader>tt :TagbarToggle<CR><C-w>l
+nnoremap <Leader>t/ :TagbarToggle<CR><C-w>l/
 
 " Use qq to record a quick macro and @@ to replay it
 nnoremap @@ @q
@@ -153,17 +157,21 @@ nnoremap H :bp<CR>
 nnoremap L :bn<CR>
 nnoremap <Leader>x :bd<CR>
 
-" Conque http://code.google.com/p/conque/wiki/Usage
-let g:ConqueTerm_FastMode = 1
-let g:ConqueTerm_InsertOnEnter = 1
-let g:ConqueTerm_CWInsert = 1
+"" Conque http://code.google.com/p/conque/wiki/Usage
+"let g:ConqueTerm_FastMode = 1
+"let g:ConqueTerm_InsertOnEnter = 1
+"let g:ConqueTerm_CWInsert = 1
+"" http://code.google.com/p/conque/wiki/Usage
+"nnoremap <Leader>shh :ConqueTermSplit  zsh<CR>
+"nnoremap <Leader>shv :ConqueTermVSplit zsh<CR>
+
 
 " CtrlP: do not manage working directory
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_cmd = 'CtrlPBuffer' " Search in Files, Buffers and MRU files at the same time.
 let g:ctrlp_max_history = 50
 let g:ctrlp_mruf_max = 50
-nnoremap <c-p> :CtrlPBuffer<CR>
+"nnoremap <c-p> :CtrlPMRUFiles<CR>
 
 " http://stackoverflow.com/questions/53664/how-to-effectively-work-with-multiple-files-in-vim/53702#53702
 " Ctrl+Shift+6 to switch between 2 files 
@@ -171,23 +179,25 @@ nnoremap <c-p> :CtrlPBuffer<CR>
 " Remove auto close for " because it causes problem when editting vim files
 "iunmap "
 
-" <tab> was mapped to delete file content which is annoying
-iunmap <tab>
-
 nnoremap <Leader>r :!ruby %<CR>
 
-" vim-slime
-let g:slime_target = "tmux"
-let g:slime_no_mappings="yes"
-
 " ctags
-nnoremap <leader>ct :!/usr/local/bin/ctags -R app vendor lib public/javascripts/ public/stylesheets/ public/triton<CR>
+nnoremap <leader>ct :!/usr/local/bin/ctags -R app vendor lib public/javascripts/<CR>
 autocmd BufWritePost * if filereadable('tags') | call system('ctags -a '.expand('%')) | endif
+nnoremap <c-[> :pop<CR>
+vnoremap <c-[> :pop<CR>
+
+" https://github.com/jgdavey/tslime.vim
+vmap <C-x> <Plug>SendSelectionToTmux
+nmap <C-x> <Plug>NormalModeSendToTmux
+nmap <Leader>tmux <Plug>SetTmuxVars
+" Example for running a command in tmux
+"nmap \\ :Tmux ls<CR>
 
 " Open tmux command buffer
 nnoremap <Leader>em :e ~/.vim-tmux<CR>
 " Map <CR> in insert mode
-"autocmd BufEnter .vim-tmux inoremap <CR> <ESC><C-c><C-c>j<S-a>
+"autocmd BufEnter .vim-tmux inoremap <CR> <ESC><C-x>
 "autocmd BufLeave .vim-tmux iunmap <CR>
 
 " Buffers
@@ -197,10 +207,6 @@ nnoremap <Leader>em :e ~/.vim-tmux<CR>
 " http://vim.wikia.com/wiki/Format_your_xml_document_using_xmllint
 nnoremap <Leader>tidy !xmllint --format -<CR>
 vnoremap <Leader>tidy !xmllint --format -<CR>
-
-" http://code.google.com/p/conque/wiki/Usage
-nnoremap <Leader>shh :ConqueTermSplit bash -login<CR>
-nnoremap <Leader>shv :ConqueTermVSplit bash -login<CR>
 
 " http://vim.wikia.com/wiki/Maximize_window_and_return_to_previous_split_structure
 nnoremap <C-W>o :call MaximizeToggle ()<CR>
@@ -224,8 +230,28 @@ endfunction
 
 " https://github.com/spf13/spf13-vim/issues/68
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
+
+" <tab> was mapped to delete file content which is annoying
 unmap <tab>
+unmap <esc>
 
 nnoremap <space> i <esc>l
 nnoremap <backspace> X
+
+" http://stackoverflow.com/questions/6126871/easymotion-coloring-in-vim-with-solarized-theme
+" change the default EasyMotion shading to something more readable with Solarized
+hi link EasyMotionTarget ErrorMsg
+hi link EasyMotionShade  Comment
+
+" http://vim.wikia.com/wiki/Open_a_web-browser_with_the_URL_in_the_current_line
+function! HandleURI()
+  let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;:]*')
+  echo s:uri
+  if s:uri != ""
+    exec "!open \"" . s:uri . "\""
+  else
+    echo "No URI found in line."
+  endif
+endfunction
+map <Leader>w :call HandleURI()<CR>
 
