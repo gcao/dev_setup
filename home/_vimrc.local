@@ -30,7 +30,7 @@ set nolist " Hide invisible charasters
 set listchars=tab:,.,trail:.,extends:#,nbsp:. " Highlight problematic whitespace
 set foldmethod=syntax " :help fold
 set foldlevelstart=5
-
+ 
 " http://lokaltog.github.com/powerline/overview.html#installation
 "python from powerline.ext.vim import source_plugin; source_plugin()
 "source /usr/local/lib/python2.7/site-packages/powerline/ext/vim/powerline.vim
@@ -106,8 +106,10 @@ nnoremap s :CommandT<CR>
 "unmap <Leader>t
 nnoremap <Leader>f :CommandTFlush<CR>
 
+nnoremap <Leader>ez :e ~/.zshrc.local<CR>
+nnoremap <Leader>em :e ~/.tmux.conf<CR>
+nnoremap <Leader>ev :e ~/.vimrc.local<CR>
 nnoremap <Leader>el :e ~/.vimrc.local<CR>
-nnoremap <Leader>sl :so ~/.vimrc.local<CR>
 
 " http://vimbits.com/bits/128
 " automatically reload vimrc when it's saved
@@ -195,7 +197,7 @@ nmap <Leader>tmux <Plug>SetTmuxVars
 "nmap \\ :Tmux ls<CR>
 
 " Open tmux command buffer
-nnoremap <Leader>em :e ~/.vim-tmux<CR>
+"nnoremap <Leader>em :e ~/.vim-tmux<CR>
 " Map <CR> in insert mode
 "autocmd BufEnter .vim-tmux inoremap <CR> <ESC><C-x>
 "autocmd BufLeave .vim-tmux iunmap <CR>

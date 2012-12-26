@@ -17,3 +17,7 @@ Bundle 'altercation/vim-colors-solarized'
 Bundle 'mileszs/ack.vim'
 Bundle 'jgdavey/tslime.vim'
 
+" http://codejury.com/consolas-font-in-vim-powerline-windows/
+let g:Powerline_symbols="fancy"
+Bundle 'Lokaltog/vim-powerline'
+
