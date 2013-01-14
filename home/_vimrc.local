@@ -12,6 +12,8 @@ set background=dark
 color solarized
 "color Monokai
 
+set shell=/bin/zsh
+
 set nospell
 set nopaste
 " http://stackoverflow.com/questions/2861627/vim-paste-in-insert-mode
@@ -43,6 +45,14 @@ let mapleader=","
 " http://vimbits.com/bits/180
 inoremap jk <Esc>
 inoremap kj <Esc>
+
+"inoremap <A-h> <C-o>h
+"inoremap <A-j> <C-o>j
+"inoremap <A-k> <C-o>k
+"inoremap <A-l> <C-o>l
+"inoremap <A-w> <C-o>w
+"inoremap <A-b> <C-o>b
+"inoremap <A-e> <C-o>e
 
 nnoremap /    /\v
 nnoremap //   /\vxzz<CR>
@@ -79,9 +89,9 @@ nnoremap <Right> <nop>
 "nnoremap <C-L> <C-W>l
 
 " http://vimbits.com/bits/25
-" Improve up/down movement on wrapped lines
-"nnoremap j gj
-"nnoremap k gk
+" Use gj/gk to move in wrapped lines
+unmap j
+unmap k
 
 " Use mm and `` to set mark quickly
 nnoremap `` `m
@@ -106,10 +116,10 @@ nnoremap s :CommandT<CR>
 "unmap <Leader>t
 nnoremap <Leader>f :CommandTFlush<CR>
 
+nnoremap <Leader>eh :e ~/work/dev_contrib/firefox/ProteusIndex.html<CR>
 nnoremap <Leader>ez :e ~/.zshrc.local<CR>
 nnoremap <Leader>em :e ~/.tmux.conf<CR>
 nnoremap <Leader>ev :e ~/.vimrc.local<CR>
-nnoremap <Leader>el :e ~/.vimrc.local<CR>
 
 " http://vimbits.com/bits/128
 " automatically reload vimrc when it's saved
@@ -173,7 +183,18 @@ let g:ctrlp_working_path_mode = 0
 let g:ctrlp_cmd = 'CtrlPBuffer' " Search in Files, Buffers and MRU files at the same time.
 let g:ctrlp_max_history = 50
 let g:ctrlp_mruf_max = 50
-"nnoremap <c-p> :CtrlPMRUFiles<CR>
+
+" https://github.com/kien/ctrlp.vim/issues/280#issuecomment-8638286
+let g:ctrlp_buffer_func = { 'enter': 'MyCtrlPMappings' }
+
+func! MyCtrlPMappings()
+  nnoremap <buffer> <silent> <c-@> :call <sid>DeleteBuffer()<cr>
+endfunc
+
+func! s:DeleteBuffer()
+  exec "bd" fnamemodify(getline('.')[2:], ':p')
+  exec "norm \<F5>"
+endfunc
 
 " http://stackoverflow.com/questions/53664/how-to-effectively-work-with-multiple-files-in-vim/53702#53702
 " Ctrl+Shift+6 to switch between 2 files 
@@ -181,7 +202,7 @@ let g:ctrlp_mruf_max = 50
 " Remove auto close for " because it causes problem when editting vim files
 "iunmap "
 
-nnoremap <Leader>r :!ruby %<CR>
+nnoremap <Leader>r :!source .rvmrc; ruby %<CR>
 
 " ctags
 nnoremap <leader>ct :!/usr/local/bin/ctags -R app vendor lib public/javascripts/<CR>
@@ -190,9 +211,9 @@ nnoremap <c-[> :pop<CR>
 vnoremap <c-[> :pop<CR>
 
 " https://github.com/jgdavey/tslime.vim
-vmap <C-x> <Plug>SendSelectionToTmux
-nmap <C-x> <Plug>NormalModeSendToTmux
-nmap <Leader>tmux <Plug>SetTmuxVars
+"vmap <C-x> <Plug>SendSelectionToTmux
+"nmap <C-x> <Plug>NormalModeSendToTmux
+"nmap <Leader>tmux <Plug>SetTmuxVars
 " Example for running a command in tmux
 "nmap \\ :Tmux ls<CR>
 
@@ -256,4 +277,30 @@ function! HandleURI()
   endif
 endfunction
 map <Leader>w :call HandleURI()<CR>
+
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Run stuff after 'vim'
+function! RunInVim()
+  let s:cmd = matchstr(getline("."), 'vim \zs.*')
+  echo s:cmd
+  if s:cmd != ""
+    exec s:cmd
+  else
+    echo "No vim command found in line."
+  endif
+endfunction
+map <Leader>v :call RunInVim()<CR>
+map <C-x> :call RunInVim()<CR>
+
+" vim e +507 ~/.vimrc
+let g:indent_guides_enable_on_vim_startup = 0
+
+" http://stackoverflow.com/questions/1979520/auto-open-nerdtree-in-every-tab
+"autocmd VimEnter * NERDTree
+"autocmd VimEnter * wincmd w
+"autocmd BufEnter * NERDTreeMirror
 

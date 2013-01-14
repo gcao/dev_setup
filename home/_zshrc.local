@@ -28,6 +28,7 @@ alias k9="kill -9"
 alias ll='ls -l'
 alias pg='ps aux | grep'
 alias svnst='svn --ignore-externals st | egrep -v "^X"'
+alias svnup='svn --ignore-externals up'
 alias tmux="TERM=screen-256color-bce tmux"
 alias vi='GEM_HOME="" GEM_PATH="" vi'
 alias vim='GEM_HOME="" GEM_PATH="" vi'
