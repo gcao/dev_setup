@@ -33,6 +33,10 @@ set listchars=tab:,.,trail:.,extends:#,nbsp:. " Highlight problematic whitespace
 set foldmethod=syntax " :help fold
 set foldlevelstart=5
  
+" https://coderwall.com/p/tqns-w
+set exrc
+set secure
+
 " http://lokaltog.github.com/powerline/overview.html#installation
 "python from powerline.ext.vim import source_plugin; source_plugin()
 "source /usr/local/lib/python2.7/site-packages/powerline/ext/vim/powerline.vim
@@ -90,8 +94,10 @@ nnoremap <Right> <nop>
 
 " http://vimbits.com/bits/25
 " Use gj/gk to move in wrapped lines
-unmap j
-unmap k
+if mapcheck('j', 'n')
+  unmap j
+  unmap k
+endif
 
 " Use mm and `` to set mark quickly
 nnoremap `` `m
@@ -125,6 +131,7 @@ nnoremap <Leader>ev :e ~/.vimrc.local<CR>
 " automatically reload vimrc when it's saved
 au BufWritePost .vimrc so ~/.vimrc
 au BufWritePost .vimrc.local so ~/.vimrc.local
+au BufWritePost .vimrc.local PowerlineReloadColorscheme
 
 nnoremap <Leader>mb <Plug>MiniBufExplorer<CR><C-w>j
 
@@ -145,17 +152,17 @@ nnoremap <Leader>" i"<ESC>wwi"<ESC>
 " Wrap word with '
 nnoremap <Leader>' i'<ESC>wwi'<ESC>
 
-" Map ,XXX to go to buffer XXX
-nnoremap <Leader>0 :10b<CR>
+"" Map ,XXX to go to buffer XXX
+"nnoremap <Leader>0 :10b<CR>
 
-for i in range(1,200)
-  execute "nnoremap <Leader>".i." :".i."b<CR>"
-endfor
+"for i in range(1,200)
+"  execute "nnoremap <Leader>".i." :".i."b<CR>"
+"endfor
 
-nnoremap <Leader><Leader>0 :10b<CR>
-for i in range(1,9)
-  execute "nnoremap <Leader><Leader>".i." :".i."b<CR>"
-endfor
+"nnoremap <Leader><Leader>0 :10b<CR>
+"for i in range(1,9)
+"  execute "nnoremap <Leader><Leader>".i." :".i."b<CR>"
+"endfor
 
 "ruby <<EOF
 "1.upto 400 do |i|
@@ -168,6 +175,7 @@ nnoremap H :bp<CR>
 "nnoremap <Leader>. :bn<CR>
 nnoremap L :bn<CR>
 nnoremap <Leader>x :bd<CR>
+nnoremap <Leader>X :BD<CR>
 
 "" Conque http://code.google.com/p/conque/wiki/Usage
 "let g:ConqueTerm_FastMode = 1
@@ -176,7 +184,6 @@ nnoremap <Leader>x :bd<CR>
 "" http://code.google.com/p/conque/wiki/Usage
 "nnoremap <Leader>shh :ConqueTermSplit  zsh<CR>
 "nnoremap <Leader>shv :ConqueTermVSplit zsh<CR>
-
 
 " CtrlP: do not manage working directory
 let g:ctrlp_working_path_mode = 0
@@ -202,7 +209,8 @@ endfunc
 " Remove auto close for " because it causes problem when editting vim files
 "iunmap "
 
-nnoremap <Leader>r :!source .rvmrc; ruby %<CR>
+"nnoremap <Leader>r :![[ -s ".rvmrc" ]] && source .rvmrc; echo "ruby %\n"; ruby %<CR>
+nnoremap <Leader>r :!echo "ruby %\n"; ruby %<CR>
 
 " ctags
 nnoremap <leader>ct :!/usr/local/bin/ctags -R app vendor lib public/javascripts/<CR>
@@ -255,8 +263,12 @@ endfunction
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 
 " <tab> was mapped to delete file content which is annoying
-unmap <tab>
-unmap <esc>
+if mapcheck('<tab>', 'n')
+  unmap <tab>
+endif
+if mapcheck('<esc>', 'n')
+  unmap <esc>
+endif
 
 nnoremap <space> i <esc>l
 nnoremap <backspace> X
@@ -283,18 +295,62 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" Run stuff after 'vim'
-function! RunInVim()
-  let s:cmd = matchstr(getline("."), 'vim \zs.*')
+"function! RunThis()
+"  let s:cmd = substitute(getline("."), "^[#$\"]", "", "")
+"  echo s:cmd
+"  if s:cmd != ""
+"    let s:vimCmd = matchstr(s:cmd, 'vim \zs.*')
+"    if s:vimCmd != ""
+"      exec s:vimCmd
+"    else
+"      " Go to next line to get ready to execute next line
+"      exec "normal j"
+"      exec "!" . s:cmd
+"    endif
+"  else
+"    echo "No command found in line."
+"  endif
+"endfunction
+function! RunThis()
+  let s:cmd = substitute(getline("."), "^[#$\"]", "", "")
   echo s:cmd
   if s:cmd != ""
-    exec s:cmd
+    let s:vimCmd = matchstr(s:cmd, 'vim \zs.*')
+    if s:vimCmd != ""
+      exec s:vimCmd
+    else
+      " Go to next line to get ready to execute next line
+      exec "normal j"
+
+      ruby <<EOF
+        command = <<-APPLESCRIPT
+        tell application "iTerm" to activate
+        set the clipboard to "#{VIM.evaluate('s:cmd')}"
+        tell application "System Events"
+          tell process "iTerm"
+            keystroke "l" using {control down, shift down}
+            --keystroke "#{VIM.evaluate('s:cmd')}"
+            tell application "System Events" to keystroke "v" using command down
+            keystroke return
+            keystroke "h" using {control down, shift down}
+          end tell
+        end tell
+        APPLESCRIPT
+
+        file = '/tmp/test99.scpt'
+        File.open file, 'w' do |f|
+          f.print "osascript -e '#{command}'"
+        end
+        VIM.command "!sh #{file}"
+EOF
+    end
   else
-    echo "No vim command found in line."
+    echo "No command found in line."
   endif
 endfunction
-map <Leader>v :call RunInVim()<CR>
-map <C-x> :call RunInVim()<CR>
+map <F4>      :call RunThis()<CR>
+map <Leader>v :call RunThis()<CR>
+map <F5> :source %<CR>
 
 " vim e +507 ~/.vimrc
 let g:indent_guides_enable_on_vim_startup = 0
@@ -303,4 +359,10 @@ let g:indent_guides_enable_on_vim_startup = 0
 "autocmd VimEnter * NERDTree
 "autocmd VimEnter * wincmd w
 "autocmd BufEnter * NERDTreeMirror
-
+let NERDTreeQuitOnOpen=0
+if mapcheck('<Leader>e', 'n')
+  unmap <Leader>e
+end
+map <C-e> :NERDTreeFind<CR>
+map <F3> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
+map <F10> <C-w>o

@@ -8,7 +8,7 @@ prompt_context() {
 }
 
 # Customize to your needs...
-export PATH=$HOME/bin:$HOME/.rvm/bin:/usr/local/oracle/instantclient_10_2:bin:$HOME/tools/apache-tomcat-7.0.30/bin:/usr/local/Cellar/python/2.7.1/bin:/opt/local/bin:/opt/local/sbin:/opt/local/lib/postgresql83/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/usr/local/bin/postgres:/sw/bin:/Applications/kdiff3.app/Contents/MacOS:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:$HOME/tools/mongodb-2.0/bin
+export PATH=$HOME/bin:/usr/local/oracle/instantclient_10_2:bin:$HOME/tools/apache-tomcat-7.0.30/bin:/usr/local/Cellar/python/2.7.1/bin:/opt/local/bin:/opt/local/sbin:/opt/local/lib/postgresql83/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/usr/local/bin/postgres:/sw/bin:/Applications/kdiff3.app/Contents/MacOS:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:$HOME/tools/mongodb-2.0/bin
 
 # Amazon Tools Setup
 export EC2_HOME=~/tools/ec2-api-tools
@@ -54,8 +54,9 @@ bindkey -M viins 'kj' vi-cmd-mode
 bindkey -v
 bindkey '^R' history-incremental-search-backward
 
-export rvm_project_rvmrc=1
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
+# Moved to ~/.zshenv
+#export rvm_project_rvmrc=1
+#[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" 
 
 export PATH=bin:$PATH:$HOME/tools/android-sdk-macosx/tools
 
@@ -65,4 +66,8 @@ export TOMCAT_HOME=$HOME/tools/apache-tomcat-7.0.30
 #export DYLD_LIBRARY_PATH="/usr/local/oracle/instantclient_10_2"
 #export SQLPATH="/usr/local/oracle/instantclient_10_2"
 #export TNS_ADMIN="/usr/local/oracle/network/admin"
+
+# Node and npm setup
+#export NODE_PATH=/usr/local/lib/node
+export PATH=/usr/local/share/npm/bin:$PATH
 

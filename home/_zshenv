@@ -1,1 +1,3 @@
-source "$HOME/.rvm/scripts/rvm"
+# http://gabebw.wordpress.com/2010/08/02/rails-vim-rvm-and-a-curious-infuriating-bug/
+export rvm_project_rvmrc=1
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" 

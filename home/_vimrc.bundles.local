@@ -21,3 +21,10 @@ Bundle 'jgdavey/tslime.vim'
 let g:Powerline_symbols="fancy"
 Bundle 'Lokaltog/vim-powerline'
 
+" https://github.com/suan/vim-instant-markdown
+let g:instant_markdown_slow = 1
+Bundle 'suan/vim-instant-markdown'
+
+Bundle 'vim-scripts/bufkill.vim'
+
+Bundle 'gcao/vim-goodies'
