@@ -43,9 +43,13 @@ alias rt="rake -T"
 
 alias ui='cd ~/work/ui/src'
 alias ui16='cd ~/work/ui_r16/src/'
+alias ui19='cd ~/work/ui_r19/src/'
 alias ui20='cd ~/work/ui_r20/src/'
+alias ui21='cd ~/work/ui_r21/src/'
+alias ui22='cd ~/work/ui_r22/src/'
 
 export EDITOR='vi -c startinsert -u /Users/gcao/.vimrc.blank' # start vim quickly and in insert mode
+#export EDITOR='vi -c startinsert' # start vim in insert mode
 set -o vi
 
 # http://danielmiessler.com/blog/enhancements-to-shell-and-vim-productivity

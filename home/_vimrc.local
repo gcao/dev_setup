@@ -1,10 +1,14 @@
-" Run below commands to set up vim
+" Modeline and Notes {
+" vim: set foldmarker={,} foldlevel=0 foldmethod=marker
+" }
+
+" Run below commands to set up vim {
 " curl http://j.mp/spf13-vim3 -L -o - | sh
 " ln -s ~/proj/dev_setup/home/_vimrc.local ~/.vimrc.local
 " ln -s ~/proj/dev_setup/home/_vimrc.bundles.local ~/.vimrc.bundles.local
 " Use below command to reload vim with updated configuration
 " vim +BundleInstall! +BundleClean +q
-"
+" }
 syntax enable
 set background=dark
 "color molokai
@@ -43,36 +47,41 @@ set secure
 
 let mapleader=","
 
-" Functions: http://www.ibm.com/developerworks/linux/library/l-vim-script-2/index.html
+" functions: http://www.ibm.com/developerworks/linux/library/l-vim-script-2/index.html
 
-" The Smash Escape
-" http://vimbits.com/bits/180
-inoremap jk <Esc>
-inoremap kj <Esc>
+" The Smash Escape {
+  " http://vimbits.com/bits/180
+  inoremap jk <Esc>
+  inoremap kj <Esc>
+" }
 
-"inoremap <A-h> <C-o>h
-"inoremap <A-j> <C-o>j
-"inoremap <A-k> <C-o>k
-"inoremap <A-l> <C-o>l
-"inoremap <A-w> <C-o>w
-"inoremap <A-b> <C-o>b
-"inoremap <A-e> <C-o>e
+" Movement in Insert mode - disabled {
+  "inoremap <A-h> <C-o>h
+  "inoremap <A-j> <C-o>j
+  "inoremap <A-k> <C-o>k
+  "inoremap <A-l> <C-o>l
+  "inoremap <A-w> <C-o>w
+  "inoremap <A-b> <C-o>b
+  "inoremap <A-e> <C-o>e
+" }
 
 nnoremap /    /\v
-nnoremap //   /\vxzz<CR>
+nnoremap //   :nohlsearch<CR>
 
 " fold open/close at cursor location
 nnoremap zz   za
 
-" /,/l1l0 to remove space before ',' but add one after ','
-nmap <Leader>a :Tabularize /
-vmap <Leader>a :Tabularize /
-nmap <Leader>a, :Tabularize /,/l0l1<CR>
-vmap <Leader>a, :Tabularize /,/l0l1<CR>
-nmap <Leader>a= :Tabularize /=<CR>
-vmap <Leader>a= :Tabularize /=<CR>
-nmap <Leader>a> :Tabularize /=><CR>
-vmap <Leader>a> :Tabularize /=><CR>
+" Alignment by Tabularize {
+  " /,/l1l0 to remove space before ',' but add one after ','
+  nmap <Leader>a :Tabularize /
+  vmap <Leader>a :Tabularize /
+  nmap <Leader>a, :Tabularize /,/l0l1<CR>
+  vmap <Leader>a, :Tabularize /,/l0l1<CR>
+  nmap <Leader>a= :Tabularize /=<CR>
+  vmap <Leader>a= :Tabularize /=<CR>
+  nmap <Leader>a> :Tabularize /=><CR>
+  vmap <Leader>a> :Tabularize /=><CR>
+" }
 
 nmap <Leader>k :Ack<Space>
 
@@ -81,16 +90,13 @@ nnoremap <C-A> ggVGy
 " Ctrl+I to delete all
 nnoremap <C-I> gg1000d<CR>i
 
-" Disable arrow keys - based on recommendations on http://blog.sanctum.geek.nz/vim-anti-patterns/
-nnoremap <Up> <nop>
-nnoremap <Down> <nop>
-nnoremap <Left> <nop>
-nnoremap <Right> <nop>
-
-"nnoremap <C-J> <C-W>j
-"nnoremap <C-K> <C-W>k
-"nnoremap <C-H> <C-W>h
-"nnoremap <C-L> <C-W>l
+" Disable arrow keys {
+  " based on recommendations on http://blog.sanctum.geek.nz/vim-anti-patterns/
+  nnoremap <Up> <nop>
+  nnoremap <Down> <nop>
+  nnoremap <Left> <nop>
+  nnoremap <Right> <nop>
+" }
 
 " http://vimbits.com/bits/25
 " Use gj/gk to move in wrapped lines
@@ -117,7 +123,7 @@ nmap ;  :
 nmap !  :!
 nnoremap <Leader><Space> :map<Space>
 
-nnoremap s :CommandT<CR>
+nnoremap \ :CommandT<CR>
 "Force to use t to find files
 "unmap <Leader>t
 nnoremap <Leader>f :CommandTFlush<CR>
@@ -127,13 +133,14 @@ nnoremap <Leader>ez :e ~/.zshrc.local<CR>
 nnoremap <Leader>em :e ~/.tmux.conf<CR>
 nnoremap <Leader>ev :e ~/.vimrc.local<CR>
 
-" http://vimbits.com/bits/128
-" automatically reload vimrc when it's saved
-au BufWritePost .vimrc so ~/.vimrc
-au BufWritePost .vimrc.local so ~/.vimrc.local
-au BufWritePost .vimrc.local PowerlineReloadColorscheme
-
-nnoremap <Leader>mb <Plug>MiniBufExplorer<CR><C-w>j
+if !exists("vimrc_autocommands_loaded")
+  let vimrc_autocommands_loaded = 1
+  " http://vimbits.com/bits/128
+  " automatically reload vimrc when it's saved
+  au BufWritePost .vimrc so ~/.vimrc
+  au BufWritePost .vimrc.local so ~/.vimrc.local
+  au BufWritePost .vimrc.local PowerlineReloadColorscheme
+endif
 
 nnoremap <Leader>tt :TagbarToggle<CR><C-w>l
 nnoremap <Leader>t/ :TagbarToggle<CR><C-w>l/
@@ -152,23 +159,24 @@ nnoremap <Leader>" i"<ESC>wwi"<ESC>
 " Wrap word with '
 nnoremap <Leader>' i'<ESC>wwi'<ESC>
 
-"" Map ,XXX to go to buffer XXX
-"nnoremap <Leader>0 :10b<CR>
+" Map ,XXX to go to buffer XXX - disabled {
+  "nnoremap <Leader>0 :10b<CR>
 
-"for i in range(1,200)
-"  execute "nnoremap <Leader>".i." :".i."b<CR>"
-"endfor
+  "for i in range(1,200)
+  "  execute "nnoremap <Leader>".i." :".i."b<CR>"
+  "endfor
 
-"nnoremap <Leader><Leader>0 :10b<CR>
-"for i in range(1,9)
-"  execute "nnoremap <Leader><Leader>".i." :".i."b<CR>"
-"endfor
+  "nnoremap <Leader><Leader>0 :10b<CR>
+  "for i in range(1,9)
+  "  execute "nnoremap <Leader><Leader>".i." :".i."b<CR>"
+  "endfor
 
-"ruby <<EOF
-"1.upto 400 do |i|
-"  VIM.command "nnoremap <Leader>#{i} :#{i}b<CR>"
-"end
-"EOF
+  "ruby <<EOF
+  "1.upto 400 do |i|
+  "  VIM.command "nnoremap <Leader>#{i} :#{i}b<CR>"
+  "end
+  "EOF
+" }
 
 "nnoremap <Leader>, :bp<CR>
 nnoremap H :bp<CR>
@@ -177,31 +185,35 @@ nnoremap L :bn<CR>
 nnoremap <Leader>x :bd<CR>
 nnoremap <Leader>X :BD<CR>
 
-"" Conque http://code.google.com/p/conque/wiki/Usage
-"let g:ConqueTerm_FastMode = 1
-"let g:ConqueTerm_InsertOnEnter = 1
-"let g:ConqueTerm_CWInsert = 1
-"" http://code.google.com/p/conque/wiki/Usage
-"nnoremap <Leader>shh :ConqueTermSplit  zsh<CR>
-"nnoremap <Leader>shv :ConqueTermVSplit zsh<CR>
+" Conque - disabled {
+  " http://code.google.com/p/conque/wiki/Usage
+  "let g:ConqueTerm_FastMode = 1
+  "let g:ConqueTerm_InsertOnEnter = 1
+  "let g:ConqueTerm_CWInsert = 1
+  "" http://code.google.com/p/conque/wiki/Usage
+  "nnoremap <Leader>shh :ConqueTermSplit  zsh<CR>
+  "nnoremap <Leader>shv :ConqueTermVSplit zsh<CR>
+" }
 
-" CtrlP: do not manage working directory
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_cmd = 'CtrlPBuffer' " Search in Files, Buffers and MRU files at the same time.
-let g:ctrlp_max_history = 50
-let g:ctrlp_mruf_max = 50
+" CtrlP {
+  " do not manage working directory
+  let g:ctrlp_working_path_mode = 0
+  let g:ctrlp_cmd = 'CtrlPBuffer' " Search in Files, Buffers and MRU files at the same time.
+  let g:ctrlp_max_history = 50
+  let g:ctrlp_mruf_max = 50
 
-" https://github.com/kien/ctrlp.vim/issues/280#issuecomment-8638286
-let g:ctrlp_buffer_func = { 'enter': 'MyCtrlPMappings' }
+  " https://github.com/kien/ctrlp.vim/issues/280#issuecomment-8638286
+  let g:ctrlp_buffer_func = { 'enter': 'MyCtrlPMappings' }
 
-func! MyCtrlPMappings()
-  nnoremap <buffer> <silent> <c-@> :call <sid>DeleteBuffer()<cr>
-endfunc
+  func! MyCtrlPMappings()
+    nnoremap <buffer> <silent> <c-@> :call <sid>DeleteBuffer()<cr>
+  endfunc
 
-func! s:DeleteBuffer()
-  exec "bd" fnamemodify(getline('.')[2:], ':p')
-  exec "norm \<F5>"
-endfunc
+  func! s:DeleteBuffer()
+    exec "bd" fnamemodify(getline('.')[2:], ':p')
+    exec "norm \<F5>"
+  endfunc
+" }
 
 " http://stackoverflow.com/questions/53664/how-to-effectively-work-with-multiple-files-in-vim/53702#53702
 " Ctrl+Shift+6 to switch between 2 files 
@@ -209,14 +221,17 @@ endfunc
 " Remove auto close for " because it causes problem when editting vim files
 "iunmap "
 
-"nnoremap <Leader>r :![[ -s ".rvmrc" ]] && source .rvmrc; echo "ruby %\n"; ruby %<CR>
 nnoremap <Leader>r :!echo "ruby %\n"; ruby %<CR>
 
-" ctags
-nnoremap <leader>ct :!/usr/local/bin/ctags -R app vendor lib public/javascripts/<CR>
-autocmd BufWritePost * if filereadable('tags') | call system('ctags -a '.expand('%')) | endif
-nnoremap <c-[> :pop<CR>
-vnoremap <c-[> :pop<CR>
+" ctags {
+  nnoremap <leader>ct :!/usr/local/bin/ctags -R app vendor lib public/javascripts/<CR>
+  if !("coffeescript_autocmd_loaded")
+    let coffeescript_autocmd_loaded = 1
+    autocmd BufWritePost * if filereadable('tags') | call system('ctags -a '.expand('%')) | endif
+  endif
+  nnoremap <c-[> :pop<CR>
+  vnoremap <c-[> :pop<CR>
+" }
 
 " https://github.com/jgdavey/tslime.vim
 "vmap <C-x> <Plug>SendSelectionToTmux
@@ -239,25 +254,27 @@ vnoremap <c-[> :pop<CR>
 nnoremap <Leader>tidy !xmllint --format -<CR>
 vnoremap <Leader>tidy !xmllint --format -<CR>
 
-" http://vim.wikia.com/wiki/Maximize_window_and_return_to_previous_split_structure
-nnoremap <C-W>o :call MaximizeToggle ()<CR>
-inoremap <C-W>o :call MaximizeToggle ()<CR>
+" Maximize buffer {
+  " http://vim.wikia.com/wiki/Maximize_window_and_return_to_previous_split_structure
+  nnoremap <C-W>o :call MaximizeToggle ()<CR>
+  inoremap <C-W>o :call MaximizeToggle ()<CR>
 
-function! MaximizeToggle()
-  if exists("s:maximize_session")
-    exec "source " . s:maximize_session
-    call delete(s:maximize_session)
-    unlet s:maximize_session
-    let &hidden=s:maximize_hidden_save
-    unlet s:maximize_hidden_save
-  else
-    let s:maximize_hidden_save = &hidden
-    let s:maximize_session = tempname()
-    set hidden
-    exec "mksession! " . s:maximize_session
-    only
-  endif
-endfunction
+  function! MaximizeToggle()
+    if exists("s:maximize_session")
+      exec "source " . s:maximize_session
+      call delete(s:maximize_session)
+      unlet s:maximize_session
+      let &hidden=s:maximize_hidden_save
+      unlet s:maximize_hidden_save
+    else
+      let s:maximize_hidden_save = &hidden
+      let s:maximize_session = tempname()
+      set hidden
+      exec "mksession! " . s:maximize_session
+      only
+    endif
+  endfunction
+" }
 
 " https://github.com/spf13/spf13-vim/issues/68
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
@@ -278,91 +295,97 @@ nnoremap <backspace> X
 hi link EasyMotionTarget ErrorMsg
 hi link EasyMotionShade  Comment
 
-" http://vim.wikia.com/wiki/Open_a_web-browser_with_the_URL_in_the_current_line
-function! HandleURI()
-  let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;:]*')
-  echo s:uri
-  if s:uri != ""
-    exec "!open \"" . s:uri . "\""
-  else
-    echo "No URI found in line."
-  endif
-endfunction
-map <Leader>w :call HandleURI()<CR>
+" Open URL in browser {
+  " http://vim.wikia.com/wiki/Open_a_web-browser_with_the_URL_in_the_current_line
+  function! HandleURI()
+    let s:uri = matchstr(getline("."), '[a-z]*:\/\/[^ >,;:]*')
+    echo s:uri
+    if s:uri != ""
+      exec "!open \"" . s:uri . "\""
+    else
+      echo "No URI found in line."
+    endif
+  endfunction
+  map <Leader>w :call HandleURI()<CR>
+" }
 
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-"function! RunThis()
-"  let s:cmd = substitute(getline("."), "^[#$\"]", "", "")
-"  echo s:cmd
-"  if s:cmd != ""
-"    let s:vimCmd = matchstr(s:cmd, 'vim \zs.*')
-"    if s:vimCmd != ""
-"      exec s:vimCmd
-"    else
-"      " Go to next line to get ready to execute next line
-"      exec "normal j"
-"      exec "!" . s:cmd
-"    endif
-"  else
-"    echo "No command found in line."
-"  endif
-"endfunction
-function! RunThis()
-  let s:cmd = substitute(getline("."), "^[#$\"]", "", "")
-  echo s:cmd
-  if s:cmd != ""
-    let s:vimCmd = matchstr(s:cmd, 'vim \zs.*')
-    if s:vimCmd != ""
-      exec s:vimCmd
-    else
-      " Go to next line to get ready to execute next line
-      exec "normal j"
+" Run external command in file {
+  "function! RunThis()
+  "  let s:cmd = substitute(getline("."), "^[#$\"]", "", "")
+  "  echo s:cmd
+  "  if s:cmd != ""
+  "    let s:vimCmd = matchstr(s:cmd, 'vim \zs.*')
+  "    if s:vimCmd != ""
+  "      exec s:vimCmd
+  "    else
+  "      " Go to next line to get ready to execute next line
+  "      exec "normal j"
+  "      exec "!" . s:cmd
+  "    endif
+  "  else
+  "    echo "No command found in line."
+  "  endif
+  "endfunction
+  function! RunThis()
+    let s:cmd = substitute(getline("."), "^[#$\"]", "", "")
+    echo s:cmd
+    if s:cmd != ""
+      let s:vimCmd = matchstr(s:cmd, 'vim \zs.*')
+      if s:vimCmd != ""
+        exec s:vimCmd
+      else
+        " Go to next line to get ready to execute next line
+        exec "normal j"
 
-      ruby <<EOF
-        command = <<-APPLESCRIPT
-        tell application "iTerm" to activate
-        set the clipboard to "#{VIM.evaluate('s:cmd')}"
-        tell application "System Events"
-          tell process "iTerm"
-            keystroke "l" using {control down, shift down}
-            --keystroke "#{VIM.evaluate('s:cmd')}"
-            tell application "System Events" to keystroke "v" using command down
-            keystroke return
-            keystroke "h" using {control down, shift down}
+        ruby <<EOF
+          command = <<-APPLESCRIPT
+          tell application "iTerm" to activate
+          set the clipboard to "#{VIM.evaluate('s:cmd')}"
+          tell application "System Events"
+            tell process "iTerm"
+              keystroke "l" using {control down, shift down}
+              -- paste content
+              tell application "System Events" to keystroke "v" using command down
+              keystroke return
+              keystroke "h" using {control down, shift down}
+            end tell
           end tell
-        end tell
-        APPLESCRIPT
+          APPLESCRIPT
 
-        file = '/tmp/test99.scpt'
-        File.open file, 'w' do |f|
-          f.print "osascript -e '#{command}'"
-        end
-        VIM.command "!sh #{file}"
+          file = '/tmp/test99.scpt'
+          File.open file, 'w' do |f|
+            f.print "osascript -e '#{command}'"
+          end
+          VIM.command "!sh #{file}"
 EOF
-    end
-  else
-    echo "No command found in line."
-  endif
-endfunction
-map <F4>      :call RunThis()<CR>
-map <Leader>v :call RunThis()<CR>
-map <F5> :source %<CR>
+      end
+    else
+      echo "No command found in line."
+    endif
+  endfunction
+  map <F4>      :call RunThis()<CR>
+  map <Leader>v :call RunThis()<CR>
+  map <F5> :source %<CR>
+" }
 
 " vim e +507 ~/.vimrc
 let g:indent_guides_enable_on_vim_startup = 0
 
-" http://stackoverflow.com/questions/1979520/auto-open-nerdtree-in-every-tab
-"autocmd VimEnter * NERDTree
-"autocmd VimEnter * wincmd w
-"autocmd BufEnter * NERDTreeMirror
-let NERDTreeQuitOnOpen=0
-if mapcheck('<Leader>e', 'n')
-  unmap <Leader>e
-end
-map <C-e> :NERDTreeFind<CR>
-map <F3> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
-map <F10> <C-w>o
+" NERDTree {
+  " http://stackoverflow.com/questions/1979520/auto-open-nerdtree-in-every-tab
+  "autocmd VimEnter * NERDTree
+  "autocmd VimEnter * wincmd w
+  "autocmd BufEnter * NERDTreeMirror
+  let NERDTreeQuitOnOpen=0
+  if mapcheck('<Leader>e', 'n')
+    unmap <Leader>e
+  end
+  map <C-e> :NERDTreeFind<CR>
+  map <F3> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
+  map <F10> <C-w>o
+" }
