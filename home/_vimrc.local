@@ -1,5 +1,6 @@
 " Modeline and Notes {
-" vim: set foldmarker={,} foldlevel=0 foldmethod=marker
+" http://vim.wikia.com/wiki/Modeline_magic
+" vim: set foldmarker={,} foldlevel=0 foldmethod=marker :
 " }
 
 " Run below commands to set up vim {
@@ -9,6 +10,7 @@
 " Use below command to reload vim with updated configuration
 " vim +BundleInstall! +BundleClean +q
 " }
+
 syntax enable
 set background=dark
 "color molokai
@@ -66,6 +68,7 @@ let mapleader=","
 " }
 
 nnoremap /    /\v
+" // to not highlight search result
 nnoremap //   :nohlsearch<CR>
 
 " fold open/close at cursor location
@@ -100,7 +103,7 @@ nnoremap <C-I> gg1000d<CR>i
 
 " http://vimbits.com/bits/25
 " Use gj/gk to move in wrapped lines
-if mapcheck('j', 'n')
+if mapcheck('k', 'n')
   unmap j
   unmap k
 endif
@@ -124,8 +127,6 @@ nmap !  :!
 nnoremap <Leader><Space> :map<Space>
 
 nnoremap \ :CommandT<CR>
-"Force to use t to find files
-"unmap <Leader>t
 nnoremap <Leader>f :CommandTFlush<CR>
 
 nnoremap <Leader>eh :e ~/work/dev_contrib/firefox/ProteusIndex.html<CR>
@@ -215,13 +216,14 @@ nnoremap <Leader>X :BD<CR>
   endfunc
 " }
 
+" Buffers
+"<C-6> to switch between current and last accessed buffer
+
 " http://stackoverflow.com/questions/53664/how-to-effectively-work-with-multiple-files-in-vim/53702#53702
 " Ctrl+Shift+6 to switch between 2 files 
 
 " Remove auto close for " because it causes problem when editting vim files
 "iunmap "
-
-nnoremap <Leader>r :!echo "ruby %\n"; ruby %<CR>
 
 " ctags {
   nnoremap <leader>ct :!/usr/local/bin/ctags -R app vendor lib public/javascripts/<CR>
@@ -233,26 +235,27 @@ nnoremap <Leader>r :!echo "ruby %\n"; ruby %<CR>
   vnoremap <c-[> :pop<CR>
 " }
 
-" https://github.com/jgdavey/tslime.vim
-"vmap <C-x> <Plug>SendSelectionToTmux
-"nmap <C-x> <Plug>NormalModeSendToTmux
-"nmap <Leader>tmux <Plug>SetTmuxVars
-" Example for running a command in tmux
-"nmap \\ :Tmux ls<CR>
+" Tmux - disabled {
+  " https://github.com/jgdavey/tslime.vim
+  "vmap <C-x> <Plug>SendSelectionToTmux
+  "nmap <C-x> <Plug>NormalModeSendToTmux
+  "nmap <Leader>tmux <Plug>SetTmuxVars
+  " Example for running a command in tmux
+  "nmap \\ :Tmux ls<CR>
 
-" Open tmux command buffer
-"nnoremap <Leader>em :e ~/.vim-tmux<CR>
-" Map <CR> in insert mode
-"autocmd BufEnter .vim-tmux inoremap <CR> <ESC><C-x>
-"autocmd BufLeave .vim-tmux iunmap <CR>
+  " Open tmux command buffer
+  "nnoremap <Leader>em :e ~/.vim-tmux<CR>
+  " Map <CR> in insert mode
+  "autocmd BufEnter .vim-tmux inoremap <CR> <ESC><C-x>
+  "autocmd BufLeave .vim-tmux iunmap <CR>
+" }
 
-" Buffers
-"<C-6> to switch between current and last accessed buffer
-
-" xmllint is part of libxml2
-" http://vim.wikia.com/wiki/Format_your_xml_document_using_xmllint
-nnoremap <Leader>tidy !xmllint --format -<CR>
-vnoremap <Leader>tidy !xmllint --format -<CR>
+" XML/HTML formatting {
+  " xmllint is part of libxml2
+  " http://vim.wikia.com/wiki/Format_your_xml_document_using_xmllint
+  nnoremap <Leader>tidy !xmllint --format -<CR>
+  vnoremap <Leader>tidy !xmllint --format -<CR>
+" }
 
 " Maximize buffer {
   " http://vim.wikia.com/wiki/Maximize_window_and_return_to_previous_split_structure
@@ -314,7 +317,9 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" Run external command in file {
+nnoremap <Leader>r :!osascript $HOME/proj/dev_setup/home/bin/run.scpt ruby %<CR>
+
+" Run external command in current line {
   "function! RunThis()
   "  let s:cmd = substitute(getline("."), "^[#$\"]", "", "")
   "  echo s:cmd
@@ -389,3 +394,7 @@ let g:indent_guides_enable_on_vim_startup = 0
   map <F3> :NERDTreeToggle<CR>:NERDTreeMirror<CR>
   map <F10> <C-w>o
 " }
+
+" Hints:
+" ':verbose COMMAND' to show more detail of command result
+
