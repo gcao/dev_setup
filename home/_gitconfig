@@ -1,20 +1,20 @@
-[github]
-	user = gcao
-	token = 486e72be6382402976b0ef9179a433fd
 [user]
 	name = Guoliang Cao
-	email = gcao@vonage.com
+	email = gcao99@gmail.com
+[core]
+	excludesfile = /Users/gcao/.gitignore_global
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[alias]
+  st = status
+  ci = commit
+  br = branch
+  co = checkout
+  df = diff
+  lg = log -p
 [color]
 	diff = auto
-	status = auto
-	branch = auto
-[core]
-	excludesfile = /Users/gcao/.gitignore
-
-[alias]
-  ci = commit -a
-  co = checkout
-  st = status
-  br = branch
-  ba = branch -a
-  putsh = push origin master

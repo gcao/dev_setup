@@ -25,7 +25,8 @@ Bundle 'Lokaltog/vim-powerline'
 let g:instant_markdown_slow = 1
 Bundle 'suan/vim-instant-markdown'
 
+"Bundle 'airblade/vim-gitgutter'
 Bundle 'vim-scripts/bufkill.vim'
 Bundle 'goldfeld/vim-seek'
 Bundle 'gcao/vim-goodies'
-
+Bundle 'epmatsw/ag.vim'

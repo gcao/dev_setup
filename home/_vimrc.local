@@ -84,9 +84,12 @@ nnoremap zz   za
   vmap <Leader>a= :Tabularize /=<CR>
   nmap <Leader>a> :Tabularize /=><CR>
   vmap <Leader>a> :Tabularize /=><CR>
+  nmap <Leader>a<space> :Tabularize / /l0l0<CR>
+  vmap <Leader>a<space> :Tabularize / /l0l0<CR>
 " }
 
-nmap <Leader>k :Ack<Space>
+"nmap <Leader>k :Ack<Space>
+nmap <Leader>k :Ag<Space>
 
 " Ctrl+A to select all
 nnoremap <C-A> ggVGy
@@ -115,6 +118,10 @@ nnoremap <Leader>` :marks<CR>
 " http://vimbits.com/bits/11
 " Make Y behave like other capitals
 nnoremap Y y$
+
+" Reselect visual block after indent/outdent
+vnoremap < <gv
+vnoremap > >gv
 
 " http://stackoverflow.com/questions/7163947/vim-paste-multiple-times
 " 'p' to paste, 'gv' to re-select what was originally selected. 'y' to copy it again.
@@ -291,6 +298,7 @@ if mapcheck('<esc>', 'n')
 endif
 
 nnoremap <space> i <esc>l
+"nnoremap <cr> i<cr><esc>
 nnoremap <backspace> X
 
 " http://stackoverflow.com/questions/6126871/easymotion-coloring-in-vim-with-solarized-theme
@@ -317,7 +325,14 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-nnoremap <Leader>r :!osascript $HOME/proj/dev_setup/home/bin/run.scpt ruby %<CR>
+" rr=$HOME/bin/rr will move focus to the right pane of iTerm and run arguments as a
+" command in the shell
+nnoremap <Leader>r :!rr ruby %<CR>
+nnoremap <F2>      :!rr 
+nnoremap <S-F2>    :!rrr
+
+" Run this file
+nnoremap <F6>      :!%<CR>
 
 " Run external command in current line {
   "function! RunThis()
@@ -328,8 +343,6 @@ nnoremap <Leader>r :!osascript $HOME/proj/dev_setup/home/bin/run.scpt ruby %<CR>
   "    if s:vimCmd != ""
   "      exec s:vimCmd
   "    else
-  "      " Go to next line to get ready to execute next line
-  "      exec "normal j"
   "      exec "!" . s:cmd
   "    endif
   "  else
@@ -344,9 +357,6 @@ nnoremap <Leader>r :!osascript $HOME/proj/dev_setup/home/bin/run.scpt ruby %<CR>
       if s:vimCmd != ""
         exec s:vimCmd
       else
-        " Go to next line to get ready to execute next line
-        exec "normal j"
-
         ruby <<EOF
           command = <<-APPLESCRIPT
           tell application "iTerm" to activate
@@ -358,6 +368,7 @@ nnoremap <Leader>r :!osascript $HOME/proj/dev_setup/home/bin/run.scpt ruby %<CR>
               tell application "System Events" to keystroke "v" using command down
               keystroke return
               keystroke "h" using {control down, shift down}
+              keystroke return
             end tell
           end tell
           APPLESCRIPT
@@ -397,4 +408,4 @@ let g:indent_guides_enable_on_vim_startup = 0
 
 " Hints:
 " ':verbose COMMAND' to show more detail of command result
-
+" ? is search backward from end of the file, is the reverse of /.

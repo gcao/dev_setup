@@ -1,0 +1,6 @@
+#!/bin/sh
+
+#osascript $HOME/proj/dev_setup/home/bin/run.scpt $*
+$HOME/proj/dev_setup/home/bin/rr $*
+$HOME/proj/dev_setup/home/bin/iterm_rrr.applescript
+
