@@ -328,8 +328,8 @@ nnoremap <C-l> <C-w>l
 " rr=$HOME/bin/rr will move focus to the right pane of iTerm and run arguments as a
 " command in the shell
 nnoremap <Leader>r :!rr ruby %<CR>
-nnoremap <F2>      :!rr 
-nnoremap <S-F2>    :!rrr
+nnoremap <F2>      :!rr<Space>
+nnoremap <S-F2>    :!rrr<Space>
 
 " Run this file
 nnoremap <F6>      :!%<CR>

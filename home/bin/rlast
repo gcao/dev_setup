@@ -1,0 +1,14 @@
+#! /usr/bin/osascript
+
+tell application "iTerm" to activate
+tell application "System Events"
+  tell process "iTerm"
+    keystroke "l" using {control down, shift down}
+    keystroke "!!"
+    keystroke return
+    keystroke return
+    keystroke "h" using {control down, shift down}
+    keystroke return
+  end tell
+end tell
+

@@ -1,0 +1,3 @@
+#!/bin/sh
+# http://ahlamnote.blogspot.com/2007/01/find-files-by-last-modification-time.html
+touch -t "$1" /tmp/$$ && find . -newer /tmp/$$ && rm /tmp/$$

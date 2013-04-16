@@ -1,0 +1,8 @@
+# See http://mmb.pcb.ub.es/~carlesfe/unix/tricks.txt
+Host subscribe-fe-vm-01.klga1.s.vonagenetworks.net
+    ProxyCommand ssh -T prodlogin.vonagenetworks.net 'nc %h %p'
+    HostName subscribe-fe-vm-01.klga1.s.vonagenetworks.net
+
+Host subscribe-be-vm-01.klga1.s.vonagenetworks.net
+    ProxyCommand ssh -T prodlogin.vonagenetworks.net 'nc %h %p'
+    HostName subscribe-be-vm-01.klga1.s.vonagenetworks.net
