@@ -34,7 +34,12 @@ set tabstop=2
 set autoindent
 set nosmartindent " See http://vim.wikia.com/wiki/Indenting_source_code
 set smarttab
-set clipboard=unnamed " Default to copy to system clipboard
+
+" http://stackoverflow.com/questions/11404800/fix-vim-tmux-yank-paste-on-unnamed-register
+if $TMUX == ''
+  set clipboard=unnamed " Default to copy to system clipboard
+endif
+
 set nolist " Hide invisible charasters
 set listchars=tab:,.,trail:.,extends:#,nbsp:. " Highlight problematic whitespace
 set foldmethod=syntax " :help fold
@@ -89,8 +94,8 @@ nnoremap zz   za
   vmap <Leader>a<space> :Tabularize / /l0l0<CR>
 " }
 
-"nmap <Leader>k :Ack<Space>
-nmap <Leader>k :Ag<Space>
+"nnoremap <Leader>k :Ack<Space>
+nnoremap <Leader>k :Ag<Space>
 
 " Ctrl+A to select all
 nnoremap <C-A> ggVGy
@@ -105,12 +110,8 @@ nnoremap <C-I> gg1000d<CR>i
   nnoremap <Right> <nop>
 " }
 
-" http://vimbits.com/bits/25
-" Use gj/gk to move in wrapped lines
-if mapcheck('k', 'n')
-  unmap j
-  unmap k
-endif
+" unmap j/k to make relative jump work if there are line wraps
+autocmd BufEnter if mapcheck('k', 'n') | unmap j | unmap k | endif
 
 " Use mm and `` to set mark quickly
 nnoremap `` `m
@@ -130,8 +131,8 @@ xnoremap p pgvy
 
 nnoremap cc xi
 
-nmap ;  :
-nmap !  :!
+nnoremap ;  :
+nnoremap !  :!
 nnoremap <Leader><Space> :map<Space>
 
 nnoremap \ :CommandT<CR>
@@ -169,11 +170,11 @@ nnoremap <Leader>" i"<ESC>wwi"<ESC>
 nnoremap <Leader>' i'<ESC>wwi'<ESC>
 
 " Map ,XXX to go to buffer XXX - disabled {
-  "nnoremap <Leader>0 :10b<CR>
+  nnoremap <Leader>0 :10b<CR>
 
-  "for i in range(1,200)
-  "  execute "nnoremap <Leader>".i." :".i."b<CR>"
-  "endfor
+  for i in range(1,200)
+    execute "nnoremap <Leader>".i." :".i."b<CR>"
+  endfor
 
   "nnoremap <Leader><Leader>0 :10b<CR>
   "for i in range(1,9)
@@ -329,27 +330,18 @@ nnoremap <C-l> <C-w>l
 " rr=$HOME/bin/rr will move focus to the right pane of iTerm and run arguments as a
 " command in the shell
 nnoremap <Leader>r :!rr ruby %<CR>
+" http://arstechnica.com/civis/viewtopic.php?f=16&t=94386
+nnoremap <Leader>R :!rr rspec % -l <C-R>=line(".")<CR><CR>
 nnoremap <F2>      :!rr<Space>
 nnoremap <S-F2>    :!rrr<Space>
 
 " Run this file
 nnoremap <F6>      :!%<CR>
 
+" http://vimdoc.sourceforge.net/htmldoc/editing.html#CTRL-^
+"nnoremap <C-Space> :e #<CR>
+
 " Run external command in current line {
-  "function! RunThis()
-  "  let s:cmd = substitute(getline("."), "^[#$\"]", "", "")
-  "  echo s:cmd
-  "  if s:cmd != ""
-  "    let s:vimCmd = matchstr(s:cmd, 'vim \zs.*')
-  "    if s:vimCmd != ""
-  "      exec s:vimCmd
-  "    else
-  "      exec "!" . s:cmd
-  "    endif
-  "  else
-  "    echo "No command found in line."
-  "  endif
-  "endfunction
   function! RunThis()
     let s:cmd = substitute(getline("."), "^[#$\"]", "", "")
     echo s:cmd
@@ -358,28 +350,7 @@ nnoremap <F6>      :!%<CR>
       if s:vimCmd != ""
         exec s:vimCmd
       else
-        ruby <<EOF
-          command = <<-APPLESCRIPT
-          tell application "iTerm" to activate
-          set the clipboard to "#{VIM.evaluate('s:cmd')}"
-          tell application "System Events"
-            tell process "iTerm"
-              keystroke "l" using {control down, shift down}
-              -- paste content
-              tell application "System Events" to keystroke "v" using command down
-              keystroke return
-              keystroke "h" using {control down, shift down}
-              keystroke return
-            end tell
-          end tell
-          APPLESCRIPT
-
-          file = '/tmp/test99.scpt'
-          File.open file, 'w' do |f|
-            f.print "osascript -e '#{command}'"
-          end
-          VIM.command "!sh #{file}"
-EOF
+        exec '!rr "' . s:cmd . '"'
       end
     else
       echo "No command found in line."
@@ -399,6 +370,7 @@ let g:indent_guides_enable_on_vim_startup = 0
   "autocmd VimEnter * wincmd w
   "autocmd BufEnter * NERDTreeMirror
   let NERDTreeQuitOnOpen=0
+  let NERDTreeShowLineNumbers=1
   if mapcheck('<Leader>e', 'n')
     unmap <Leader>e
   end
@@ -407,6 +379,33 @@ let g:indent_guides_enable_on_vim_startup = 0
   map <F10> <C-w>o
 " }
 
+nnoremap <C-o> :e<Space>
+
+"http://vim.wikia.com/wiki/Using_command-line_history
+"nnoremap : q:dd
+nnoremap q; q:dd
+nnoremap q: q:dd
+"nnoremap / q/i
+"nnoremap ? q?i
+
+nnoremap <Leader>sd :!svn diff %<CR>
+nnoremap <Leader>gd :!git diff %<CR>
+
+if has('gui_macvim')
+  "http://vim.1045645.n5.nabble.com/Remove-scrollbar-td1216911.html
+  set guioptions-=r
+  set guioptions-=L
+  set transparency=0
+  set fullscreen
+  set guifont=Source\ Code\ Pro\ for\ Powerline:h13
+endif
+
+" https://github.com/fholgado/minibufexpl.vim
+"hi MBENormal               guifg=#606060 guibg=fg
+
 " Hints:
 " ':verbose COMMAND' to show more detail of command result
 " ? is search backward from end of the file, is the reverse of /.
+
+au BufEnter Vagrantfile setlocal syntax=ruby
+

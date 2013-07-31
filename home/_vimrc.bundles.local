@@ -27,6 +27,11 @@ Bundle 'suan/vim-instant-markdown'
 
 "Bundle 'airblade/vim-gitgutter'
 Bundle 'vim-scripts/bufkill.vim'
-Bundle 'goldfeld/vim-seek'
+"Bundle 'goldfeld/vim-seek'
 Bundle 'gcao/vim-goodies'
 Bundle 'epmatsw/ag.vim'
+"Bundle 'tpope/vim-dispatch'
+Bundle 'tpope/vim-rails'
+
+"let g:ruby_debugger_progname = 'mvim'
+"Bundle 'astashov/vim-ruby-debugger'

@@ -2,6 +2,8 @@
 #test -r .zshrc.local && source .zshrc.local
 #
 setopt AUTO_CD
+unsetopt correctall
+setopt autocd
 
 # Overwrite prompt_context() which is used in themes
 prompt_context() {
@@ -16,6 +18,7 @@ export PATH=$PATH:$EC2_HOME/bin
 export EC2_PRIVATE_KEY=~/.ec2/pk.pem
 export EC2_CERT=~/.ec2/cert.pem
 ssh-add ~/.ssh/ec2-keypair
+ssh-add ~/.ssh/newec2.pem
 
 # http://www.commandlinefu.com/commands/view/2081/mac-os-x-change-color-of-the-ls-command
 export LSCOLORS=gxfxcxdxbxegedabagacad
@@ -47,6 +50,9 @@ alias ui19='cd ~/work/ui_r19/src/'
 alias ui20='cd ~/work/ui_r20/src/'
 alias ui21='cd ~/work/ui_r21/src/'
 alias ui22='cd ~/work/ui_r22/src/'
+alias ui23='cd ~/work/ui_r23/src/'
+alias ui24='cd ~/work/ui_r24/src/'
+alias ui25='cd ~/work/ui_r25/src/'
 
 export EDITOR='vi -c startinsert -u /Users/gcao/.vimrc.blank' # start vim quickly and in insert mode
 #export EDITOR='vi -c startinsert' # start vim in insert mode
@@ -54,7 +60,9 @@ set -o vi
 
 # http://danielmiessler.com/blog/enhancements-to-shell-and-vim-productivity
 bindkey -M viins 'jk' vi-cmd-mode
+bindkey -M viins 'jj' vi-cmd-mode
 bindkey -M viins 'kj' vi-cmd-mode
+bindkey -M viins 'kk' vi-cmd-mode
 bindkey -v
 bindkey '^R' history-incremental-search-backward
 
@@ -62,10 +70,11 @@ export PATH=/usr/local/lib/python2.7/site-packages:/usr/local/share/python:$PATH
 
 # Moved to ~/.zshenv
 #export rvm_project_rvmrc=1
-#[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" 
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" 
 
 export PATH=bin:$PATH:$HOME/tools/android-sdk-macosx/tools
 
+export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home
 export TOMCAT_HOME=$HOME/tools/apache-tomcat-7.0.30
 
 #export LD_LIBRARY_PATH="/usr/local/oracle/instantclient_10_2"
@@ -76,3 +85,5 @@ export TOMCAT_HOME=$HOME/tools/apache-tomcat-7.0.30
 # Node and npm setup
 #export NODE_PATH=/usr/local/lib/node
 export PATH=/usr/local/share/npm/bin:$PATH
+
+[[ -s $HOME/tools/ansible/hacking/env-setup ]] && source $HOME/tools/ansible/hacking/env-setup -q

@@ -18,3 +18,5 @@
   lg = log -p
 [color]
 	diff = auto
+[github]
+	user = gcao
