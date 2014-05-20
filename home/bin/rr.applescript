@@ -1,7 +1,5 @@
 #! /usr/bin/osascript
 
-# TODO handle |, > etc and quoted parameters e.g. "John Doe"
-
 #keystroke (ASCII character 30) -- up arrow key
 #keystroke (ASCII character 31) -- down arrow key
 #keystroke (ASCII character 29) -- right arrow key
@@ -20,7 +18,7 @@ end joinList
 on run argv
 	set cmd to joinList(argv, " ")
 	set the clipboard to cmd
-
+	
 	tell application "iTerm" to activate
 	tell application "System Events"
 		tell process "iTerm"
@@ -40,12 +38,12 @@ on run argv
 				tell application "System Events" to keystroke "v" using command down
 				keystroke return
 			end if
-
+			
 			delay 0.2
 			#keystroke "h" using {control down, shift down}
 			keystroke "b" using {control down}
 			keystroke (ASCII character 28)
-
+			
 			keystroke return
 		end tell
 	end tell

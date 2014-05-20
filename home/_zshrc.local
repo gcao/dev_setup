@@ -2,23 +2,84 @@
 #test -r .zshrc.local && source .zshrc.local
 #
 setopt AUTO_CD
-unsetopt correctall
 setopt autocd
+unsetopt correctall
 
-# Overwrite prompt_context() which is used in themes
-prompt_context() {
+## http://stackoverflow.com/a/17915260
+#RPROMPT='[%D{%L:%M:%S %p}]'
+#TMOUT=1
+#TRAPALRM() {
+#  zle reset-prompt
+#}
+
+# http://paulgoscicki.com/archives/2012/09/vi-mode-indicator-in-zsh-prompt/
+#vim_ins_mode="%{$fg[cyan]%}INS"
+vim_ins_mode=""
+vim_cmd_mode="%{$fg[red]%}CMD %{%F{black}%}%{%K{blue}%}$SEGMENT_SEPARATOR"
+vim_mode=$vim_ins_mode
+
+function zle-keymap-select {
+  vim_mode="${${KEYMAP/vicmd/${vim_cmd_mode}}/(main|viins)/${vim_ins_mode}}"
+  zle reset-prompt
+}
+zle -N zle-keymap-select
+
+function zle-line-finish {
+  vim_mode=$vim_ins_mode
+}
+zle -N zle-line-finish
+
+# Fix a bug when you C-c in CMD mode and you'd be prompted with CMD mode indicator, while in fact you would be in INS mode
+# Fixed by catching SIGINT (C-c), set vim_mode to INS and then repropagate the SIGINT, so if anything else depends on it, we will not break it
+# Thanks Ron! (see comments)
+function TRAPINT() {
+  vim_mode=$vim_ins_mode
+  zle && zle reset-prompt
+  return $(( 128 + $1 ))
+}
+
+prompt_mode() {
+  echo -n $vim_mode
+}
+
+# Overwrite functions in agnoster.zsh-theme
+prompt_status() {
+  local symbols
+  symbols=()
+  #[[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}✘"
+  #[[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}⚡"
+  [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}⚙"
+
+  [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
+}
+
+# Comment out parts that add too much overhead between commands
+build_prompt() {
+  RETVAL=$?
+  prompt_mode
+  prompt_status
+  #prompt_virtualenv
+  #prompt_context
+  prompt_dir
+  prompt_git
+  #prompt_hg
+  prompt_end
 }
 
 # Customize to your needs...
-export PATH=$HOME/bin:/usr/local/oracle/instantclient_10_2:bin:$HOME/tools/apache-tomcat-7.0.30/bin:/usr/local/Cellar/python/2.7.1/bin:/opt/local/bin:/opt/local/sbin:/opt/local/lib/postgresql83/bin:/usr/local/bin:/usr/local/sbin:/usr/local/mysql/bin:/usr/local/bin/postgres:/sw/bin:/Applications/kdiff3.app/Contents/MacOS:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin:$HOME/tools/mongodb-2.0/bin
+export PATH=bin:~/bin:/usr/local/bin:$PATH
 
 # Amazon Tools Setup
 export EC2_HOME=~/tools/ec2-api-tools
 export PATH=$PATH:$EC2_HOME/bin
-export EC2_PRIVATE_KEY=~/.ec2/pk.pem
-export EC2_CERT=~/.ec2/cert.pem
-ssh-add ~/.ssh/ec2-keypair
-ssh-add ~/.ssh/newec2.pem
+#export EC2_PRIVATE_KEY=~/.ec2/pk.pem
+#export EC2_CERT=~/.ec2/cert.pem
+
+# Pass in manually on ssh command
+ssh-add ~/.ssh/id_rsa
+#ssh-add ~/.ssh/ec2-numi.pem
+#ssh-add ~/.ssh/nat-staging.pem
+#ssh-add ~/.ssh/webapp-staging.pem
 
 # http://www.commandlinefu.com/commands/view/2081/mac-os-x-change-color-of-the-ls-command
 export LSCOLORS=gxfxcxdxbxegedabagacad
@@ -36,23 +97,42 @@ alias tmux="TERM=screen-256color-bce tmux"
 alias vi='GEM_HOME="" GEM_PATH="" vi'
 alias vim='GEM_HOME="" GEM_PATH="" vi'
 alias vii='vi -c startinsert'
-alias vib='vi -u $HOME/.vimrc.blank'
+alias vib='vi -u ~/.vimrc.blank'
 
-alias ss='./script/server'
-alias sc='./script/console'
+alias cape='ssh capeusor@capeus.org'
+alias mountcape='sshfs capeusor@capeus.org: ~/proj/capeus'
+
+alias ss='rails s'
+alias sc='rails c'
 alias dr='rake db:dev:reset'
 alias trr='rake db:test:reset'
 alias rt="rake -T"
 
-alias ui='cd ~/work/ui/src'
-alias ui16='cd ~/work/ui_r16/src/'
-alias ui19='cd ~/work/ui_r19/src/'
-alias ui20='cd ~/work/ui_r20/src/'
-alias ui21='cd ~/work/ui_r21/src/'
-alias ui22='cd ~/work/ui_r22/src/'
-alias ui23='cd ~/work/ui_r23/src/'
-alias ui24='cd ~/work/ui_r24/src/'
-alias ui25='cd ~/work/ui_r25/src/'
+alias work='cd ~/work/'
+alias web='cd ~/work/web-app/'
+alias commerce='cd ~/work/commerce/'
+alias javaapp='cd ~/work/java-app/java-app'
+alias pipeline='cd ~/work/pipeline/'
+alias wtest='cd ~/work/pipeline/'
+alias opsworks='cd ~/work/opsworks/'
+
+alias diyfdb='ssh -N -L 15432:diyfdb-prod.caibfusn2myj.us-east-1.rds.amazonaws.com:5432 web3'
+alias diyapp-staging='ssh -N -L 15432:diyapp-staging.numi.com:5444 sweb1'
+
+#alias prod='ssh -i ~/.ssh/jump-prod.pem ec2-user@$JUMP_HOST'
+#alias web3='ssh -i ~/.ssh/webapp-prod.pem ec2-user@$WEBAPP3_HOST'
+#alias web4='ssh -i ~/.ssh/webapp-prod.pem ec2-user@$WEBAPP4_HOST'
+#alias webjobs='ssh -i ~/.ssh/webapp-prod.pem ec2-user@$WEBJOBS_HOST'
+#alias commerce1='ssh -i ~/.ssh/commerce-prod.pem ec2-user@$COMMERCE1_HOST'
+#alias commerce2='ssh -i ~/.ssh/commerce-prod.pem ec2-user@$COMMERCE2_HOST'
+##alias marketing='ssh -i ~/.ssh/marketing-prod.pem ec2-user@$COMMERCE2_HOST'
+## http://sshmenu.sourceforge.net/articles/transparent-mulithop.html
+#alias marketing='ssh -i ~/.ssh/jump-prod.pem -A -t ec2-user@$JUMP_HOST ssh -i marketing-prod.pem -A ec2-user@$MARKETING_HOST'
+
+#alias sweb1='ssh -i ~/.ssh/dev.pem ec2-user@$STAGING_WEB1_HOST'
+#alias sweb2='ssh -i ~/.ssh/dev.pem ec2-user@$STAGING_WEB2_HOST'
+#alias swebjobs='ssh -i ~/.ssh/dev.pem ec2-user@$STAGING_JOBS_HOST'
+#alias scommerce='ssh -i ~/.ssh/dev.pem ec2-user@$STAGING_COMMERCE_HOST'
 
 export EDITOR='vi -c startinsert -u /Users/gcao/.vimrc.blank' # start vim quickly and in insert mode
 #export EDITOR='vi -c startinsert' # start vim in insert mode
@@ -65,25 +145,57 @@ bindkey -M viins 'kj' vi-cmd-mode
 bindkey -M viins 'kk' vi-cmd-mode
 bindkey -v
 bindkey '^R' history-incremental-search-backward
+bindkey '^P' history-beginning-search-backward
+bindkey '^N' history-beginning-search-forward
 
-export PATH=/usr/local/lib/python2.7/site-packages:/usr/local/share/python:$PATH
+# http://nuclearsquid.com/writings/edit-long-commands/
+autoload -U edit-command-line
+zle -N edit-command-line
+bindkey -M vicmd '^E' edit-command-line
+bindkey -M viins '^E' edit-command-line
+
+# http://stackoverflow.com/questions/6041178/keep-the-windows-name-fixed-in-tmux
+# http://superuser.com/questions/306028/tmux-and-zsh-custom-prompt-bug-with-window-name
+export DISABLE_AUTO_TITLE=true
+
+#export PATH=/usr/local/lib/python2.7/site-packages:/usr/local/share/python:$PATH
+export PATH=/usr/local/lib/python2.7/site-packages:$PATH
 
 # Moved to ~/.zshenv
 #export rvm_project_rvmrc=1
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" 
+[[ -s "~/.rvm/scripts/rvm" ]] && source "~/.rvm/scripts/rvm" 
 
-export PATH=bin:$PATH:$HOME/tools/android-sdk-macosx/tools
-
-export JAVA_HOME=/System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home
-export TOMCAT_HOME=$HOME/tools/apache-tomcat-7.0.30
-
-#export LD_LIBRARY_PATH="/usr/local/oracle/instantclient_10_2"
-#export DYLD_LIBRARY_PATH="/usr/local/oracle/instantclient_10_2"
-#export SQLPATH="/usr/local/oracle/instantclient_10_2"
-#export TNS_ADMIN="/usr/local/oracle/network/admin"
+export TOMCAT_HOME=~/tools/apache-tomcat-7.0.30
 
 # Node and npm setup
-#export NODE_PATH=/usr/local/lib/node
 export PATH=/usr/local/share/npm/bin:$PATH
 
-[[ -s $HOME/tools/ansible/hacking/env-setup ]] && source $HOME/tools/ansible/hacking/env-setup -q
+#[[ -s ~/tools/ansible/hacking/env-setup ]] && source ~/tools/ansible/hacking/env-setup -q
+
+function e {
+  # base url with first command already injected
+  # $ explain tar
+  #   => http://explainshel.com/explain/tar?args=
+  url="http://explainshell.com/explain/$1?args="
+
+  # removes $1 (tar) from arguments ($@)
+  shift;
+
+  # iterates over remaining args and adds builds the rest of the url
+  for i in "$@"; do
+    url=$url"$i""+"
+  done
+
+  # opens url in browser
+  open $url
+}
+
+# This is required for installing pg gem and possibly other libraries
+export ARCHFLAGS="-arch x86_64"
+
+source /usr/local/share/zsh/site-functions/go
+export GOPATH=~/.go-packages
+export PATH=$PATH:/usr/local/Cellar/go/1.2.1/libexec/bin:~/.go-packages/bin
+
+export DOCKER_HOST=tcp://localhost:4243
+

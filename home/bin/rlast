@@ -7,6 +7,9 @@ tell application "System Events"
     keystroke "!!"
     keystroke return
     keystroke return
+
+    #do shell script "sleep 1"
+    delay 0.2
     keystroke "h" using {control down, shift down}
     keystroke return
   end tell

@@ -2,3 +2,6 @@
 .DS_Store
 .svn
 .idea
+.ruby-version
+.ruby-gemset
+__MACOSX

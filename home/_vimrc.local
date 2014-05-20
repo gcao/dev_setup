@@ -11,6 +11,10 @@
 " vim +BundleInstall! +BundleClean +q
 " }
 
+"http://stackoverflow.com/a/10739962/120151
+set ttimeout
+set ttimeoutlen=50
+
 syntax enable
 set encoding=utf-8
 set background=dark
@@ -31,23 +35,49 @@ set hidden  " Don't prompt to save buffer when changing to another buffer
 set expandtab  "Use :retab to replace tabs with spaces
 set shiftwidth=2
 set tabstop=2
+set softtabstop=2
 set autoindent
 set nosmartindent " See http://vim.wikia.com/wiki/Indenting_source_code
 set smarttab
+" See http://items.sjbach.com/319/configuring-vim-right
+set wildmode=list:longest
+set scrolloff=3
+set ignorecase
+set smartcase
+set relativenumber
 
 " http://stackoverflow.com/questions/11404800/fix-vim-tmux-yank-paste-on-unnamed-register
-if $TMUX == ''
+"if $TMUX == ''
   set clipboard=unnamed " Default to copy to system clipboard
-endif
+"endif
 
 set nolist " Hide invisible charasters
 set listchars=tab:,.,trail:.,extends:#,nbsp:. " Highlight problematic whitespace
-set foldmethod=syntax " :help fold
-set foldlevelstart=5
+
+"set foldmethod=syntax " :help fold
+"set foldlevel=5
+"set foldlevelstart=5
+autocmd BufEnter * set foldlevelstart=5 foldlevel=5 foldmethod=syntax
  
 " https://coderwall.com/p/tqns-w
 set exrc
 set secure
+
+" http://stackoverflow.com/a/12814727
+if has('mac') && ($TERM == 'xterm-256color' || $TERM == 'screen' || $TERM == 'screen-256color')
+  map <Esc>OP <F1>
+  map <Esc>OQ <F2>
+  map <Esc>OR <F3>
+  map <Esc>OS <F4>
+  map <Esc>[16~ <F5>
+  map <Esc>[17~ <F6>
+  map <Esc>[18~ <F7>
+  map <Esc>[19~ <F8>
+  map <Esc>[20~ <F9>
+  map <Esc>[21~ <F10>
+  map <Esc>[23~ <F11>
+  map <Esc>[24~ <F12>
+endif
 
 " http://lokaltog.github.com/powerline/overview.html#installation
 "python from powerline.ext.vim import source_plugin; source_plugin()
@@ -131,17 +161,24 @@ xnoremap p pgvy
 
 nnoremap cc xi
 
+nnoremap <Leader>;  ;
+nnoremap <Leader>:  ,
 nnoremap ;  :
 nnoremap !  :!
 nnoremap <Leader><Space> :map<Space>
 
-nnoremap \ :CommandT<CR>
-nnoremap <Leader>f :CommandTFlush<CR>
+"nnoremap \ :CommandT<CR>
+"nnoremap <Leader>f :CommandTFlush<CR>
+nnoremap \ :CtrlPMixed<CR>
+nnoremap <Leader>f :CtrlPClearCache<CR>
 
 nnoremap <Leader>eh :e ~/work/dev_contrib/firefox/ProteusIndex.html<CR>
 nnoremap <Leader>ez :e ~/.zshrc.local<CR>
 nnoremap <Leader>em :e ~/.tmux.conf<CR>
+nnoremap <Leader>eb :e ~/.vimrc.bundles.local<CR>
 nnoremap <Leader>ev :e ~/.vimrc.local<CR>
+nnoremap <Leader>et :e ~/Dropbox/notes/test
+nnoremap <Leader>el :e ~/Dropbox/notes/diary.txt<CR>
 
 if !exists("vimrc_autocommands_loaded")
   let vimrc_autocommands_loaded = 1
@@ -149,7 +186,7 @@ if !exists("vimrc_autocommands_loaded")
   " automatically reload vimrc when it's saved
   au BufWritePost .vimrc so ~/.vimrc
   au BufWritePost .vimrc.local so ~/.vimrc.local
-  au BufWritePost .vimrc.local PowerlineReloadColorscheme
+  "au BufWritePost .vimrc.local PowerlineReloadColorscheme
 endif
 
 nnoremap <Leader>tt :TagbarToggle<CR><C-w>l
@@ -234,8 +271,10 @@ nnoremap <Leader>X :BD<CR>
 " Remove auto close for " because it causes problem when editting vim files
 "iunmap "
 
+" Support coffeescript in ctags
+" https://gist.github.com/mads379/907245
 " ctags {
-  nnoremap <leader>ct :!/usr/local/bin/ctags -R app vendor lib public/javascripts/<CR>
+  nnoremap <leader>ct :!/usr/local/bin/ctags -R app<CR>
   if !("coffeescript_autocmd_loaded")
     let coffeescript_autocmd_loaded = 1
     autocmd BufWritePost * if filereadable('tags') | call system('ctags -a '.expand('%')) | endif
@@ -333,10 +372,11 @@ nnoremap <Leader>r :!rr ruby %<CR>
 " http://arstechnica.com/civis/viewtopic.php?f=16&t=94386
 nnoremap <Leader>R :!rr rspec % -l <C-R>=line(".")<CR><CR>
 nnoremap <F2>      :!rr<Space>
-nnoremap <S-F2>    :!rrr<Space>
+nnoremap <S-F2>    :!rlast<CR>
 
 " Run this file
-nnoremap <F6>      :!%<CR>
+"nnoremap <F6>      :!%<CR>
+nnoremap <F6>      :!rr %<CR>
 
 " http://vimdoc.sourceforge.net/htmldoc/editing.html#CTRL-^
 "nnoremap <C-Space> :e #<CR>
@@ -356,8 +396,7 @@ nnoremap <F6>      :!%<CR>
       echo "No command found in line."
     endif
   endfunction
-  map <F4>      :call RunThis()<CR>
-  map <Leader>v :call RunThis()<CR>
+  map <F4> :call RunThis()<CR>
   map <F5> :source %<CR>
 " }
 
@@ -391,6 +430,10 @@ nnoremap q: q:dd
 nnoremap <Leader>sd :!svn diff %<CR>
 nnoremap <Leader>gd :!git diff %<CR>
 
+nnoremap <Leader>vb :VCSBlame<CR>
+nnoremap <Leader>vl :VCSLog<CR>
+nnoremap <Leader>vd :VCSVimDiff<CR>
+
 if has('gui_macvim')
   "http://vim.1045645.n5.nabble.com/Remove-scrollbar-td1216911.html
   set guioptions-=r
@@ -408,4 +451,162 @@ endif
 " ? is search backward from end of the file, is the reverse of /.
 
 au BufEnter Vagrantfile setlocal syntax=ruby
+
+"if filereadable(expand(".ruby-version"))
+"  exec 'Rvm'
+"endif
+
+" https://github.com/spf13/spf13-vim/pull/428#issuecomment-23410420
+let g:airline_powerline_fonts=1
+let g:airline_left_sep=''
+let g:airline_right_sep=''
+
+" http://superuser.com/questions/230081/in-vim-prevent-caret-moving-back-when-i-leave-edit-mode
+"au InsertLeave * call cursor([getpos('.')[1], getpos('.')[2]+1])
+"function! InsertLeaveHack()
+"  let pos = getpos('.')
+"  exec cursor([pos[1], pos[2]+1])
+"endfunction
+"au InsertLeave * call InsertLeaveHack()
+
+autocmd BufWinEnter * set nofoldenable
+autocmd BufWinEnter * set foldlevel=9999
+
+UnBundle 'airblade/vim-gitgutter'
+
+nnoremap <Leader>ps :!rm /tmp/profile.log<CR>:profile start /tmp/profile.log<CR>:profile func *<CR>:profile file *<CR>
+nnoremap <Leader>pe :profile pause<CR>:qa<CR>
+"nnoremap <Leader>pe :profile pause<CR>
+
+"http://blog.davidfrancos.net/slow-syntastic-big-files/
+let g:syntastic_enable_highlighting=0
+
+" http://stackoverflow.com/a/5403847
+autocmd WinEnter * call s:CloseIfOnlyNerdTreeLeft()
+" Close all open buffers on entering a window if the only buffer that's left is the NERDTree buffer
+function! s:CloseIfOnlyNerdTreeLeft()
+  if exists("t:NERDTreeBufName")
+    if bufwinnr(t:NERDTreeBufName) != -1
+      if winnr("$") == 1
+        q
+      endif
+    endif
+  endif
+endfunction
+
+set listchars=tab:>-,trail:·
+nmap <silent> <leader>s :set nolist!<CR>
+
+inoremap <F9>        <C-o>
+inoremap <ESC>       <ESC>l
+inoremap <ESC><ESC>  <ESC>l
+
+"" Undo mapping in .vimrc.local
+"if mapcheck('<ESC><C-F>', 'i')
+"  iunmap [F
+"  iunmap [H
+"endif
+
+"" Move forward to char after x
+nnoremap g(        f(l
+nnoremap g)        f)l
+nnoremap g[        f[l
+nnoremap g]        f]l
+nnoremap g{        f{l
+nnoremap g}        f}l
+nnoremap g<        f<l
+nnoremap g>        f>l
+nnoremap g'        f'l
+nnoremap g"        f"l
+nnoremap g.        f.l
+nnoremap g:        f:l
+nnoremap g=        f=l
+nnoremap g-        f-l
+nnoremap g_        f_l
+nnoremap g/        f/l
+nnoremap g@        f@l
+nnoremap g#        f#l
+nnoremap g&        f&l
+nnoremap g*        f*l
+nnoremap g+        f+l
+nnoremap g\|       f\|l
+nnoremap g\        f\l
+nnoremap g?        f?l
+nnoremap g<space>  f l
+vnoremap g(        f(l
+vnoremap g)        f)l
+vnoremap g[        f[l
+vnoremap g]        f]l
+vnoremap g{        f{l
+vnoremap g}        f}l
+vnoremap g<        f<l
+vnoremap g>        f>l
+vnoremap g'        f'l
+vnoremap g"        f"l
+vnoremap g.        f.l
+vnoremap g:        f:l
+vnoremap g=        f=l
+vnoremap g-        f-l
+vnoremap g_        f_l
+vnoremap g/        f/l
+vnoremap g@        f@l
+vnoremap g#        f#l
+vnoremap g&        f&l
+vnoremap g*        f*l
+vnoremap g+        f+l
+vnoremap g\|       f\|l
+vnoremap g\        f\l
+vnoremap g?        f?l
+vnoremap g<space>  f l
+"" Move backward to char before x
+nnoremap G(        F(h
+nnoremap G)        F)h
+nnoremap G[        F[h
+nnoremap G]        F]h
+nnoremap G{        F{h
+nnoremap G}        F}h
+nnoremap G<        F<h
+nnoremap G>        F>h
+nnoremap G'        F'h
+nnoremap G"        F"h
+nnoremap G.        F.h
+nnoremap G:        F:h
+nnoremap G=        F=h
+nnoremap G-        F-h
+nnoremap G_        F_h
+nnoremap G/        F/h
+nnoremap G@        F@h
+nnoremap G#        F#h
+nnoremap G&        F&h
+nnoremap G*        F*h
+nnoremap G+        F+h
+nnoremap G\|       F\|h
+nnoremap G\        F\h
+nnoremap G?        F?h
+nnoremap G<space>  F h
+vnoremap G(        F(h
+vnoremap G)        F)h
+vnoremap G[        F[h
+vnoremap G]        F]h
+vnoremap G{        F{h
+vnoremap G}        F}h
+vnoremap G<        F<h
+vnoremap G>        F>h
+vnoremap G'        F'h
+vnoremap G"        F"h
+vnoremap G.        F.h
+vnoremap G:        F:h
+vnoremap G=        F=h
+vnoremap G-        F-h
+vnoremap G_        F_h
+vnoremap G/        F/h
+vnoremap G@        F@h
+vnoremap G#        F#h
+vnoremap G&        F&h
+vnoremap G*        F*h
+vnoremap G+        F+h
+vnoremap G\|       F\|h
+vnoremap G\        F\h
+vnoremap G?        F?h
+vnoremap G<space>  F h
 

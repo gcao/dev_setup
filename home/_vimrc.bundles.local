@@ -5,33 +5,58 @@ let g:spf13_no_autochdir = 1
 
 let g:rooter_patterns = ['vendor/', 'PROTEUS_VERSION', 'Rakefile', '.git/']
 
+let g:go_disable_autoinstall = 1
+
 "Bundle 'rosenfeld/conque-term'
 "Bundle 'fholgado/minibufexpl.vim'
+"
+" Command-T causes vim 7.4 to Segmentation fault, not sure why, probably need
+" to be recompiled?
+" Followed these steps to fix
+" cd ~/.vim/bundle/Command-T/ruby/command-t/
+" ruby extconf.rb
+" make
+" make install
 Bundle 'wincent/Command-T'
+
 Bundle 'rickharris/vim-monokai'
 "Bundle 'airblade/vim-rooter'
-Bundle 'kchmck/vim-coffee-script'
 Bundle 'vim-scripts/L9'
 Bundle 'vim-scripts/FuzzyFinder'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'mileszs/ack.vim'
 Bundle 'jgdavey/tslime.vim'
 
-" http://codejury.com/consolas-font-in-vim-powerline-windows/
-let g:Powerline_symbols="fancy"
-Bundle 'Lokaltog/vim-powerline'
+"" http://codejury.com/consolas-font-in-vim-powerline-windows/
+"let g:Powerline_symbols="fancy"
+"Bundle 'Lokaltog/vim-powerline'
+
+"UnBundle 'bling/vim-airline'
+
+"Bundle 'Lokaltog/powerline'
+"set rtp+=$HOME/.vim/bundle/powerline/bindings/vim
 
 " https://github.com/suan/vim-instant-markdown
 let g:instant_markdown_slow = 1
 Bundle 'suan/vim-instant-markdown'
 
-"Bundle 'airblade/vim-gitgutter'
 Bundle 'vim-scripts/bufkill.vim'
 "Bundle 'goldfeld/vim-seek'
 Bundle 'gcao/vim-goodies'
 Bundle 'epmatsw/ag.vim'
-"Bundle 'tpope/vim-dispatch'
-Bundle 'tpope/vim-rails'
+Bundle 'tpope/vim-dispatch'
+"Bundle 'tpope/vim-rails'
 
 "let g:ruby_debugger_progname = 'mvim'
 "Bundle 'astashov/vim-ruby-debugger'
+
+Bundle 'vim-scripts/vcscommand.vim'
+
+" Follow instructions below to finish install
+" https://github.com/Valloric/YouCompleteMe
+"Bundle 'Valloric/YouCompleteMe'
+
+Bundle 'tpope/vim-rvm'
+
+"let g:EditorConfig_core_mode = 'external_command'
+"Bundle 'editorconfig/editorconfig-vim'
+
+Bundle 'rhysd/clever-f.vim'

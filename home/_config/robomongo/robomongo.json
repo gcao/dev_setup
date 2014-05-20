@@ -1,0 +1,22 @@
+{
+ "TimeZone" : 0,
+ "connections" : [
+  {
+   "connectionName" : "localhost",
+   "credentials" : [
+    {
+     "databaseName" : "admin",
+     "enabled" : false,
+     "userName" : "",
+     "userPassword" : ""
+    }
+   ],
+   "defaultDatabase" : "",
+   "serverHost" : "localhost",
+   "serverPort" : 27017
+  }
+ ],
+ "uuidEncoding" : 0,
+ "version" : "1.0",
+ "viewMode" : 1
+}

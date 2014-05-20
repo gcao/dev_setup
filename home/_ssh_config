@@ -1,8 +1,193 @@
-# See http://mmb.pcb.ub.es/~carlesfe/unix/tricks.txt
-Host subscribe-fe-vm-01.klga1.s.vonagenetworks.net
-    ProxyCommand ssh -T prodlogin.vonagenetworks.net 'nc %h %p'
-    HostName subscribe-fe-vm-01.klga1.s.vonagenetworks.net
+ServerAliveInterval 15
+ServerAliveCountMax 120
 
-Host subscribe-be-vm-01.klga1.s.vonagenetworks.net
-    ProxyCommand ssh -T prodlogin.vonagenetworks.net 'nc %h %p'
-    HostName subscribe-be-vm-01.klga1.s.vonagenetworks.net
+Host *
+  ForwardAgent yes
+
+# Production
+Host jump-prod
+  HostName       54.86.168.183
+  User           ec2-user
+  IdentityFile   ~/.ssh/jumpbox-prod.pem
+  IdentitiesOnly yes
+
+Host web3
+  HostName       10.0.20.204
+  User           ec2-user
+  ProxyCommand   ssh -q jump-prod nc %h 22
+  IdentityFile   ~/.ssh/webapp-prod.pem
+  IdentitiesOnly yes
+
+Host web4
+  HostName       10.0.30.207
+  User           ec2-user
+  ProxyCommand   ssh -q jump-prod nc %h 22
+  IdentityFile   ~/.ssh/webapp-prod.pem
+  IdentitiesOnly yes
+
+Host webjobs
+  HostName       10.0.20.231
+  User           ec2-user
+  ProxyCommand   ssh -q jump-prod nc %h 22
+  IdentityFile   ~/.ssh/webapp-prod.pem
+  IdentitiesOnly yes
+
+Host commerce1
+  HostName       10.0.20.155
+  User           ec2-user
+  ProxyCommand   ssh -q jump-prod nc %h 22
+  IdentityFile   ~/.ssh/commerce-prod.pem
+  IdentitiesOnly yes
+
+Host commerce2
+  HostName       10.0.30.222
+  User           ec2-user
+  ProxyCommand   ssh -q jump-prod nc %h 22
+  IdentityFile   ~/.ssh/commerce-prod.pem
+  IdentitiesOnly yes
+
+Host marketing
+  HostName       10.0.20.196
+  User           ec2-user
+  ProxyCommand   ssh -q jump-prod nc %h 22
+  IdentityFile   ~/.ssh/marketing-prod.pem
+  IdentitiesOnly yes
+
+# Staging
+Host sweb1
+  HostName       54.197.235.170
+  User           ec2-user
+  #ProxyCommand   ssh -q jump-prod nc %h 22
+  IdentityFile   ~/.ssh/webapp-dev.pem
+  IdentitiesOnly yes
+
+Host sweb2
+  HostName       174.129.41.46
+  User           ec2-user
+  #ProxyCommand   ssh -q jump-prod nc %h 22
+  IdentityFile   ~/.ssh/webapp-dev.pem
+  IdentitiesOnly yes
+
+Host swebjobs
+  HostName       54.83.19.255
+  User           ec2-user
+  #ProxyCommand   ssh -q jump-prod nc %h 22
+  IdentityFile   ~/.ssh/webapp-dev.pem
+  IdentitiesOnly yes
+
+Host scommerce
+  HostName       54.83.61.201
+  User           ec2-user
+  #ProxyCommand   ssh -q jump-prod nc %h 22
+  IdentityFile   ~/.ssh/webapp-dev.pem
+  IdentitiesOnly yes
+
+Host smarketing
+  HostName       54.235.165.10
+  User           ec2-user
+  #ProxyCommand   ssh -q jump-prod nc %h 22
+  IdentityFile   ~/.ssh/webapp-dev.pem
+  IdentitiesOnly yes
+
+Host sdas
+  HostName       184.73.58.77
+  User           ubuntu
+  IdentityFile   ~/.ssh/orange-apps.pem
+  IdentitiesOnly yes
+
+Host sjava1
+  HostName       54.196.109.8
+  User           ubuntu
+  IdentityFile   ~/.ssh/orange-apps.pem
+  IdentitiesOnly yes
+
+Host sjava2
+  HostName       184.73.27.123
+  User           ubuntu
+  IdentityFile   ~/.ssh/orange-apps.pem
+  IdentitiesOnly yes
+
+Host ssolr
+  HostName       54.204.20.168
+  User           ubuntu
+  IdentityFile   ~/.ssh/orange-apps.pem
+  IdentitiesOnly yes
+
+# Staging2
+Host jump-staging2
+  HostName       54.86.170.124
+  User           ec2-user
+  IdentityFile   ~/.ssh/jumpbox-staging.pem
+  IdentitiesOnly yes
+
+Host ssweb1
+  HostName       10.1.20.211
+  User           ec2-user
+  ProxyCommand   ssh -q jump-staging2 nc %h 22
+  IdentityFile   ~/.ssh/webapp-staging.pem
+  IdentitiesOnly yes
+
+Host ssweb2
+  HostName       10.1.30.84
+  User           ec2-user
+  ProxyCommand   ssh -q jump-staging2 nc %h 22
+  IdentityFile   ~/.ssh/webapp-staging.pem
+  IdentitiesOnly yes
+
+Host sswebjobs
+  HostName       10.1.20.203
+  User           ec2-user
+  ProxyCommand   ssh -q jump-staging2 nc %h 22
+  IdentityFile   ~/.ssh/webapp-staging.pem
+  IdentitiesOnly yes
+
+Host sscommerce1
+  HostName       10.1.20.16
+  User           ec2-user
+  ProxyCommand   ssh -q jump-staging2 nc %h 22
+  IdentityFile   ~/.ssh/commerce-staging.pem
+  IdentitiesOnly yes
+
+Host sscommerce2
+  HostName       10.1.30.204
+  User           ec2-user
+  ProxyCommand   ssh -q jump-staging2 nc %h 22
+  IdentityFile   ~/.ssh/commerce-staging.pem
+  IdentitiesOnly yes
+
+Host ssmarketing
+  HostName       10.1.20.233
+  User           ec2-user
+  ProxyCommand   ssh -q jump-staging2 nc %h 22
+  IdentityFile   ~/.ssh/marketing-staging.pem
+  IdentitiesOnly yes
+
+Host ssdas
+  HostName       10.1.20.146
+  User           ubuntu
+  ProxyCommand   ssh -q jump-staging2 nc %h 22
+  IdentityFile   ~/.ssh/java-app-staging.pem
+  IdentitiesOnly yes
+
+Host ssjava1
+  HostName       10.1.30.69
+  User           ubuntu
+  ProxyCommand   ssh -q jump-staging2 nc %h 22
+  IdentityFile   ~/.ssh/java-app-staging.pem
+  IdentitiesOnly yes
+
+Host ssjava2
+  HostName       10.1.20.38
+  User           ubuntu
+  ProxyCommand   ssh -q jump-staging2 nc %h 22
+  IdentityFile   ~/.ssh/java-app-staging.pem
+  IdentitiesOnly yes
+
+Host sssolr
+  HostName       10.1.30.179
+  User           ubuntu
+  ProxyCommand   ssh -q jump-staging2 nc %h 22
+  IdentityFile   ~/.ssh/java-app-staging.pem
+  IdentitiesOnly yes
+
+

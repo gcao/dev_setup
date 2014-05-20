@@ -5,3 +5,31 @@
 # http://gabebw.wordpress.com/2010/08/02/rails-vim-rvm-and-a-curious-infuriating-bug/
 export rvm_project_rvmrc=1
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" 
+
+export JUMP_HOST=54.85.74.151
+
+# Below are internal IPs and can only be accessed from VPN
+export WEBAPP3_HOST=10.0.20.204
+export WEBAPP4_HOST=10.0.30.207
+export WEBJOBS_HOST=10.0.20.231
+export COMMERCE1_HOST=10.0.20.155
+export COMMERCE2_HOST=10.0.30.222
+export MARKETING_HOST=10.0.20.196
+
+# Below are public IPs
+export STAGING_WEB1_HOST=54.197.235.170
+export STAGING_WEB2_HOST=174.129.41.46
+export STAGING_JOBS_HOST=54.83.19.255
+export STAGING_COMMERCE_HOST=54.83.61.201
+
+export SAUCE_USERNAME=gcaonutri
+export SAUCE_ACCESS_KEY=1a982073-b537-4e99-8d6f-4c749545afee
+
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.7.0_51.jdk/Contents/Home
+export PATH=$JAVA_HOME/bin:$PATH
+
+export AWS_ACCESS_KEY_ID=AKIAJY342NPUMBGHIB4Q
+export AWS_SECRET_ACCESS_KEY=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
+
+export DOCKER_HOST=tcp://172.17.8.100:4243
+export FLEETCTL_TUNNEL=172.17.8.100
