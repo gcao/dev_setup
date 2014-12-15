@@ -45,6 +45,7 @@ set scrolloff=3
 set ignorecase
 set smartcase
 set relativenumber
+set iskeyword-=.
 
 " http://stackoverflow.com/questions/11404800/fix-vim-tmux-yank-paste-on-unnamed-register
 "if $TMUX == ''
@@ -110,6 +111,16 @@ nnoremap //   :nohlsearch<CR>
 " fold open/close at cursor location
 nnoremap zz   za
 
+" Comment out line in ~/.vimrc that map j to gj and k to gk
+" Below seems not removing the mapping
+if mapcheck('j', 'n')
+  unmap j
+  unmap k
+endif
+
+nnoremap <c-j> gj
+nnoremap <c-k> gk
+
 " Alignment by Tabularize {
   " /,/l1l0 to remove space before ',' but add one after ','
   nmap <Leader>a :Tabularize /
@@ -125,7 +136,8 @@ nnoremap zz   za
 " }
 
 "nnoremap <Leader>k :Ack<Space>
-nnoremap <Leader>k :Ag<Space>
+" Ag! will not open first result
+nnoremap <Leader>k :Ag!<Space>
 
 " Ctrl+A to select all
 nnoremap <C-A> ggVGy
@@ -471,6 +483,7 @@ let g:airline_right_sep=''
 
 autocmd BufWinEnter * set nofoldenable
 autocmd BufWinEnter * set foldlevel=9999
+autocmd BufWinEnter * set iskeyword-=.
 
 UnBundle 'airblade/vim-gitgutter'
 

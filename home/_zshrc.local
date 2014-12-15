@@ -1,21 +1,34 @@
 # Add below line to end of .zshrc
 #test -r .zshrc.local && source .zshrc.local
-#
+
+test -r ~/.zshrc.secret && source ~/.zshrc.secret
+
 setopt AUTO_CD
 setopt autocd
 unsetopt correctall
 
+export JAVA_HOME="$(/usr/libexec/java_home)"
+export EC2_HOME="/usr/local/Cellar/ec2-api-tools/1.7.1.0/libexec"
+export EC2_AMITOOL_HOME="/usr/local/Cellar/ec2-ami-tools/1.5.3/libexec"
+# Amazon Tools Setup
+#export EC2_PRIVATE_KEY=~/.ec2/pk.pem
+#export EC2_CERT=~/.ec2/cert.pem
+
 ## http://stackoverflow.com/a/17915260
-#RPROMPT='[%D{%L:%M:%S %p}]'
 #TMOUT=1
 #TRAPALRM() {
 #  zle reset-prompt
 #}
 
+#prompt_time() {
+#  echo -n '%D{%L:%M:%S %p} '
+#}
+
 # http://paulgoscicki.com/archives/2012/09/vi-mode-indicator-in-zsh-prompt/
 #vim_ins_mode="%{$fg[cyan]%}INS"
 vim_ins_mode=""
-vim_cmd_mode="%{$fg[red]%}CMD %{%F{black}%}%{%K{blue}%}$SEGMENT_SEPARATOR"
+#vim_cmd_mode="%{$fg[red]%}CMD %{%F{black}%}%{%K{blue}%}$SEGMENT_SEPARATOR"
+vim_cmd_mode="%{$fg[red]%}CMD "
 vim_mode=$vim_ins_mode
 
 function zle-keymap-select {
@@ -48,7 +61,8 @@ prompt_status() {
   symbols=()
   #[[ $RETVAL -ne 0 ]] && symbols+="%{%F{red}%}✘"
   #[[ $UID -eq 0 ]] && symbols+="%{%F{yellow}%}⚡"
-  [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}⚙"
+  # ⚙ ☢
+  [[ $(jobs -l | wc -l) -gt 0 ]] && symbols+="%{%F{cyan}%}☢"
 
   [[ -n "$symbols" ]] && prompt_segment black default "$symbols"
 }
@@ -57,6 +71,7 @@ prompt_status() {
 build_prompt() {
   RETVAL=$?
   prompt_mode
+  #prompt_time
   prompt_status
   #prompt_virtualenv
   #prompt_context
@@ -69,12 +84,6 @@ build_prompt() {
 # Customize to your needs...
 export PATH=bin:~/bin:/usr/local/bin:$PATH
 
-# Amazon Tools Setup
-export EC2_HOME=~/tools/ec2-api-tools
-export PATH=$PATH:$EC2_HOME/bin
-#export EC2_PRIVATE_KEY=~/.ec2/pk.pem
-#export EC2_CERT=~/.ec2/cert.pem
-
 # Pass in manually on ssh command
 ssh-add ~/.ssh/id_rsa
 #ssh-add ~/.ssh/ec2-numi.pem
@@ -84,6 +93,7 @@ ssh-add ~/.ssh/id_rsa
 # http://www.commandlinefu.com/commands/view/2081/mac-os-x-change-color-of-the-ls-command
 export LSCOLORS=gxfxcxdxbxegedabagacad
 
+unalias rr
 alias a="alias"
 alias diff='colordiff'
 alias h='history'
@@ -98,6 +108,13 @@ alias vi='GEM_HOME="" GEM_PATH="" vi'
 alias vim='GEM_HOME="" GEM_PATH="" vi'
 alias vii='vi -c startinsert'
 alias vib='vi -u ~/.vimrc.blank'
+alias vi-='vi -'
+alias tmuxp='tmuxp load ~/.tmuxp.yaml'
+
+alias cdd='cd /; cd -'
+
+alias start-nginx='sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.nginx.plist'
+alias stop-nginx='sudo launchctl unload /Library/LaunchDaemons/homebrew.mxcl.nginx.plist'
 
 alias cape='ssh capeusor@capeus.org'
 alias mountcape='sshfs capeusor@capeus.org: ~/proj/capeus'
@@ -107,38 +124,38 @@ alias sc='rails c'
 alias dr='rake db:dev:reset'
 alias trr='rake db:test:reset'
 alias rt="rake -T"
+alias deploymola="curl -d 'delay=0sec' http://10.111.74.133:8081/jenkins/job/MOLA_DEPLOY/build; open http://10.111.74.133:8081/jenkins/job/MOLA_DEPLOY/"
 
 alias work='cd ~/work/'
-alias web='cd ~/work/web-app/'
-alias commerce='cd ~/work/commerce/'
-alias javaapp='cd ~/work/java-app/java-app'
-alias pipeline='cd ~/work/pipeline/'
-alias wtest='cd ~/work/pipeline/'
-alias opsworks='cd ~/work/opsworks/'
+alias cola='cd ~/work/cola/'
+alias mola='cd ~/work/mola/'
+alias tomcat='cd ~/tools/tomcat/'
+
+alias proj='cd ~/proj/'
+alias meili='cd ~/proj/meili/'
+alias todo='cd ~/proj/todomvc/labs/architecture-examples/tjs/'
 
 alias diyfdb='ssh -N -L 15432:diyfdb-prod.caibfusn2myj.us-east-1.rds.amazonaws.com:5432 web3'
 alias diyapp-staging='ssh -N -L 15432:diyapp-staging.numi.com:5444 sweb1'
 
-#alias prod='ssh -i ~/.ssh/jump-prod.pem ec2-user@$JUMP_HOST'
-#alias web3='ssh -i ~/.ssh/webapp-prod.pem ec2-user@$WEBAPP3_HOST'
-#alias web4='ssh -i ~/.ssh/webapp-prod.pem ec2-user@$WEBAPP4_HOST'
-#alias webjobs='ssh -i ~/.ssh/webapp-prod.pem ec2-user@$WEBJOBS_HOST'
-#alias commerce1='ssh -i ~/.ssh/commerce-prod.pem ec2-user@$COMMERCE1_HOST'
-#alias commerce2='ssh -i ~/.ssh/commerce-prod.pem ec2-user@$COMMERCE2_HOST'
-##alias marketing='ssh -i ~/.ssh/marketing-prod.pem ec2-user@$COMMERCE2_HOST'
-## http://sshmenu.sourceforge.net/articles/transparent-mulithop.html
-#alias marketing='ssh -i ~/.ssh/jump-prod.pem -A -t ec2-user@$JUMP_HOST ssh -i marketing-prod.pem -A ec2-user@$MARKETING_HOST'
-
-#alias sweb1='ssh -i ~/.ssh/dev.pem ec2-user@$STAGING_WEB1_HOST'
-#alias sweb2='ssh -i ~/.ssh/dev.pem ec2-user@$STAGING_WEB2_HOST'
-#alias swebjobs='ssh -i ~/.ssh/dev.pem ec2-user@$STAGING_JOBS_HOST'
-#alias scommerce='ssh -i ~/.ssh/dev.pem ec2-user@$STAGING_COMMERCE_HOST'
-
-export EDITOR='vi -c startinsert -u /Users/gcao/.vimrc.blank' # start vim quickly and in insert mode
-#export EDITOR='vi -c startinsert' # start vim in insert mode
 set -o vi
+export EDITOR='vi -u /Users/gcao/.vimrc.blank' # start vim quickly and in normal mode
+#export EDITOR='vi -c startinsert -u /Users/gcao/.vimrc.blank' # start vim quickly and in insert mode
+#export EDITOR='vi -c startinsert' # start vim in insert mode
 
-# http://danielmiessler.com/blog/enhancements-to-shell-and-vim-productivity
+function sshdeploy {
+  if [[ $1 =~ web ]]; then
+    DIR=/srv/www/webapp/current
+  elif [[ $1 =~ commerce ]]; then
+    DIR=/srv/www/commerce/current
+  else
+    DIR=
+  fi
+
+  ssh $1 -t "sudo su - deploy --session-command 'cd $DIR; /bin/bash'"
+}
+
+## http://danielmiessler.com/blog/enhancements-to-shell-and-vim-productivity
 bindkey -M viins 'jk' vi-cmd-mode
 bindkey -M viins 'jj' vi-cmd-mode
 bindkey -M viins 'kj' vi-cmd-mode
@@ -164,6 +181,7 @@ export PATH=/usr/local/lib/python2.7/site-packages:$PATH
 # Moved to ~/.zshenv
 #export rvm_project_rvmrc=1
 [[ -s "~/.rvm/scripts/rvm" ]] && source "~/.rvm/scripts/rvm" 
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 export TOMCAT_HOME=~/tools/apache-tomcat-7.0.30
 
@@ -171,6 +189,8 @@ export TOMCAT_HOME=~/tools/apache-tomcat-7.0.30
 export PATH=/usr/local/share/npm/bin:$PATH
 
 #[[ -s ~/tools/ansible/hacking/env-setup ]] && source ~/tools/ansible/hacking/env-setup -q
+
+[[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
 
 function e {
   # base url with first command already injected
@@ -190,6 +210,19 @@ function e {
   open $url
 }
 
+function svr {
+  svn revert -R $*
+}
+function svl {
+  svn log -v $* | more
+}
+function sva {
+  svn st $* | grep '?' | cut -b 2- | xargs svn add
+}
+function svd {
+  svn st $* | grep '!' | cut -b 2- | xargs svn rm
+}
+
 # This is required for installing pg gem and possibly other libraries
 export ARCHFLAGS="-arch x86_64"
 
@@ -197,5 +230,9 @@ source /usr/local/share/zsh/site-functions/go
 export GOPATH=~/.go-packages
 export PATH=$PATH:/usr/local/Cellar/go/1.2.1/libexec/bin:~/.go-packages/bin
 
-export DOCKER_HOST=tcp://localhost:4243
+export PATH=$PATH:~/tools/ec2-api-tools/bin
+
+# http://deis.io/get-deis/
+#export DOCKER_HOST=tcp://172.17.8.100:4243
+#export FLEETCTL_TUNNEL=172.17.8.100
 

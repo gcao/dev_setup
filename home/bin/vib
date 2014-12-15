@@ -1,0 +1,1 @@
+vi -u ~/.vimrc.blank $*

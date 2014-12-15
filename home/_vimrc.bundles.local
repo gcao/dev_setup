@@ -7,6 +7,13 @@ let g:rooter_patterns = ['vendor/', 'PROTEUS_VERSION', 'Rakefile', '.git/']
 
 let g:go_disable_autoinstall = 1
 
+" http://stackoverflow.com/a/25871235
+"let g:ctrlp_custom_ignore = {
+"    \ 'dir':  '\v[\/]\.(git|hg|svn)|node_modules|build|target$',
+"    \ 'file': '\v\.(exe|so|dll)$',
+"    \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+"    \ }
+
 "Bundle 'rosenfeld/conque-term'
 "Bundle 'fholgado/minibufexpl.vim'
 "
@@ -60,3 +67,5 @@ Bundle 'tpope/vim-rvm'
 "Bundle 'editorconfig/editorconfig-vim'
 
 Bundle 'rhysd/clever-f.vim'
+
+Bundle 'lambdatoast/elm.vim'
