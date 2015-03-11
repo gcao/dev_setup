@@ -46,6 +46,7 @@ set ignorecase
 set smartcase
 set relativenumber
 set iskeyword-=.
+"set wildignore+=build,target,coverage,node_modules
 
 " http://stackoverflow.com/questions/11404800/fix-vim-tmux-yank-paste-on-unnamed-register
 "if $TMUX == ''
@@ -103,6 +104,8 @@ let mapleader=","
   "inoremap <A-b> <C-o>b
   "inoremap <A-e> <C-o>e
 " }
+
+map \|    $h
 
 nnoremap /    /\v
 " // to not highlight search result
@@ -260,6 +263,19 @@ nnoremap <Leader>X :BD<CR>
   let g:ctrlp_cmd = 'CtrlPBuffer' " Search in Files, Buffers and MRU files at the same time.
   let g:ctrlp_max_history = 50
   let g:ctrlp_mruf_max = 50
+
+  " http://stackoverflow.com/a/23015287/120151
+  " For some reason 'if exists(g:ctrlp_user_command)' does not work", so I
+  " set it to some dummy value then unset it
+  let g:ctrlp_user_command={}
+  unlet g:ctrlp_user_command
+
+  " http://stackoverflow.com/a/25871235
+  let g:ctrlp_custom_ignore = {
+      \ 'dir':  '\v[\/]\.(git|hg|svn)|node_modules|build|dist|target|coverage|bower_components$',
+      \ 'file': '\v\.(exe|so|dll)$',
+      \ 'link': 'SOME_BAD_SYMBOLIC_LINKS',
+      \ }
 
   " https://github.com/kien/ctrlp.vim/issues/280#issuecomment-8638286
   let g:ctrlp_buffer_func = { 'enter': 'MyCtrlPMappings' }
@@ -445,6 +461,9 @@ nnoremap <Leader>gd :!git diff %<CR>
 nnoremap <Leader>vb :VCSBlame<CR>
 nnoremap <Leader>vl :VCSLog<CR>
 nnoremap <Leader>vd :VCSVimDiff<CR>
+nnoremap <Leader>vr :!svn revert %<CR><CR>
+nnoremap <Leader>vu :!svn up<CR>
+nnoremap <Leader>vc :!svn diff % -c
 
 if has('gui_macvim')
   "http://vim.1045645.n5.nabble.com/Remove-scrollbar-td1216911.html
@@ -531,6 +550,7 @@ nnoremap g<        f<l
 nnoremap g>        f>l
 nnoremap g'        f'l
 nnoremap g"        f"l
+nnoremap g,        f,l
 nnoremap g.        f.l
 nnoremap g:        f:l
 nnoremap g=        f=l
@@ -582,6 +602,7 @@ nnoremap G<        F<h
 nnoremap G>        F>h
 nnoremap G'        F'h
 nnoremap G"        F"h
+nnoremap G,        F,h
 nnoremap G.        F.h
 nnoremap G:        F:h
 nnoremap G=        F=h

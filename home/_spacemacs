@@ -10,7 +10,10 @@
  ;; Paths must have a trailing slash (ie. `~/.mycontribs/')
  dotspacemacs-configuration-layer-path '()
  ;; List of configuration layers to load.
- dotspacemacs-configuration-layers '()
+ dotspacemacs-configuration-layers '(
+  git
+  osx
+ )
  ;; A list of packages and/or extensions that will not be install and loaded.
  dotspacemacs-excluded-packages '()
 )
@@ -20,8 +23,8 @@
 
 (setq-default
  ;; Default theme applied at startup
- dotspacemacs-default-theme 'solarized-light
- ;;dotspacemacs-default-theme 'monokai
+ ;;dotspacemacs-default-theme 'solarized-light
+ dotspacemacs-default-theme 'tsdh-dark
  ;; The leader key
  dotspacemacs-leader-key "SPC"
  ;; The command key used for Evil commands (ex-commands) and
@@ -41,11 +44,14 @@
  ;; If non nil pressing 'jk' in insert state, ido or helm will activate the
  ;; evil leader.
  dotspacemacs-feature-toggle-leader-on-jk nil
+ ;; If non-nil smartparens-strict-mode will be enabled in programming modes.
+ dotspacemacs-smartparens-strict-mode nil
+ ;; If non nil advises quit functions to keep server open when quitting.
+ dotspacemacs-persistent-server nil
  ;; The default package repository used if no explicit repository has been
  ;; specified with an installed package.
  ;; Not used for now.
  dotspacemacs-default-package-repository nil
- paradox-github-token "85a0c6dd992d96c50cdee134714d94278cbf6b9b"
 )
 
 ;; Initialization Hooks
@@ -59,8 +65,28 @@
 (defun dotspacemacs/config ()
   "This is were you can ultimately override default Spacemacs configuration.
 This function is called at the very end of Spacemacs initialization."
-  (global-linum-mode)
-  (linum-relative-toggle)
+ (spacemacs/set-font "Source Code Pro for Powerline" 11)
+ (setq powerline-default-separator 'nil)
+
+ (setq mac-option-modifier 'meta)
+ (setq mac-command-modifier 'super)
+ (setq mac-pass-control-to-system nil)
+ 
+ (global-set-key (kbd "s-q") 'save-buffers-kill-emacs)
+ (global-set-key (kbd "s-v") 'yank)
+ (global-set-key (kbd "s-c") 'copy-region-as-kill)
+ 
+ ;; Reverse colors for the border to have nicer line
+ (set-face-inverse-video-p 'vertical-border nil)
+ (set-face-background 'vertical-border (face-background 'default))
+ 
+ ;; Set symbol for the border
+ (set-display-table-slot standard-display-table
+                         'vertical-border
+                         (make-glyph-code ?│))
+
+ (global-linum-mode)
+ (linum-relative-toggle)
 )
 
 ;; Custom variables
@@ -69,23 +95,6 @@ This function is called at the very end of Spacemacs initialization."
 ;; Do not write anything in this section. This is where Emacs will
 ;; auto-generate custom variable definitions.
 
-;; My customization
-(setq mac-option-modifier 'meta)
-(setq mac-command-modifier 'super)
-(setq mac-pass-control-to-system nil)
-
-(global-set-key (kbd "s-q") 'save-buffers-kill-emacs)
-(global-set-key (kbd "s-v") 'yank)
-(global-set-key (kbd "s-c") 'copy-region-as-kill)
-
-;; Reverse colors for the border to have nicer line  
-(set-face-inverse-video-p 'vertical-border nil)
-(set-face-background 'vertical-border (face-background 'default))
-
-;; Set symbol for the border
-(set-display-table-slot standard-display-table
-                        'vertical-border 
-                        (make-glyph-code ?│))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -99,6 +108,7 @@ This function is called at the very end of Spacemacs initialization."
  '(ahs-idle-timer 0 t)
  '(ahs-inhibit-face-list nil)
  '(paradox-automatically-star t)
+ '(paradox-github-token "85a0c6dd992d96c50cdee134714d94278cbf6b9b")
  '(ring-bell-function (quote ignore) t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

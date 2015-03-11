@@ -1,0 +1,5 @@
+#!/bin/bash
+
+ruby -e "puts ENV['SHELL_COMMAND']"
+#echo $SHELL_COMMAND | cut -b 3- | ruby
+

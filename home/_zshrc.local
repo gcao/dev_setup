@@ -3,6 +3,21 @@
 
 test -r ~/.zshrc.secret && source ~/.zshrc.secret
 
+## http://www.commandlinefu.com/commands/view/11469/source-zshrcbashrc-in-all-open-terminals
+#trap "source ~/.zshrc" USR1
+#alias reload-zsh=pkill -usr1 zsh
+
+#export TERM=screen-256color
+export TERM=xterm-256color
+
+# http://enki-tech.blogspot.com/2012/09/customizing-zsh-part-1-hooks-and-rprompt.html
+#autoload -U add-zsh-hook
+
+#preexec_hook() {
+#  export SHELL_COMMAND=$1
+#}
+#add-zsh-hook preexec preexec_hook
+
 setopt AUTO_CD
 setopt autocd
 unsetopt correctall
@@ -82,7 +97,7 @@ build_prompt() {
 }
 
 # Customize to your needs...
-export PATH=bin:~/bin:/usr/local/bin:$PATH
+export PATH=bin:~/bin:~/Dropbox/proj/dev_setup/home/bin:/usr/local/bin:$PATH
 
 # Pass in manually on ssh command
 ssh-add ~/.ssh/id_rsa
@@ -103,7 +118,8 @@ alias ll='ls -l'
 alias pg='ps aux | grep'
 alias svnst='svn --ignore-externals st | egrep -v "^X"'
 alias svnup='svn --ignore-externals up'
-alias tmux="TERM=screen-256color-bce tmux"
+#alias tmux="TERM=screen-256color-bce tmux"
+alias tmux="TERM=xterm-256color tmux"
 alias vi='GEM_HOME="" GEM_PATH="" vi'
 alias vim='GEM_HOME="" GEM_PATH="" vi'
 alias vii='vi -c startinsert'
@@ -221,6 +237,9 @@ function sva {
 }
 function svd {
   svn st $* | grep '!' | cut -b 2- | xargs svn rm
+}
+function grepit {
+  grep "it " $* | awk -F\" '{print $2}'
 }
 
 # This is required for installing pg gem and possibly other libraries

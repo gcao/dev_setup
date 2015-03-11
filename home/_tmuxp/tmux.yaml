@@ -1,0 +1,109 @@
+session_name: tmux
+windows:
+- focus: 'true'
+  layout: 3aaa,272x81,0,0{174x81,0,0,1,97x81,175,0[97x40,175,0,2,97x40,175,41,33]}
+  options:
+    automatic-rename: 'off'
+  panes:
+  - vim
+  - zsh
+  - focus: 'true'
+    shell_command: Python
+  start_directory: /Users/gcao
+  window_name: null
+- layout: d6e1,272x81,0,0{174x81,0,0,4,97x81,175,0[97x42,175,0,5,97x38,175,43,6]}
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command:
+    - cd /Users/gcao/work/cola
+    - vim
+  - shell_command:
+    - cd /Users/gcao/work/cola
+    - zsh
+  - shell_command:
+    - cd /Users/gcao/tools/tomcat-from-alex
+    - zsh
+  window_name: 'COLA '
+- layout: bb0c,272x81,0,0{174x81,0,0,7,97x81,175,0[97x40,175,0,8,97x40,175,41,37]}
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command: vim
+  - zsh
+  - zsh
+  start_directory: /Users/gcao/work/mola
+  window_name: 'MOLA '
+- layout: a91b,272x81,0,0{174x81,0,0[174x40,0,0,10,174x40,0,41,34],97x81,175,0[97x40,175,0,11,97x40,175,41,35]}
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command: zsh
+  - zsh
+  - zsh
+  - zsh
+  start_directory: /Users/gcao
+  window_name: 'SERVERS '
+- layout: 793b,272x81,0,0{174x81,0,0,13,97x81,175,0[97x42,175,0,14,97x38,175,43,15]}
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command: zsh
+  - zsh
+  - zsh
+  start_directory: /Users/gcao
+  window_name: null
+- layout: f954,272x81,0,0{174x81,0,0,16,97x81,175,0[97x42,175,0,17,97x38,175,43,18]}
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command: zsh
+  - zsh
+  - zsh
+  start_directory: /Users/gcao
+  window_name: null
+- layout: b869,272x81,0,0{174x81,0,0,19,97x81,175,0[97x42,175,0,20,97x38,175,43,21]}
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command: zsh
+  - zsh
+  - zsh
+  start_directory: /Users/gcao
+  window_name: null
+- layout: 3937,272x81,0,0{174x81,0,0,22,97x81,175,0[97x42,175,0,23,97x38,175,43,24]}
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command: zsh
+  - zsh
+  - zsh
+  start_directory: /Users/gcao
+  window_name: null
+- layout: b950,272x81,0,0{174x81,0,0,25,97x81,175,0[97x42,175,0,26,97x38,175,43,27]}
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command: zsh
+  - zsh
+  - zsh
+  start_directory: /Users/gcao
+  window_name: null
+- layout: d967,272x81,0,0{174x81,0,0,28,97x81,175,0[97x42,175,0,29,97x38,175,43,30]}
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command: vim
+  - zsh
+  - zsh
+  start_directory: /Users/gcao/p2/jsgameviewer
+  window_name: 'jsGV '
