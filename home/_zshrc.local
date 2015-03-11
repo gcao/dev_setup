@@ -147,12 +147,10 @@ alias cola='cd ~/work/cola/'
 alias mola='cd ~/work/mola/'
 alias tomcat='cd ~/tools/tomcat/'
 
+alias devsetup='cd ~/Dropbox/proj/dev_setup/'
 alias proj='cd ~/proj/'
-alias meili='cd ~/proj/meili/'
+alias weiqi='cd ~/p2/jsgameviewer/'
 alias todo='cd ~/proj/todomvc/labs/architecture-examples/tjs/'
-
-alias diyfdb='ssh -N -L 15432:diyfdb-prod.caibfusn2myj.us-east-1.rds.amazonaws.com:5432 web3'
-alias diyapp-staging='ssh -N -L 15432:diyapp-staging.numi.com:5444 sweb1'
 
 set -o vi
 export EDITOR='vi -u /Users/gcao/.vimrc.blank' # start vim quickly and in normal mode
