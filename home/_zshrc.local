@@ -125,7 +125,9 @@ alias vim='GEM_HOME="" GEM_PATH="" vi'
 alias vii='vi -c startinsert'
 alias vib='vi -u ~/.vimrc.blank'
 alias vi-='vi -'
-alias tmuxp='tmuxp load ~/.tmuxp.yaml'
+alias tmuxp-load='tmuxp load ~/.tmuxp.yaml'
+#alias svnurl="svn info | grep '^URL' | cut -b 6-"
+alias svnurl="svn info | grep '^URL' | cut -b 6- 1>&2 | pbcopy"
 
 alias cdd='cd /; cd -'
 
@@ -151,6 +153,9 @@ alias devsetup='cd ~/Dropbox/proj/dev_setup/'
 alias proj='cd ~/proj/'
 alias weiqi='cd ~/p2/jsgameviewer/'
 alias todo='cd ~/proj/todomvc/labs/architecture-examples/tjs/'
+
+alias paste-as-request='pbpaste | xmllint --format > /tmp/request.xml'
+alias deploy='curl http://10.111.74.133:8081/jenkins/view/DEPLOY/job/COLA_UK_TOMCAT_DEPLOY/build?delay=0sec'
 
 set -o vi
 export EDITOR='vi -u /Users/gcao/.vimrc.blank' # start vim quickly and in normal mode
@@ -238,6 +243,12 @@ function svd {
 }
 function grepit {
   grep "it " $* | awk -F\" '{print $2}'
+}
+function help {
+  clf $* > /tmp/cmds.sh ; vi /tmp/cmds.sh
+}
+function soap {
+  curl -s -k -H "Content-Type: text/xml; charset=utf-8" -d @/tmp/request.xml -X POST $*
 }
 
 # This is required for installing pg gem and possibly other libraries
