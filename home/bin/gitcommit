@@ -1,0 +1,10 @@
+# Commit a single file
+
+FILE=$(readlink $1)
+# If readlink doesn't return path
+FILE=${FILE:-$1}
+DIR=$(dirname $FILE)
+FILENAME=$(basename $FILE)
+cd $DIR
+git add $FILENAME
+git commit $FILENAME
