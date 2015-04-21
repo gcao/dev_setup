@@ -56,11 +56,31 @@ set iskeyword-=.
 set nolist " Hide invisible charasters
 set listchars=tab:,.,trail:.,extends:#,nbsp:. " Highlight problematic whitespace
 
-"set foldmethod=syntax " :help fold
-"set foldlevel=5
-"set foldlevelstart=5
-autocmd BufEnter * set foldlevelstart=5 foldlevel=5 foldmethod=syntax
- 
+" Fold {
+  " to disable autocmd, use augroup, see http://superuser.com/a/719023
+  func! Fold()
+    augroup FOLD
+    set foldenable foldlevelstart=5 foldlevel=5
+    autocmd BufEnter    * set foldlevelstart=5 foldlevel=5
+    autocmd BufWinEnter * set foldlevelstart=5 foldlevel=5
+    augroup END
+  endfunc
+
+  func! Nofold()
+    set nofoldenable
+    autocmd! FOLD BufEnter    *
+    autocmd! FOLD BufWinEnter *
+  endfunc
+
+  call Fold()
+  call Nofold()
+
+  nnoremap <leader>fe :call Fold()
+  nnoremap <leader>fd :call Nofold()
+" }
+
+autocmd BufWinEnter * set iskeyword-=.
+
 " https://coderwall.com/p/tqns-w
 set exrc
 set secure
@@ -85,7 +105,8 @@ endif
 "python from powerline.ext.vim import source_plugin; source_plugin()
 "source /usr/local/lib/python2.7/site-packages/powerline/ext/vim/powerline.vim
 
-let mapleader=","
+"let mapleader=","
+let mapleader=" "
 
 " functions: http://www.ibm.com/developerworks/linux/library/l-vim-script-2/index.html
 
@@ -180,7 +201,7 @@ nnoremap <Leader>;  ;
 nnoremap <Leader>:  ,
 nnoremap ;  :
 nnoremap !  :!
-nnoremap <Leader><Space> :map<Space>
+nnoremap <Leader>m :map<Space>
 
 "nnoremap \ :CommandT<CR>
 "nnoremap <Leader>f :CommandTFlush<CR>
@@ -359,14 +380,14 @@ nnoremap <Leader>X :BD<CR>
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 
 " <tab> was mapped to delete file content which is annoying
-if mapcheck('<tab>', 'n')
-  unmap <tab>
-endif
+"if mapcheck('<tab>', 'n')
+"  unmap <tab>
+"endif
 if mapcheck('<esc>', 'n')
   unmap <esc>
 endif
 
-nnoremap <space> i <esc>l
+nnoremap <tab> i <esc>l
 "nnoremap <cr> i<cr><esc>
 nnoremap <backspace> X
 
@@ -465,6 +486,8 @@ nnoremap <Leader>vr :!svn revert %<CR><CR>
 nnoremap <Leader>vu :!svn up<CR>
 nnoremap <Leader>vc :!svn diff % -c
 
+nnoremap <Leader>gci :!gitcommit %<CR>
+
 if has('gui_macvim')
   "http://vim.1045645.n5.nabble.com/Remove-scrollbar-td1216911.html
   set guioptions-=r
@@ -499,10 +522,6 @@ let g:airline_right_sep=''
 "  exec cursor([pos[1], pos[2]+1])
 "endfunction
 "au InsertLeave * call InsertLeaveHack()
-
-autocmd BufWinEnter * set nofoldenable
-autocmd BufWinEnter * set foldlevel=9999
-autocmd BufWinEnter * set iskeyword-=.
 
 UnBundle 'airblade/vim-gitgutter'
 
