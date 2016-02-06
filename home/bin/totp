@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+
+require 'rotp'
+
+password = `cat #{ENV['HOME']}/temp/1`.strip
+totp = ROTP::TOTP.new('7I2SZZ4VOI5LTHM3')
+current_token = totp.now
+system("printf #{password}#{current_token}")
+
+#system("printf #{password}#{current_token} | pbcopy")  #if you have pbcoby it will add it to your clipboard, otherwise just wipe it.
+

@@ -16,6 +16,8 @@
  )
  ;; A list of packages and/or extensions that will not be install and loaded.
  dotspacemacs-excluded-packages '()
+ ;; Toggle native full screen mode
+ ;; ns-use-native-fullscreen nil
 )
 
 ;; Settings

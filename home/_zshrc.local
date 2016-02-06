@@ -1,7 +1,15 @@
 # Add below line to end of .zshrc
 #test -r .zshrc.local && source .zshrc.local
 
+export LC_ALL=$LANG
+
 test -r ~/.zshrc.secret && source ~/.zshrc.secret
+
+export ORACLE_HOME=/opt/oracle/instantclient_11_2
+export LD_LIBRARY_PATH=$ORACLE_HOME:$LD_LIBRARY_PATH
+export DYLD_LIBRARY_PATH=$ORACLE_HOME:$DYLD_LIBRARY_PATH
+export TNS_ADMIN=$ORACLE_HOME/network/admin
+export PATH=$PATH:$ORACLE_HOME
 
 ## http://www.commandlinefu.com/commands/view/11469/source-zshrcbashrc-in-all-open-terminals
 #trap "source ~/.zshrc" USR1
@@ -97,10 +105,10 @@ build_prompt() {
 }
 
 # Customize to your needs...
-export PATH=bin:~/bin:~/Dropbox/proj/dev_setup/home/bin:/usr/local/bin:$PATH
+export PATH=bin:~/bin:~/Dropbox/proj/dev_setup/home/bin:/usr/local/sbin:/usr/local/bin:$PATH
 
 # Pass in manually on ssh command
-ssh-add ~/.ssh/id_rsa
+ssh-add ~/.ssh/id_rsa 2> /dev/null
 #ssh-add ~/.ssh/ec2-numi.pem
 #ssh-add ~/.ssh/nat-staging.pem
 #ssh-add ~/.ssh/webapp-staging.pem
@@ -115,19 +123,23 @@ alias h='history'
 alias hgrep="history | grep"
 alias k9="kill -9"
 alias ll='ls -l'
-alias pg='ps aux | grep'
+alias psgrep='ps aux | grep -v grep | grep'
+alias cask='brew cask'
 alias svnst='svn --ignore-externals st | egrep -v "^X"'
 alias svnup='svn --ignore-externals up'
 #alias tmux="TERM=screen-256color-bce tmux"
 alias tmux="TERM=xterm-256color tmux"
-alias vi='GEM_HOME="" GEM_PATH="" vi'
-alias vim='GEM_HOME="" GEM_PATH="" vi'
+alias vi='GEM_HOME="" GEM_PATH="" vim'
+alias vim='GEM_HOME="" GEM_PATH="" vim'
 alias vii='vi -c startinsert'
 alias vib='vi -u ~/.vimrc.blank'
 alias vi-='vi -'
 alias tmuxp-load='tmuxp load ~/.tmuxp.yaml'
-#alias svnurl="svn info | grep '^URL' | cut -b 6-"
+# 1>&2 will make sure content is also displayed
 alias svnurl="svn info | grep '^URL' | cut -b 6- 1>&2 | pbcopy"
+alias giturl="git remote show origin | grep 'URL' | head -1 | cut -b 14- 1>&2 | pbcopy"
+# Moved to bin/json so it's available everywhere
+#alias json="pbpaste | jq . 1>&2 | pbcopy"
 
 alias cdd='cd /; cd -'
 
@@ -140,25 +152,48 @@ alias mountcape='sshfs capeusor@capeus.org: ~/proj/capeus'
 alias ss='rails s'
 alias sc='rails c'
 alias dr='rake db:dev:reset'
-alias trr='rake db:test:reset'
+#alias trr='rake db:test:reset'
 alias rt="rake -T"
 alias deploymola="curl -d 'delay=0sec' http://10.111.74.133:8081/jenkins/job/MOLA_DEPLOY/build; open http://10.111.74.133:8081/jenkins/job/MOLA_DEPLOY/"
+alias jenkins='java -jar /usr/local/opt/jenkins/libexec/jenkins-cli.jar -s http://devserver-546.dev.s.vonagenetworks.net:8081/'
 
 alias work='cd ~/work/'
 alias cola='cd ~/work/cola/'
 alias mola='cd ~/work/mola/'
 alias tomcat='cd ~/tools/tomcat/'
+alias proteus='cd ~/work/ui/src/'
+alias neptuneapi='cd ~/work/ui/neptune/'
+alias neptuneclient='cd ~/work/ui/neptune-client/'
+alias vbs='cd ~/work/vbs-subscribe/vbs-client/'
+alias adminv2='cd ~/work/adminv2/'
+alias hdap='cd ~/work/hdap/'
+
+alias ui='cd ~/work/ui/'
+alias ui31='cd ~/work/ui_r31/'
+alias ui32='cd ~/work/ui_r32/'
+alias ui33='cd ~/work/ui_r33/'
+alias ui34='cd ~/work/ui_r34/'
+alias ui35='cd ~/work/ui_r35/'
+alias ui36='cd ~/work/ui_r36/'
+alias ui37='cd ~/work/ui_r37/'
+alias ui38='cd ~/work/ui_r38/'
+alias ui39='cd ~/work/ui_r39/'
+alias ui40='cd ~/work/ui_r40/'
+alias ui41='cd ~/work/ui_r41/'
 
 alias devsetup='cd ~/Dropbox/proj/dev_setup/'
 alias proj='cd ~/proj/'
 alias weiqi='cd ~/p2/jsgameviewer/'
 alias todo='cd ~/proj/todomvc/labs/architecture-examples/tjs/'
 
-alias paste-as-request='pbpaste | xmllint --format > /tmp/request.xml'
+alias paste-as-request='pbpaste | xmllint --format - > /tmp/request.xml ; cat /tmp/request.xml | pbcopy; cat /tmp/request.xml'
 alias deploy='curl http://10.111.74.133:8081/jenkins/view/DEPLOY/job/COLA_UK_TOMCAT_DEPLOY/build?delay=0sec'
 
+alias agile4synergy='ssh -N -R24800:localhost:24800 agile4 &'
+
 set -o vi
-export EDITOR='vi -u /Users/gcao/.vimrc.blank' # start vim quickly and in normal mode
+export EDITOR='vi'
+#export EDITOR='vi -u /Users/gcao/.vimrc.blank' # start vim quickly and in normal mode
 #export EDITOR='vi -c startinsert -u /Users/gcao/.vimrc.blank' # start vim quickly and in insert mode
 #export EDITOR='vi -c startinsert' # start vim in insert mode
 
@@ -187,6 +222,10 @@ bindkey '^N' history-beginning-search-forward
 # http://nuclearsquid.com/writings/edit-long-commands/
 autoload -U edit-command-line
 zle -N edit-command-line
+bindkey -M vicmd '^A' beginning-of-line
+bindkey -M viins '^A' beginning-of-line
+bindkey -M vicmd '^G' end-of-line
+bindkey -M viins '^G' end-of-line
 bindkey -M vicmd '^E' edit-command-line
 bindkey -M viins '^E' edit-command-line
 
@@ -202,14 +241,48 @@ export PATH=/usr/local/lib/python2.7/site-packages:$PATH
 [[ -s "~/.rvm/scripts/rvm" ]] && source "~/.rvm/scripts/rvm" 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
-export TOMCAT_HOME=~/tools/apache-tomcat-7.0.30
+export TOMCAT_HOME=~/tools/tomcat
 
 # Node and npm setup
-export PATH=/usr/local/share/npm/bin:$PATH
+export PATH=$HOME/.node/bin:$PATH
 
 #[[ -s ~/tools/ansible/hacking/env-setup ]] && source ~/tools/ansible/hacking/env-setup -q
 
-[[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
+#[[ -s `brew --prefix`/etc/autojump.sh ]] && . `brew --prefix`/etc/autojump.sh
+
+#http://minimul.com/increased-developer-productivity-with-tmux-part-5.html
+# These aliases are commented because we created executables in ~/bin
+# Once we figure out how to have those aliases work from vim, we can get rid
+# of those one line scripts!!!
+## Send command to the second pane (pane index starts from 0, so pane 1 is the second)
+#function ts {
+#  args=$@
+#  tmux send-keys -t 1 "$args" C-m
+#}
+## Kill and re-run last command
+#alias tt="tmux send-keys -t 1 C-c '\!\!' C-m C-m"
+## Run last command
+#alias tl="tmux send-keys -t 1 '\!\!' C-m C-m"
+## Kill process
+#alias tk="tmux send-keys -t 1 C-c"
+
+## Send command to the third pane
+#function ts2 {
+#  args=$@
+#  tmux send-keys -t 2 "$args" C-m
+#}
+#alias tt2="tmux send-keys -t 2 C-c '\!\!' C-m C-m"
+#alias tl2="tmux send-keys -t 2 '\!\!' C-m C-m"
+#alias tk2="tmux send-keys -t 2 C-c"
+
+## Send command to the forth pane
+#function ts3 {
+#  args=$@
+#  tmux send-keys -t 3 "$args" C-m
+#}
+#alias tt3="tmux send-keys -t 3 C-c '\!\!' C-m C-m"
+#alias tl3="tmux send-keys -t 3 '\!\!' C-m C-m"
+#alias tk3="tmux send-keys -t 3 C-c"
 
 function e {
   # base url with first command already injected
@@ -229,6 +302,10 @@ function e {
   open $url
 }
 
+function clipboard {
+  pbpaste | $* | pbcopy
+}
+
 function svr {
   svn revert -R $*
 }
@@ -240,6 +317,7 @@ function sva {
 }
 function svd {
   svn st $* | grep '!' | cut -b 2- | xargs svn rm
+  svn st $* | grep '.orig$' | cut -b 2- | xargs rm
 }
 function grepit {
   grep "it " $* | awk -F\" '{print $2}'
@@ -251,16 +329,54 @@ function soap {
   curl -s -k -H "Content-Type: text/xml; charset=utf-8" -d @/tmp/request.xml -X POST $*
 }
 
+# Moved to bin/gitup
+## Update master and merge into current branch
+#function gitup {
+#  branch=`git branch | grep '*' | cut -b 3-`
+#  clean=`git status | grep clean`
+#  if [ "$clean" = "" ]; then
+#    git stash
+#  fi
+#  git co master
+#  git pull origin master
+#  git co $branch
+#  if [ "$clean" = "" ]; then
+#    git stash apply
+#  fi
+#  git merge master
+#}
+
+function gitcommit {
+  branch=`git branch | grep '*' | cut -b 3-`
+  git co master
+  git pull origin master
+  git merge $branch
+  git push origin master
+  git co $branch
+}
+
+# https://github.com/github/hub
+eval "$(hub alias -s)"
+
 # This is required for installing pg gem and possibly other libraries
 export ARCHFLAGS="-arch x86_64"
 
-source /usr/local/share/zsh/site-functions/go
-export GOPATH=~/.go-packages
-export PATH=$PATH:/usr/local/Cellar/go/1.2.1/libexec/bin:~/.go-packages/bin
+export GOPATH=~/go-workspace
+export PATH=$PATH:/usr/local/opt/go/libexec/bin:$GOPATH/bin
 
 export PATH=$PATH:~/tools/ec2-api-tools/bin
 
 # http://deis.io/get-deis/
 #export DOCKER_HOST=tcp://172.17.8.100:4243
 #export FLEETCTL_TUNNEL=172.17.8.100
+
+export NVM_DIR=~/.nvm
+source $(brew --prefix nvm)/nvm.sh
+
+WINDOW_NAME=`tmux display-message -p '#W'`
+if [[ "$WINDOW_NAME" = "reattach-to-user-namespace" ]]; then
+  tmux rename-window ''
+fi
+
+export APP_DUB_PARAM=bugabuga
 

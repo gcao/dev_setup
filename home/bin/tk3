@@ -1,0 +1,2 @@
+# http://minimul.com/increased-developer-productivity-with-tmux-part-5.html
+tmux send-keys -t 3 C-c "$*" C-m

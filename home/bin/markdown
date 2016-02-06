@@ -1,0 +1,2 @@
+# Adapted from http://stackoverflow.com/questions/7694887/is-there-a-command-line-utility-for-rendering-github-flavored-markdown
+jq --slurp --raw-input '{"text": "\(.)", "mode": "markdown"}' < $1 | curl --data @- https://api.github.com/markdown > /tmp/test.html; open /tmp/test.html

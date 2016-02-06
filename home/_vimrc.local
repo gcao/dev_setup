@@ -23,8 +23,10 @@ set background=dark
 color solarized
 "color Monokai
 
+"set shell=/bin/zsh\ -i
 set shell=/bin/zsh
 
+set ff=unix
 set nospell
 set nopaste
 " http://stackoverflow.com/questions/2861627/vim-paste-in-insert-mode
@@ -41,7 +43,7 @@ set nosmartindent " See http://vim.wikia.com/wiki/Indenting_source_code
 set smarttab
 " See http://items.sjbach.com/319/configuring-vim-right
 set wildmode=list:longest
-set scrolloff=3
+set scrolloff=100
 set ignorecase
 set smartcase
 set relativenumber
@@ -163,10 +165,13 @@ nnoremap <c-k> gk
 " Ag! will not open first result
 nnoremap <Leader>k :Ag!<Space>
 
+"http://superuser.com/questions/220666/how-do-you-reuse-a-visual-mode-selection
+nnoremap vv gv
+
 " Ctrl+A to select all
-nnoremap <C-A> ggVGy
+nnoremap <C-A> ggVG
 " Ctrl+I to delete all
-nnoremap <C-I> gg1000d<CR>i
+"nnoremap <C-I> gg1000d<CR>i
 
 " Disable arrow keys {
   " based on recommendations on http://blog.sanctum.geek.nz/vim-anti-patterns/
@@ -200,12 +205,13 @@ nnoremap cc xi
 nnoremap <Leader>;  ;
 nnoremap <Leader>:  ,
 nnoremap ;  :
-nnoremap !  :!
+"nnoremap !  :!
+nnoremap <tab>  :!
 nnoremap <Leader>m :map<Space>
 
 "nnoremap \ :CommandT<CR>
 "nnoremap <Leader>f :CommandTFlush<CR>
-nnoremap \ :CtrlPMixed<CR>
+nnoremap \ :CtrlP<CR>
 nnoremap <Leader>f :CtrlPClearCache<CR>
 
 nnoremap <Leader>eh :e ~/work/dev_contrib/firefox/ProteusIndex.html<CR>
@@ -215,6 +221,8 @@ nnoremap <Leader>eb :e ~/.vimrc.bundles.local<CR>
 nnoremap <Leader>ev :e ~/.vimrc.local<CR>
 nnoremap <Leader>et :e ~/Dropbox/notes/test
 nnoremap <Leader>el :e ~/Dropbox/notes/diary.txt<CR>
+
+"nnoremap <Leader>ev :source ~/.vimrc.local<CR>
 
 if !exists("vimrc_autocommands_loaded")
   let vimrc_autocommands_loaded = 1
@@ -262,11 +270,14 @@ nnoremap <Leader>' i'<ESC>wwi'<ESC>
 " }
 
 "nnoremap <Leader>, :bp<CR>
-nnoremap H :bp<CR>
 "nnoremap <Leader>. :bn<CR>
-nnoremap L :bn<CR>
 nnoremap <Leader>x :bd<CR>
 nnoremap <Leader>X :BD<CR>
+
+nnoremap H ^
+vnoremap H ^
+nnoremap L $
+vnoremap L $
 
 " Conque - disabled {
   " http://code.google.com/p/conque/wiki/Usage
@@ -281,9 +292,10 @@ nnoremap <Leader>X :BD<CR>
 " CtrlP {
   " do not manage working directory
   let g:ctrlp_working_path_mode = 0
-  let g:ctrlp_cmd = 'CtrlPBuffer' " Search in Files, Buffers and MRU files at the same time.
+  let g:ctrlp_cmd = 'CtrlPBuffer'
   let g:ctrlp_max_history = 50
   let g:ctrlp_mruf_max = 50
+  let g:ctrlp_max_files = 0
 
   " http://stackoverflow.com/a/23015287/120151
   " For some reason 'if exists(g:ctrlp_user_command)' does not work", so I
@@ -380,15 +392,15 @@ nnoremap <Leader>X :BD<CR>
 autocmd BufNewFile,BufRead *.coffee set filetype=coffee
 
 " <tab> was mapped to delete file content which is annoying
-"if mapcheck('<tab>', 'n')
-"  unmap <tab>
-"endif
+if mapcheck('<tab>', 'n')
+  unmap <tab>
+endif
 if mapcheck('<esc>', 'n')
   unmap <esc>
 endif
 
-nnoremap <tab> i <esc>l
-"nnoremap <cr> i<cr><esc>
+nnoremap <Leader><tab> i <esc>l
+nnoremap <Leader><cr> i<cr><esc>
 nnoremap <backspace> X
 
 " http://stackoverflow.com/questions/6126871/easymotion-coloring-in-vim-with-solarized-theme
@@ -415,17 +427,22 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" rr=$HOME/bin/rr will move focus to the right pane of iTerm and run arguments as a
-" command in the shell
-nnoremap <Leader>r :!rr ruby %<CR>
+" ts=$HOME/bin/ts will send command to the second pane of iTerm and run
+nnoremap <Leader>r :!ts ruby %<CR><CR>
 " http://arstechnica.com/civis/viewtopic.php?f=16&t=94386
-nnoremap <Leader>R :!rr rspec % -l <C-R>=line(".")<CR><CR>
-nnoremap <F2>      :!rr<Space>
-nnoremap <S-F2>    :!rlast<CR>
+nnoremap <Leader>R :!ts rspec % -l <C-R>=line(".")<CR><CR>
+nnoremap <F2>      :!ts<Space>
+nnoremap <S-F2>    :!tl<CR><CR>
+
+" Source this vim config file
+"nnoremap <F5> :source %<CR>
 
 " Run this file
-"nnoremap <F6>      :!%<CR>
-nnoremap <F6>      :!rr %<CR>
+"nnoremap <F5>      :!%<CR>
+nnoremap <F5>      :!ts %<CR><CR>
+
+inoremap <F6>    <ESC>ZZ<CR>
+nnoremap <F6>    <ESC>ZZ<CR>
 
 " http://vimdoc.sourceforge.net/htmldoc/editing.html#CTRL-^
 "nnoremap <C-Space> :e #<CR>
@@ -439,14 +456,13 @@ nnoremap <F6>      :!rr %<CR>
       if s:vimCmd != ""
         exec s:vimCmd
       else
-        exec '!rr "' . s:cmd . '"'
+        exec '!ts "' . s:cmd . '"'
       end
     else
       echo "No command found in line."
     endif
   endfunction
   map <F4> :call RunThis()<CR>
-  map <F5> :source %<CR>
 " }
 
 " vim e +507 ~/.vimrc
@@ -467,7 +483,7 @@ let g:indent_guides_enable_on_vim_startup = 0
   map <F10> <C-w>o
 " }
 
-nnoremap <C-o> :e<Space>
+"nnoremap <C-o> :e<Space>
 
 "http://vim.wikia.com/wiki/Using_command-line_history
 "nnoremap : q:dd
@@ -485,8 +501,11 @@ nnoremap <Leader>vd :VCSVimDiff<CR>
 nnoremap <Leader>vr :!svn revert %<CR><CR>
 nnoremap <Leader>vu :!svn up<CR>
 nnoremap <Leader>vc :!svn diff % -c
+nnoremap <Leader>vv :!svn diff % 
 
-nnoremap <Leader>gci :!gitcommit %<CR>
+" Commit a single file
+nnoremap <Leader>ss :!svn add %; svn ci %<CR>
+nnoremap <Leader>gs :!gitcommit %<CR>
 
 if has('gui_macvim')
   "http://vim.1045645.n5.nabble.com/Remove-scrollbar-td1216911.html
@@ -548,9 +567,22 @@ endfunction
 set listchars=tab:>-,trail:·
 nmap <silent> <leader>s :set nolist!<CR>
 
+nnoremap <leader>z :!zsh -i -c<space>
+
 inoremap <F9>        <C-o>
-inoremap <ESC>       <ESC>l
-inoremap <ESC><ESC>  <ESC>l
+"inoremap <ESC>       <ESC>l
+"inoremap <ESC><ESC>  <ESC>l
+
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+cnoremap <C-x> <Del>
+cnoremap <C-d> <Left>
+cnoremap <C-f> <Right>
+cnoremap <C-h> <S-Left>
+cnoremap <C-l> <S-Right>
+"<C-w> Delete word backward
 
 "" Undo mapping in .vimrc.local
 "if mapcheck('<ESC><C-F>', 'i')

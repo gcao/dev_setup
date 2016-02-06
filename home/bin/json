@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+# For some reason, below command does not work properly using /bin/sh
+# Might be the 1>&2 is not supported
+
+pbpaste | jq . 1>&2 | pbcopy

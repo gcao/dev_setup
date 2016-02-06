@@ -1,0 +1,4 @@
+# http://minimul.com/increased-developer-productivity-with-tmux-part-5.html
+# Send command to the second pane (pane index starts from 0, so pane 1 is the second)
+tmux send-keys -t 3 C-r "$*" C-m
+

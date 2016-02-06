@@ -1,0 +1,14 @@
+#!/bin/bash
+
+branch=`git branch | grep '*' | cut -b 3-`
+clean=`git status | grep clean`
+if [ "$clean" = "" ]; then
+  git stash
+fi
+git co master
+git pull origin master
+git co $branch
+if [ "$clean" = "" ]; then
+  git stash apply
+fi
+git merge master
