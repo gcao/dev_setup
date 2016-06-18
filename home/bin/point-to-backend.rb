@@ -3,7 +3,15 @@
 HOSTS_BEGIN = "# REMOTE HDAP BEGIN"
 HOSTS_END   = "# REMOTE HDAP END"
 
-class Environment < Struct.new(:name, :description, :confluence_page, :domain, :hdap_server, :postgres_server, :_rlayman1_password)
+class Environment < Struct.new(
+                                :name,
+                                :description,
+                                :confluence_page,
+                                :domain,
+                                :hdap_server,
+                                :postgres_server,
+                                :_rlayman1_password
+                              )
   def initialize *args
     super *args
 
@@ -16,6 +24,12 @@ class Environment < Struct.new(:name, :description, :confluence_page, :domain, :
     ENVIRONMENTS.find {|env| env.name == name } or raise "Environment not found: #{name}"
   end
 
+  def self.current
+    if `grep 'Pointing to ' /etc/hosts` =~ /^\s*# Pointing to (\w+)\s*$/
+      find $1
+    end
+  end
+
   def pointToMe
     puts "Pointing to #{name}"
 
@@ -26,8 +40,8 @@ class Environment < Struct.new(:name, :description, :confluence_page, :domain, :
     s = `#{cmd}` + <<-HOSTS.gsub(/^\s+/, '')
       #{HOSTS_BEGIN}
       # Pointing to #{name}
-      #{hdap_server} hdap-server hdap-server.vocal-dev.com
-      #{postgres_server} hdap-postgres hdap-postgres.vocal-dev.com
+      #{hdap_server}	hdap-server	hdap-server.vocal-dev.com
+      #{postgres_server}	hdap-postgres	hdap-postgres.vocal-dev.com
       #{HOSTS_END}
     HOSTS
 
@@ -37,9 +51,19 @@ class Environment < Struct.new(:name, :description, :confluence_page, :domain, :
   end
 end
 
-DEFAULT = BADGER = Environment.new(
+DEFAULT = TURKEY = Environment.new(
+  'turkey',
+  'DEV: Turkey',
+  '',
+  'my.turkey.vocal-dev.com',
+  '10.71.21.190',
+  'same',
+  'Vocal123',
+)
+
+BADGER = Environment.new(
   'badger',
-  'DEV:Badger',
+  'DEV: Badger',
   '',
   'my.badger.vocal-dev.com',
   '10.71.20.20',
@@ -47,9 +71,39 @@ DEFAULT = BADGER = Environment.new(
   'Vocal123',
 )
 
+PANTHER = Environment.new(
+  'panther',
+  'DEV: Panther',
+  '',
+  'my.panther.vocal-dev.com',
+  '10.71.20.226',
+  'same',
+  'Vocal123',
+)
+
+QA6 = Environment.new(
+  'qa6',
+  'QA6 / PreProd (must connect to Virginia VPN)',
+  'https://vocalocity-confluence-tmp.snap.vonagenetworks.net:8446/pages/viewpage.action?pageId=60654927',
+  'my1.vocal-qa.com',
+  '10.63.224.50',
+  '10.63.228.188',
+  'vocal123',
+)
+
+QA7 = Environment.new(
+  'qa7',
+  'QA7 / FAT1 (must connect to Virginia VPN)',
+  'https://vocalocity-confluence-tmp.snap.vonagenetworks.net:8446/pages/viewpage.action?pageId=38535172',
+  'my2.vocal-qa.com',
+  '10.63.232.231',
+  '10.62.235.235',
+  'Vocal123',
+)
+
 QA8 = Environment.new(
   'qa8',
-  'QA8/FAT2',
+  'QA8 / FAT2 (must connect to Oregon VPN)',
   'https://vocalocity-confluence-tmp.snap.vonagenetworks.net:8446/pages/viewpage.action?pageId=55345183',
   'my.qa8.vocal-qa.com',
   '10.63.224.50',
@@ -57,23 +111,21 @@ QA8 = Environment.new(
   'vocal123',
 )
 
-QA6 = Environment.new(
-  'qa6',
-  'QA6/PreProd',
-  'https://vocalocity-confluence-tmp.snap.vonagenetworks.net:8446/pages/viewpage.action?pageId=60654927',
-  'my.vocal-qa.com',
-  '10.63.224.50',
-  '10.63.228.188',
-  'vocal123',
-)
-
-ENVIRONMENTS = [BADGER, QA8, QA6]
+ENVIRONMENTS = [TURKEY, BADGER, PANTHER, QA7, QA8, QA6]
 
 if $0 == __FILE__
   if ARGV.length == 0
     require 'pp'
     pp ENVIRONMENTS
-    DEFAULT.pointToMe
+
+    current = Environment.current
+    if current
+      puts "Pointing to #{current.name}"
+    else
+      puts "Not pointing to any environment"
+    end
+
+    #DEFAULT.pointToMe
   else
     Environment.find(ARGV[0]).pointToMe
   end

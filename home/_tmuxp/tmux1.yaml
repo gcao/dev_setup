@@ -1,0 +1,121 @@
+session_name: tmux
+windows:
+- layout: f17d,204x67,0,0{140x67,0,0,1,63x67,141,0[63x33,141,0,2,63x33,141,34,3]}
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command:
+    - cd /Users/gcao
+    - vim
+  - shell_command:
+    - cd /Users/gcao
+    - zsh
+  - shell_command:
+    - cd /Users/gcao/workskunk/cloud/ubuntu-14.04
+    - zsh
+  window_name: 'First Window '
+- focus: 'true'
+  layout: 09b6,204x67,0,0{140x67,0,0[140x33,0,0,5,140x33,0,34,34],63x67,141,0[63x33,141,0,6,63x33,141,34,7]}
+  options:
+    automatic-rename: 'off'
+  panes:
+  - shell_command:
+    - cd /Users/gcao/workskunk/dokku
+    - vagrant
+  - focus: 'true'
+    shell_command:
+    - cd /Users/gcao
+    - Python
+  - shell_command:
+    - cd /Users/gcao
+    - zsh
+  - shell_command:
+    - cd /Users/gcao
+    - zsh
+  window_name: 'Servers '
+- layout: 3992,204x67,0,0{140x67,0,0,8,63x67,141,0[63x33,141,0,9,63x33,141,34,10]}
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command: zsh
+  - zsh
+  - zsh
+  start_directory: /Users/gcao/workhdap/adminv2
+  window_name: 'AdminV2 '
+- layout: ba12,204x67,0,0{140x67,0,0,11,63x67,141,0[63x35,141,0,12,63x31,141,36,13]}
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command:
+    - cd /Users/gcao/workhdap/hdap
+    - vim
+  - shell_command:
+    - cd /Users/gcao/workhdap/hdap
+    - zsh
+  - shell_command:
+    - cd /Users/gcao/workhdap/provisioning-api
+    - zsh
+  window_name: 'HDAP '
+- layout: 3a2c,204x67,0,0{140x67,0,0,14,63x67,141,0[63x35,141,0,15,63x31,141,36,16]}
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command: vim
+  - zsh
+  - zsh
+  start_directory: /Users/gcao/w2/vgWidgets
+  window_name: 'Widgets '
+- layout: b9c5,204x67,0,0{140x67,0,0,17,63x67,141,0[63x35,141,0,18,63x31,141,36,19]}
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command: zsh
+  - zsh
+  - zsh
+  start_directory: /Users/gcao
+  window_name: 'TODO '
+- layout: 7a0e,204x67,0,0{140x67,0,0,20,63x67,141,0[63x35,141,0,21,63x31,141,36,22]}
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command: zsh
+  - zsh
+  - zsh
+  start_directory: /Users/gcao
+  window_name: 'TODO '
+- layout: fa27,204x67,0,0{140x67,0,0,23,63x67,141,0[63x35,141,0,24,63x31,141,36,25]}
+  options:
+    automatic-rename: 'off'
+  panes:
+  - vim
+  - zsh
+  - focus: 'true'
+    shell_command: zsh
+  start_directory: /Users/gcao/workskunk/agent-smith
+  window_name: 'Agent '
+- layout: 7a41,204x67,0,0{140x67,0,0,26,63x67,141,0[63x35,141,0,27,63x31,141,36,28]}
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command: vim
+  - zsh
+  - zsh
+  start_directory: /Users/gcao/workskunk/smarty
+  window_name: 'Hubot '
+- layout: 3a56,204x67,0,0{140x67,0,0,29,63x67,141,0[63x35,141,0,30,63x31,141,36,31]}
+  options:
+    automatic-rename: 'off'
+  panes:
+  - focus: 'true'
+    shell_command: vim
+  - zsh
+  - zsh
+  start_directory: /Users/gcao/Dropbox/Alfred/Alfred.alfredpreferences/workflows/user.workflow.AAD9287B-CC72-476B-A7E8-E1159EC7563B
+  window_name: 'Alfred Misc Workflow '

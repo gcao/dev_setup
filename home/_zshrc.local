@@ -3,6 +3,11 @@
 
 export LC_ALL=$LANG
 
+export KUBE_ENABLE_INSECURE_REGISTRY=true
+export KUBERNETES_PROVIDER=vagrant
+export KUBERNETES_NODE_MEMORY=3072
+export KUBERNETES_MASTER_MEMORY=1536
+
 test -r ~/.zshrc.secret && source ~/.zshrc.secret
 
 export ORACLE_HOME=/opt/oracle/instantclient_11_2
@@ -20,9 +25,11 @@ export TERM=xterm-256color
 
 # http://enki-tech.blogspot.com/2012/09/customizing-zsh-part-1-hooks-and-rprompt.html
 #autoload -U add-zsh-hook
-
 #preexec_hook() {
-#  export SHELL_COMMAND=$1
+#  #export SHELL_COMMAND=$1
+#  DATE=`date +"%Y-%m-%d %H:%M:%S"`
+#  C=$(($COLUMNS-24))
+#  echo -e "\033[1A\033[${C}C ${DATE} "
 #}
 #add-zsh-hook preexec preexec_hook
 
@@ -209,11 +216,17 @@ function sshdeploy {
   ssh $1 -t "sudo su - deploy --session-command 'cd $DIR; /bin/bash'"
 }
 
+function anacon {
+  if [[ ! $PATH =~ anaconda ]]; then
+    export PATH=/Users/gcao/anaconda3/bin:$PATH
+  fi
+}
+
 ## http://danielmiessler.com/blog/enhancements-to-shell-and-vim-productivity
 bindkey -M viins 'jk' vi-cmd-mode
 bindkey -M viins 'jj' vi-cmd-mode
 bindkey -M viins 'kj' vi-cmd-mode
-bindkey -M viins 'kk' vi-cmd-mode
+#bindkey -M viins 'kk' vi-cmd-mode
 bindkey -v
 bindkey '^R' history-incremental-search-backward
 bindkey '^P' history-beginning-search-backward
@@ -228,6 +241,16 @@ bindkey -M vicmd '^G' end-of-line
 bindkey -M viins '^G' end-of-line
 bindkey -M vicmd '^E' edit-command-line
 bindkey -M viins '^E' edit-command-line
+bindkey -M vicmd '^F' forward-char
+bindkey -M viins '^F' forward-char
+bindkey -M vicmd '^D' backward-char
+bindkey -M viins '^D' backward-char
+bindkey -M vicmd '^L' delete-char
+bindkey -M viins '^L' delete-char
+bindkey -M vicmd '^{' backward-word
+bindkey -M viins '^{' backward-word
+bindkey -M vicmd '^}' forward-word
+bindkey -M viins '^}' forward-word
 
 # http://stackoverflow.com/questions/6041178/keep-the-windows-name-fixed-in-tmux
 # http://superuser.com/questions/306028/tmux-and-zsh-custom-prompt-bug-with-window-name
@@ -351,7 +374,7 @@ function gitcommit {
   git co master
   git pull origin master
   git merge $branch
-  git push origin master
+  git push -u origin master
   git co $branch
 }
 
@@ -379,4 +402,9 @@ if [[ "$WINDOW_NAME" = "reattach-to-user-namespace" ]]; then
 fi
 
 export APP_DUB_PARAM=bugabuga
+
+# Native docker environment (must run Docker.app)
+export DOCKER_HOST=tcp://192.168.99.100:2376
+export DOCKER_CERT_PATH=/Users/gcao/.docker/machine/machines/default
+export DOCKER_TLS_VERIFY=1
 

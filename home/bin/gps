@@ -1,1 +1,1 @@
-git push origin `git branch | grep '*' | cut -b 3-`
+git push -u origin `git branch | grep '*' | cut -b 3-`

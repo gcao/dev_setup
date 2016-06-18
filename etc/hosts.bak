@@ -1,0 +1,154 @@
+# BEGIN hosts added by Pulse
+69.59.255.148   ragw.vonage.net
+# END hosts added by Pulse
+##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1	localhost gcaombpro
+127.0.0.1	local.vocal-dev.com my.vocal-dev.com
+
+255.255.255.255	broadcasthost
+::1             localhost 
+fe80::1%lo0	localhost
+#127.0.0.1 d18z4ds2kfrc9v.cloudfront.net
+#10.112.162.23 subscribe.vonage.com
+#216.115.29.18 secure.vonage.com
+
+# https://vocalocity-confluence-tmp.snap.vonagenetworks.net:8446/display/APP/How+to+Run+hdap+Locally
+#127.0.0.1 localhost.localdomain callqueuequeue vmqueue recordingqueue presencequeue presence.vocalocity.com calllogqueue
+#127.0.0.1 presence.vocalocity.com
+#10.71.20.196 sip-hdap.vocalocity.com
+#10.71.20.196 ip-10-71-20-196.ec2.internal ip-10-71-20-196
+#10.71.17.192 sbc controller.panda.vocal-dev.com awsctrl01.media-lab02.vocalocity.com internal-sip.vocalocity.com external-sip.vocalocity.com siptrunkproxy.vocalocity.com
+
+10.111.74.133 agile2 agilepair2 jenkins
+10.111.74.191 agile1
+
+10.112.153.113 exp expapps
+10.112.153.114 exp2 expapps2
+10.112.153.115 exp3 expapps3
+
+#216.115.29.18 secure.vonage.com
+
+#10.112.147.249 purchase.vonagebusiness.com
+
+10.112.153.82 smarty subscribe-vm-06.dloco.s.vonagenetworks.net
+
+# My HDAP EC2 instance
+# ping io1ac108.devvpc.vocal-dev.com
+10.71.19.187 gcao
+
+#10.71.19.187 hdap-server.vocal-dev.com
+#10.71.19.187 hdap-postgres.vocal-dev.com
+
+# Panda
+# If something does not work, try below command to obtain the right IP
+# ping hdap-int.panda.vocal-dev.com
+10.71.20.196 panda
+
+#10.71.20.196 hdap-server.vocal-dev.com
+#10.71.20.196 hdap-postgres.vocal-dev.com
+
+# Badger
+# https://confluence.snap.vonagenetworks.net:8446/pages/viewpage.action?pageId=38535183
+# ping hdap-int.badger.vocal-dev.com
+10.71.20.134 badger
+# ping orders-int.badger.vocal-dev.com
+10.71.19.141 badger-il
+
+#127.0.0.1 my.badger.vocal-dev.com
+
+#10.71.20.20 hdap-server.vocal-dev.com
+#10.71.20.20 hdap-postgres.vocal-dev.com
+
+# Turkey
+# ping hdap-int.turkey.vocal-dev.com
+10.71.21.190 turkey
+# ping orders-int.turkey.vocal-dev.com
+10.71.19.13 turkey-il
+10.71.19.49 turkey-api
+
+#10.71.21.190 hdap-server.vocal-dev.com
+#10.71.21.190 hdap-postgres.vocal-dev.com
+
+# Panther
+# ping hdap-int.panther.vocal-dev.com
+10.71.20.226 panther
+#orders-int.panther.vocal-dev.com
+10.71.19.213 panther-il
+
+#10.71.20.226 hdap-server.vocal-dev.com
+#10.71.20.226 hdap-postgres.vocal-dev.com
+
+# Hamster
+# ping hdap-int.hamster.vocal-dev.com
+10.71.20.129 hamster
+
+#10.71.20.129 hdap-server.vocal-dev.com
+#10.71.20.129 hdap-postgres.vocal-dev.com
+
+# qa6
+# https://confluence.snap.vonagenetworks.net:8446/pages/viewpage.action?pageId=38535275
+# ping qa6oqui1.qa6.vocal-qa.com
+10.63.240.214 qa6 qa61
+10.62.242.152 qa62
+# ping qa6vqui1.qa6.vocal-qa.com
+10.62.240.114 qa6v
+10.62.242.146 qa6v2
+# ping qa6vqpapi1.qa6.vocal-qa.com
+10.62.244.32 qa6-il
+10.62.243.184 qa6-il2
+
+#127.0.0.1 my1.vocal-qa.com
+
+#10.62.240.114 hdap-server.vocal-dev.com
+#10.62.243.231 hdap-postgres.vocal-dev.com
+
+# qa7
+# https://confluence.snap.vonagenetworks.net:8446/pages/viewpage.action?pageId=38535275
+# ping qa7oqui1.qa7.vocal-qa.com
+10.63.232.231 qa7 qa71
+# ping qa7vqui1.qa7.vocal-qa.com
+10.62.232.20 qa7v
+
+#127.0.0.1 my2.vocal-qa.com
+
+#10.63.232.231 hdap-server.vocal-dev.com
+## ping qa7vqmdb1.qa7.vocal-qa.com
+#10.62.235.235 hdap-postgres.vocal-dev.com
+
+# qa8
+# https://confluence.snap.vonagenetworks.net:8446/pages/viewpage.action?pageId=38535269
+# ping qa8oqui1.qa8.vocal-qa.com
+# ping qa8oqmdb1.qa8.vocal-qa.com
+# ping qa8oqmdb2.qa8.vocal-qa.com
+10.63.224.50 qa8 qa81
+10.63.225.162 qa82
+10.63.227.226 qa8-il
+10.63.228.156 qa8-il2
+#ping qa8oqquote1.qa8.vocal-qa.com
+
+#127.0.0.1 my.qa8.vocal-qa.com
+
+#10.63.224.50 hdap-server.vocal-dev.com
+#10.63.228.188 hdap-postgres.vocal-dev.com
+
+# Prod
+# ping atlsvpui1.atldc.vocalocity.com
+10.20.5.71 prod
+10.20.5.72 prod2
+10.20.5.73 prod3
+10.20.5.74 prod4
+10.20.5.75 prod5
+10.20.5.76 prod6
+10.20.5.77 prod7
+10.20.5.78 prod8
+10.20.5.79 prod9
+10.20.5.80 prod10
+
+#10.20.5.71 hdap-server.vocal-dev.com
+#10.2.1.221 hdap-postgres.vocal-dev.com
+

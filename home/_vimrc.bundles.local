@@ -6,6 +6,9 @@ let g:rooter_patterns = ['vendor/', 'PROTEUS_VERSION', 'Rakefile', '.git/']
 
 let g:go_disable_autoinstall = 1
 
+let g:syntastic_javascript_checkers = ['eslint']
+" http://stackoverflow.com/questions/20160921/syntastic-complaining-about-es6-module-syntax
+
 "Bundle 'rosenfeld/conque-term'
 "Bundle 'fholgado/minibufexpl.vim'
 "
@@ -55,7 +58,7 @@ Bundle 'vim-scripts/vcscommand.vim'
 
 Bundle 'tpope/vim-rvm'
 
-"let g:EditorConfig_core_mode = 'external_command'
+let g:EditorConfig_core_mode = 'external_command'
 Bundle 'editorconfig/editorconfig-vim'
 
 Bundle 'rhysd/clever-f.vim'
@@ -66,4 +69,9 @@ Bundle 'junegunn/vim-easy-align'
 Bundle 'slim-template/vim-slim'
 Bundle 'szw/vim-tags'
 Bundle 'marijnh/tern_for_vim'
+Bundle 'vim-airline/vim-airline-themes'
 
+"TypeScript
+Bundle 'leafgarland/typescript-vim'
+Bundle 'Shougo/vimproc.vim'
+Bundle 'Quramy/tsuquyomi'

@@ -1,2 +1,2 @@
-let g:spf13_bundle_groups=['general', 'neocomplcache', 'programming', 'ruby', 'javascript', 'html', 'go', 'misc']
+let g:spf13_bundle_groups=['general', 'neocomplete', 'programming', 'ruby', 'javascript', 'html', 'go', 'misc']
 

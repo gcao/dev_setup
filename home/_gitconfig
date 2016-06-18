@@ -31,4 +31,4 @@
 	smudge = git lfs smudge %f
 	required = true
 [branch]
-	autosetuprebase = always
+  #autosetuprebase = always
