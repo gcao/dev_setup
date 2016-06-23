@@ -48,6 +48,8 @@ class Environment < Struct.new(
     open('/etc/hosts', 'w') do |f|
       f.write(s)
     end
+
+    `sudo /usr/sbin/apachectl restart`
   end
 end
 
@@ -66,7 +68,7 @@ BADGER = Environment.new(
   'DEV: Badger',
   '',
   'my.badger.vocal-dev.com',
-  '10.71.20.20',
+  '10.71.20.134',
   'same',
   'Vocal123',
 )
@@ -86,8 +88,8 @@ QA6 = Environment.new(
   'QA6 / PreProd (must connect to Virginia VPN)',
   'https://vocalocity-confluence-tmp.snap.vonagenetworks.net:8446/pages/viewpage.action?pageId=60654927',
   'my1.vocal-qa.com',
-  '10.63.224.50',
-  '10.63.228.188',
+  '10.62.240.114',
+  '10.62.243.231',
   'vocal123',
 )
 

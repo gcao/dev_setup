@@ -396,6 +396,8 @@ export PATH=$PATH:~/tools/ec2-api-tools/bin
 export NVM_DIR=~/.nvm
 source $(brew --prefix nvm)/nvm.sh
 
+source /usr/local/share/zsh/site-functions
+
 WINDOW_NAME=`tmux display-message -p '#W'`
 if [[ "$WINDOW_NAME" = "reattach-to-user-namespace" ]]; then
   tmux rename-window ''
